@@ -1,9 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import Routes from './Routes.jsx'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import AppRoutes from './Routes'
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './styles/theme'
+import './styles/reset.css'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Routes />
-  </StrictMode>,
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <AppRoutes />
+    </ThemeProvider>
+  </React.StrictMode>
 )

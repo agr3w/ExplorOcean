@@ -1,9 +1,41 @@
-import Globe3D from './Globe3D'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import { quizzesData } from "./content/contentGrid/quizzesContent";
+import { documentariesData } from "./content/contentGrid/documentariesContent";
+import ContentPageTemplate from "./pages/ContentPageTemplate";
+import ContentHub from "./pages/ContentHub";
 
-function Routes() {
+function AppRoutes() {
   return (
-    <Globe3D />
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/documentaries"
+          element={
+            <ContentPageTemplate
+              data={documentariesData}
+              title="Nossos Documentários"
+              description="Assista a documentários incríveis e aprenda sobre a vida marinha e a história dos oceanos."
+            />
+          }
+        />
+        <Route
+          exact
+          path="/quizzes"
+          element={
+            <ContentPageTemplate
+              data={quizzesData}
+              title="Nossos Quizzes"
+              description="Teste seus conhecimentos sobre a vida marinha e a história dos oceanos."
+            />
+          }
+        ></Route>
+        <Route exact path="/hub" element={<ContentHub />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default Routes
+export default AppRoutes;
