@@ -1,11 +1,14 @@
-import React from 'react';
+// src/components/Timeline/Timeline.jsx
+
+import React, { useState } from 'react';
 import { Box, Button, Typography, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-const TimelineContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
+const TimelineContainer = styled(Box)(({ theme, isVisible }) => ({
+  display: isVisible ? 'flex' : 'none', // Adiciona a lógica de visibilidade
+  flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
   padding: theme.spacing(2),
@@ -18,22 +21,19 @@ const TimelineContainer = styled(Box)(({ theme }) => ({
   margin: theme.spacing(0, 4, 4, 4),
 }));
 
-const Timeline = ({ data, selectedEra, onSelectEra }) => {
-  const selectedIndex = data.findIndex(era => era.id === selectedEra.id);
+const NavButton = styled(Button)(({ theme, isSelected }) => ({
+  whiteSpace: 'nowrap',
+  backgroundColor: isSelected ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
+  color: 'white',
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  },
+}));
 
-  const handlePrev = () => {
-    if (selectedIndex > 0) {
-      onSelectEra(data[selectedIndex - 1]);
-    }
-  };
+const Timeline = ({ data, selectedEra, onSelectEra, isVisible }) => {
+  const [selectedEon, setSelectedEon] = useState(data[0].eon);
+  const [selectedEraGroup, setSelectedEraGroup] = useState(data[0].era);
 
-  const handleNext = () => {
-    if (selectedIndex < data.length - 1) {
-      onSelectEra(data[selectedIndex + 1]);
-    }
-  };
-
-  // Agrupando as eras por Éon e, em seguida, por Era
   const groupedData = data.reduce((acc, item) => {
     if (!acc[item.eon]) {
       acc[item.eon] = {
@@ -41,7 +41,7 @@ const Timeline = ({ data, selectedEra, onSelectEra }) => {
         eras: {}
       };
     }
-    const eraKey = item.era || item.label;
+    const eraKey = item.era || 'Sem Era';
     if (!acc[item.eon].eras[eraKey]) {
       acc[item.eon].eras[eraKey] = [];
     }
@@ -49,66 +49,106 @@ const Timeline = ({ data, selectedEra, onSelectEra }) => {
     return acc;
   }, {});
 
+  const visibleItems = data.filter(item => item.eon === selectedEon && (item.era === selectedEraGroup || (!item.era && selectedEraGroup === 'Sem Era')));
+  const selectedIndex = visibleItems.findIndex(era => era.id === selectedEra.id);
+
+  const handlePrev = () => {
+    if (selectedIndex > 0) {
+      onSelectEra(visibleItems[selectedIndex - 1]);
+    }
+  };
+
+  const handleNext = () => {
+    if (selectedIndex < visibleItems.length - 1) {
+      onSelectEra(visibleItems[selectedIndex + 1]);
+    }
+  };
+
+  const handleSelectEon = (eon) => {
+    setSelectedEon(eon);
+    const firstEraInEon = Object.keys(groupedData[eon].eras)[0];
+    setSelectedEraGroup(firstEraInEon);
+    onSelectEra(groupedData[eon].eras[firstEraInEon][0]);
+  };
+
+  const handleSelectEraGroup = (eraKey) => {
+    setSelectedEraGroup(eraKey);
+    onSelectEra(groupedData[selectedEon].eras[eraKey][0]);
+  };
+
   return (
-    <TimelineContainer>
-      <IconButton onClick={handlePrev} disabled={selectedIndex === 0}>
-        <ArrowBackIosIcon sx={{ color: 'white' }} />
-      </IconButton>
-      <Box sx={{
-        display: 'flex',
-        overflowX: 'auto',
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none',
-        '&::-webkit-scrollbar': { display: 'none' },
-        gap: 4
-      }}>
-        {Object.keys(groupedData).map((eonKey) => {
-          const eon = groupedData[eonKey];
-          return (
-            <Box key={eon.label} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1, fontWeight: 'bold' }}>
-                {eon.label}
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                {Object.keys(eon.eras).map((eraKey) => {
-                  const era = eon.eras[eraKey];
-                  return (
-                    <Box key={eraKey} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-                      {eraKey !== eon.label && (
-                        <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', mb: 1 }}>
-                          {eraKey}
-                        </Typography>
-                      )}
-                      <Box sx={{ display: 'flex', gap: 1 }}>
-                        {era.map((period) => (
-                          <Button
-                            key={period.id}
-                            onClick={() => onSelectEra(period)}
-                            variant={period.id === selectedEra.id ? 'contained' : 'text'}
-                            sx={{
-                              whiteSpace: 'nowrap',
-                              backgroundColor: period.id === selectedEra.id ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
-                              color: 'white',
-                              '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                              },
-                            }}
-                          >
-                            {period.label}
-                          </Button>
-                        ))}
-                      </Box>
-                    </Box>
-                  );
-                })}
-              </Box>
-            </Box>
-          );
-        })}
+    <TimelineContainer isVisible={isVisible}>
+      <Typography variant="h6" gutterBottom>
+        Éons
+      </Typography>
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        {Object.keys(groupedData).map(eonKey => (
+          <NavButton
+            key={eonKey}
+            onClick={() => handleSelectEon(eonKey)}
+            isSelected={selectedEon === eonKey}
+          >
+            {eonKey}
+          </NavButton>
+        ))}
       </Box>
-      <IconButton onClick={handleNext} disabled={selectedIndex === data.length - 1}>
-        <ArrowForwardIosIcon sx={{ color: 'white' }} />
-      </IconButton>
+
+      {selectedEon && (
+        <>
+          <Typography variant="h6" gutterBottom>
+            Eras
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+            {Object.keys(groupedData[selectedEon].eras).map(eraKey => (
+              <NavButton
+                key={eraKey}
+                onClick={() => handleSelectEraGroup(eraKey)}
+                isSelected={selectedEraGroup === eraKey}
+              >
+                {eraKey}
+              </NavButton>
+            ))}
+          </Box>
+        </>
+      )}
+
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%', justifyContent: 'center' }}>
+        <IconButton onClick={handlePrev} disabled={selectedIndex === 0}>
+          <ArrowBackIosIcon sx={{ color: 'white' }} />
+        </IconButton>
+        <Box
+          sx={{
+            display: 'flex',
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            '&::-webkit-scrollbar': { display: 'none' },
+            gap: 2,
+            p: 1,
+          }}
+        >
+          {visibleItems.map(item => (
+            <Button
+              key={item.id}
+              onClick={() => onSelectEra(item)}
+              variant={item.id === selectedEra.id ? 'contained' : 'text'}
+              sx={{
+                whiteSpace: 'nowrap',
+                backgroundColor: item.id === selectedEra.id ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                },
+              }}
+            >
+              {item.label}
+            </Button>
+          ))}
+        </Box>
+        <IconButton onClick={handleNext} disabled={selectedIndex === visibleItems.length - 1}>
+          <ArrowForwardIosIcon sx={{ color: 'white' }} />
+        </IconButton>
+      </Box>
     </TimelineContainer>
   );
 };
