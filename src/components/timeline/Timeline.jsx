@@ -1,69 +1,21 @@
 import React from 'react';
-import { Box, Typography, IconButton, Tooltip, keyframes } from '@mui/material';
+import { Box, Button, Typography, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-// Cores para os Éons
-const eonColors = {
-  'Pré-cambriano': '#4B0082', // Índigo escuro
-  'Fanerozoico': '#228B22', // Verde-floresta
-};
-
-// Animação de brilho pulsante
-const pulse = keyframes`
-  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
-`;
-
-// Componente estilizado para a linha do tempo
-const TimelineLine = styled(Box)(({ theme }) => ({
+const TimelineContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
+  justifyContent: 'center',
   alignItems: 'center',
+  padding: theme.spacing(2),
+  gap: theme.spacing(2),
   position: 'relative',
-  width: '100%',
-  height: '10px',
-  borderRadius: '5px',
-  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-}));
-
-const TimelineEra = styled(Box)(({ theme, width, color }) => ({
-  height: '100%',
-  backgroundColor: color,
-  borderRadius: 'inherit',
-  transition: 'width 0.5s ease-in-out',
-  width: `${width}%`,
-  position: 'relative',
-}));
-
-const TimelineMarker = styled(Box)(({ theme, isSelected }) => ({
-  width: '16px',
-  height: '16px',
-  borderRadius: '50%',
-  backgroundColor: isSelected ? theme.palette.primary.main : 'white',
-  border: `2px solid ${isSelected ? theme.palette.primary.main : 'white'}`,
-  cursor: 'pointer',
-  position: 'absolute',
-  top: '50%',
-  transform: 'translate(-50%, -50%)',
-  transition: 'all 0.3s ease-in-out',
-  zIndex: 2,
-  animation: isSelected ? `${pulse} 2s infinite` : 'none',
-  '&:hover': {
-    transform: 'translate(-50%, -50%) scale(1.2)',
-  },
-}));
-
-const TimelineLabel = styled(Typography)(({ theme, isSelected }) => ({
-  position: 'absolute',
-  top: '25px',
-  whiteSpace: 'nowrap',
-  color: isSelected ? theme.palette.primary.main : 'white',
-  fontWeight: isSelected ? 'bold' : 'normal',
-  transition: 'color 0.3s ease, transform 0.3s ease',
-  textShadow: '0 0 5px rgba(0,0,0,0.5)',
-  transform: 'translateX(-50%)',
+  zIndex: 1,
+  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  backdropFilter: 'blur(5px)',
+  borderRadius: theme.spacing(2),
+  margin: theme.spacing(0, 4, 4, 4),
 }));
 
 const Timeline = ({ data, selectedEra, onSelectEra }) => {
@@ -81,84 +33,83 @@ const Timeline = ({ data, selectedEra, onSelectEra }) => {
     }
   };
 
-  const totalDuration = data.reduce((sum, era) => {
-    const match = era.period.match(/(\d+\.?\d*)\s*a\s*(\d+\.?\d*)/);
-    if (match) {
-      const [end, start] = match.slice(1).map(Number);
-      return sum + Math.abs(start - end);
+  // Agrupando as eras por Éon e, em seguida, por Era
+  const groupedData = data.reduce((acc, item) => {
+    if (!acc[item.eon]) {
+      acc[item.eon] = {
+        label: item.eon,
+        eras: {}
+      };
     }
-    return sum;
-  }, 0);
-
-  let cumulativeWidth = 0;
-  const segments = data.map((era) => {
-    const match = era.period.match(/(\d+\.?\d*)\s*a\s*(\d+\.?\d*)/);
-    const [end, start] = match ? match.slice(1).map(Number) : [0, 0];
-    const duration = Math.abs(start - end);
-    const widthPercentage = (duration / totalDuration) * 100;
-
-    const startOffset = cumulativeWidth;
-    cumulativeWidth += widthPercentage;
-    const middleOffset = startOffset + (widthPercentage / 2);
-
-    return {
-      ...era,
-      widthPercentage,
-      middleOffset
-    };
-  });
+    const eraKey = item.era || item.label;
+    if (!acc[item.eon].eras[eraKey]) {
+      acc[item.eon].eras[eraKey] = [];
+    }
+    acc[item.eon].eras[eraKey].push(item);
+    return acc;
+  }, {});
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-      <Typography variant="h6" sx={{ mb: 4, color: 'white', textShadow: '0 0 5px rgba(255,255,255,0.2)' }}>
-        História Geológica
-      </Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center', width: '90%' }}>
-        <IconButton onClick={handlePrev} disabled={selectedIndex === 0}>
-          <ArrowBackIosIcon sx={{ color: 'white' }} />
-        </IconButton>
-        <Box sx={{ flexGrow: 1, position: 'relative', px: 2, display: 'flex' }}>
-          {/* A Linha do tempo colorida */}
-          <TimelineLine>
-            {segments.map((segment) => (
-              <TimelineEra
-                key={segment.id}
-                width={segment.widthPercentage}
-                color={eonColors[segment.eon]}
-              />
-            ))}
-          </TimelineLine>
-
-          {/* Marcadores e Rótulos da linha do tempo */}
-          {segments.map((segment) => (
-            <Tooltip
-              key={segment.id}
-              title={`${segment.label}: ${segment.period}`}
-              arrow
-              placement="top"
-            >
-              <Box
-                onClick={() => onSelectEra(segment)}
-                sx={{
-                  position: 'absolute',
-                  left: `${segment.middleOffset}%`,
-                  cursor: 'pointer',
-                  zIndex: 3,
-                }}
-              >
-                <TimelineMarker isSelected={selectedEra.id === segment.id} />
-                <TimelineLabel isSelected={selectedEra.id === segment.id}>
-                  {segment.label}
-                </TimelineLabel>
+    <TimelineContainer>
+      <IconButton onClick={handlePrev} disabled={selectedIndex === 0}>
+        <ArrowBackIosIcon sx={{ color: 'white' }} />
+      </IconButton>
+      <Box sx={{
+        display: 'flex',
+        overflowX: 'auto',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
+        '&::-webkit-scrollbar': { display: 'none' },
+        gap: 4
+      }}>
+        {Object.keys(groupedData).map((eonKey) => {
+          const eon = groupedData[eonKey];
+          return (
+            <Box key={eon.label} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 1, fontWeight: 'bold' }}>
+                {eon.label}
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                {Object.keys(eon.eras).map((eraKey) => {
+                  const era = eon.eras[eraKey];
+                  return (
+                    <Box key={eraKey} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+                      {eraKey !== eon.label && (
+                        <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', mb: 1 }}>
+                          {eraKey}
+                        </Typography>
+                      )}
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        {era.map((period) => (
+                          <Button
+                            key={period.id}
+                            onClick={() => onSelectEra(period)}
+                            variant={period.id === selectedEra.id ? 'contained' : 'text'}
+                            sx={{
+                              whiteSpace: 'nowrap',
+                              backgroundColor: period.id === selectedEra.id ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
+                              color: 'white',
+                              '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                              },
+                            }}
+                          >
+                            {period.label}
+                          </Button>
+                        ))}
+                      </Box>
+                    </Box>
+                  );
+                })}
               </Box>
-            </Tooltip>
-          ))}
-        </Box>
-        <IconButton onClick={handleNext} disabled={selectedIndex === data.length - 1}>
-          <ArrowForwardIosIcon sx={{ color: 'white' }} />
-        </IconButton>
+            </Box>
+          );
+        })}
       </Box>
-    </Box>
+      <IconButton onClick={handleNext} disabled={selectedIndex === data.length - 1}>
+        <ArrowForwardIosIcon sx={{ color: 'white' }} />
+      </IconButton>
+    </TimelineContainer>
   );
 };
 
