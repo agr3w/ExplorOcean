@@ -6,16 +6,11 @@ import Navigator from "../components/navigator/Navigator";
 import Footer from "../components/footer/footer";
 import { Box } from "@mui/material";
 import CategoryFilter from "../components/categoryFilter/categoryFilter";
+import { useContentFilter } from "../hooks/useContentFilter";
 
 // O novo componente agora recebe os dados, título e descrição como props
 export default function ContentPageTemplate({ data, title, description }) {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  const uniqueCategories = [...new Set(data.map((item) => item.category))];
-
-  const filteredItems = selectedCategory
-    ? data.filter((item) => item.category === selectedCategory)
-    : data;
+  const { selectedCategory, setSelectedCategory, uniqueCategories, filteredItems } = useContentFilter(data);
 
   return (
     <>
