@@ -6,6 +6,7 @@ import { documentariesData } from "./content/contentGrid/documentariesContent";
 import ContentPageTemplate from "./pages/ContentPageTemplate";
 import ContentHub from "./pages/ContentHub";
 import GlobePage from "./pages/GlobePage";
+import TimelinePage from "./pages/TimelinePage";
 
 function AppRoutes() {
   return (
@@ -35,6 +36,8 @@ function AppRoutes() {
         ></Route>
         <Route exact path="/hub" element={<ContentHub />} />
         <Route exact path="/globe" element={<GlobePage />} />
+        <Route exact path="/time-line" element={<TimelinePage />} />
+
       </Routes>
     </Router>
   );

@@ -49,10 +49,6 @@ export default function GlobePage() {
           onMarianaClick={handleMarianaClick} 
           onPlateClick={handlePlateClick} 
         />
-        {/* Adicione o fundo de estrelas no mesmo Canvas ou em um Canvas separado se necessário */}
-        {/* Por simplicidade, vamos imaginar que Globe3D e StarsBackground estão no mesmo Canvas */}
-        {/* No entanto, StarsBackground precisa ser renderizado DENTRO do Canvas do react-three-fiber */}
-        {/* Para isso, teremos que modificar Globe3D para ser um wrapper de Canvas */}
       </Box>
 
       {/* O Drawer de detalhes */}
