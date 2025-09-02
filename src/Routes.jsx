@@ -10,6 +10,7 @@ import TimelinePage from "./pages/TimelinePage";
 import FaunaFloraPage from "./pages/FaunaFloraPage";
 import DocumentaryDetailPage from "./pages/DocumentaryDetailPage";
 import QuizDetailPage from "./pages/QuizDetailPage";
+import FaunaFloraDetailPage from "./pages/FaunaFloraDetailPage";
 
 function AppRoutes() {
   return (
@@ -43,7 +44,7 @@ function AppRoutes() {
         <Route exact path="/fauna-flora" element={<FaunaFloraPage />} />
         <Route path="/documentaries/:id" element={<DocumentaryDetailPage />} />
         <Route path="/quizzes/:id" element={<QuizDetailPage />} />
-        {/* <Route path="/faunaflora/:category/:id" element={<FaunaFloraDetailPage />} /> */}
+        <Route path="/:category/:id" element={<FaunaFloraDetailPage />} />
       </Routes>
     </Router>
   );

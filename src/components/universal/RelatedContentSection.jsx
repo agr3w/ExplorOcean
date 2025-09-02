@@ -43,7 +43,7 @@ export default function RelatedContentSection({ relatedContent }) {
             <RelatedCard>
               <CardContent>
                 <Typography variant="h6">Fauna Local</Typography>
-                <Link to={`/faunaflora/fauna/${animal.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to={`/Fauna/${animal.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Button variant="text" sx={{ color: 'white' }}>
                     {animal.label}
                   </Button>
@@ -57,7 +57,7 @@ export default function RelatedContentSection({ relatedContent }) {
             <RelatedCard>
               <CardContent>
                 <Typography variant="h6">Flora Local</Typography>
-                <Link to={`/faunaflora/flora/${plant.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to={`/Flora/${plant.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Button variant="text" sx={{ color: 'white' }}>
                     {plant.label}
                   </Button>
