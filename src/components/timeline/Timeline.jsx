@@ -1,13 +1,11 @@
-// src/components/Timeline/Timeline.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const TimelineContainer = styled(Box)(({ theme, isVisible }) => ({
-  display: isVisible ? 'flex' : 'none', // Adiciona a lógica de visibilidade
+  display: isVisible ? 'flex' : 'none',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
@@ -30,18 +28,20 @@ const NavButton = styled(Button)(({ theme, isSelected }) => ({
   },
 }));
 
-const Timeline = ({ data, selectedEra, onSelectEra, isVisible }) => {
+const Timeline = ({ data, onSelectEra, isVisible }) => {
   const [selectedEon, setSelectedEon] = useState(data[0].eon);
-  const [selectedEraGroup, setSelectedEraGroup] = useState(data[0].era);
+  const [selectedEraGroup, setSelectedEraGroup] = useState(data[0].era || data[0].id);
+  const [selectedItem, setSelectedItem] = useState(data[0]);
+
+  useEffect(() => {
+    onSelectEra(selectedItem);
+  }, [selectedItem, onSelectEra]);
 
   const groupedData = data.reduce((acc, item) => {
     if (!acc[item.eon]) {
-      acc[item.eon] = {
-        label: item.eon,
-        eras: {}
-      };
+      acc[item.eon] = { label: item.eon, eras: {} };
     }
-    const eraKey = item.era || 'Sem Era';
+    const eraKey = item.era || 'eonOnly';
     if (!acc[item.eon].eras[eraKey]) {
       acc[item.eon].eras[eraKey] = [];
     }
@@ -49,32 +49,36 @@ const Timeline = ({ data, selectedEra, onSelectEra, isVisible }) => {
     return acc;
   }, {});
 
-  const visibleItems = data.filter(item => item.eon === selectedEon && (item.era === selectedEraGroup || (!item.era && selectedEraGroup === 'Sem Era')));
-  const selectedIndex = visibleItems.findIndex(era => era.id === selectedEra.id);
+  const visibleItems = groupedData[selectedEon].eras[selectedEraGroup];
+  const selectedIndex = visibleItems ? visibleItems.findIndex(era => era.id === selectedItem.id) : -1;
 
   const handlePrev = () => {
     if (selectedIndex > 0) {
-      onSelectEra(visibleItems[selectedIndex - 1]);
+      setSelectedItem(visibleItems[selectedIndex - 1]);
     }
   };
 
   const handleNext = () => {
     if (selectedIndex < visibleItems.length - 1) {
-      onSelectEra(visibleItems[selectedIndex + 1]);
+      setSelectedItem(visibleItems[selectedIndex + 1]);
     }
   };
 
   const handleSelectEon = (eon) => {
     setSelectedEon(eon);
-    const firstEraInEon = Object.keys(groupedData[eon].eras)[0];
-    setSelectedEraGroup(firstEraInEon);
-    onSelectEra(groupedData[eon].eras[firstEraInEon][0]);
+    const eraKeys = Object.keys(groupedData[eon].eras);
+    const firstEraKey = eraKeys.includes('eonOnly') && eraKeys.length > 1 ? eraKeys.find(key => key !== 'eonOnly') : eraKeys[0];
+    
+    setSelectedEraGroup(firstEraKey);
+    setSelectedItem(groupedData[eon].eras[firstEraKey][0]);
   };
 
   const handleSelectEraGroup = (eraKey) => {
     setSelectedEraGroup(eraKey);
-    onSelectEra(groupedData[selectedEon].eras[eraKey][0]);
+    setSelectedItem(groupedData[selectedEon].eras[eraKey][0]);
   };
+  
+  const showErasSection = selectedEon && Object.keys(groupedData[selectedEon].eras).length > 1;
 
   return (
     <TimelineContainer isVisible={isVisible}>
@@ -93,21 +97,23 @@ const Timeline = ({ data, selectedEra, onSelectEra, isVisible }) => {
         ))}
       </Box>
 
-      {selectedEon && (
+      {showErasSection && (
         <>
           <Typography variant="h6" gutterBottom>
             Eras
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-            {Object.keys(groupedData[selectedEon].eras).map(eraKey => (
-              <NavButton
-                key={eraKey}
-                onClick={() => handleSelectEraGroup(eraKey)}
-                isSelected={selectedEraGroup === eraKey}
-              >
-                {eraKey}
-              </NavButton>
-            ))}
+            {Object.keys(groupedData[selectedEon].eras)
+              .filter(eraKey => eraKey !== 'eonOnly')
+              .map(eraKey => (
+                <NavButton
+                  key={eraKey}
+                  onClick={() => handleSelectEraGroup(eraKey)}
+                  isSelected={selectedEraGroup === eraKey}
+                >
+                  {eraKey}
+                </NavButton>
+              ))}
           </Box>
         </>
       )}
@@ -127,14 +133,14 @@ const Timeline = ({ data, selectedEra, onSelectEra, isVisible }) => {
             p: 1,
           }}
         >
-          {visibleItems.map(item => (
+          {visibleItems && visibleItems.map(item => (
             <Button
               key={item.id}
-              onClick={() => onSelectEra(item)}
-              variant={item.id === selectedEra.id ? 'contained' : 'text'}
+              onClick={() => setSelectedItem(item)}
+              variant={item.id === selectedItem.id ? 'contained' : 'text'}
               sx={{
                 whiteSpace: 'nowrap',
-                backgroundColor: item.id === selectedEra.id ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
+                backgroundColor: item.id === selectedItem.id ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
                 color: 'white',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -145,7 +151,7 @@ const Timeline = ({ data, selectedEra, onSelectEra, isVisible }) => {
             </Button>
           ))}
         </Box>
-        <IconButton onClick={handleNext} disabled={selectedIndex === visibleItems.length - 1}>
+        <IconButton onClick={handleNext} disabled={!visibleItems || selectedIndex === visibleItems.length - 1}>
           <ArrowForwardIosIcon sx={{ color: 'white' }} />
         </IconButton>
       </Box>

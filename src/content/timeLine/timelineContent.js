@@ -1,7 +1,6 @@
 export const timelineData = [
   // Éon Pré-cambriano
   {
-    eon: 'Pré-cambriano',
     id: 'pré-cambriano',
     label: 'Pré-cambriano',
     period: '4.6 bilhões a 541 milhões de anos atrás',
@@ -36,8 +35,8 @@ export const timelineData = [
   // Éon Fanerozoico - Era Paleozoica
   {
     eon: 'Fanerozoico',
-    era: 'Fanerozoico',
-    // id: 'fanerozoico',
+    // era: 'Fanerozoico',
+    id: 'fanerozoico',
     label: 'Fanerozoico',
     period: '541 milhões de anos atrás até hoje',
     mapImage: '/src/assets/paleozoico-map.jpg',
