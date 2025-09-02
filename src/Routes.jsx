@@ -8,6 +8,7 @@ import ContentHub from "./pages/ContentHub";
 import GlobePage from "./pages/GlobePage";
 import TimelinePage from "./pages/TimelinePage";
 import FaunaFloraPage from "./pages/FaunaFloraPage";
+import DocumentaryDetailPage from "./pages/DocumentaryDetailPage";
 
 function AppRoutes() {
   return (
@@ -38,9 +39,8 @@ function AppRoutes() {
         <Route exact path="/hub" element={<ContentHub />} />
         <Route exact path="/globe" element={<GlobePage />} />
         <Route exact path="/time-line" element={<TimelinePage />} />
-                <Route exact path="/fauna-flora" element={<FaunaFloraPage />} />
-
-
+        <Route exact path="/fauna-flora" element={<FaunaFloraPage />} />
+        <Route path="/documentaries/:id" element={<DocumentaryDetailPage />} />
       </Routes>
     </Router>
   );
