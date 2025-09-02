@@ -5,6 +5,12 @@ import { quizzesData } from "./content/contentGrid/quizzesContent";
 import { documentariesData } from "./content/contentGrid/documentariesContent";
 import ContentPageTemplate from "./pages/ContentPageTemplate";
 import ContentHub from "./pages/ContentHub";
+import GlobePage from "./pages/GlobePage";
+import TimelinePage from "./pages/TimelinePage";
+import FaunaFloraPage from "./pages/FaunaFloraPage";
+import DocumentaryDetailPage from "./pages/DocumentaryDetailPage";
+import QuizDetailPage from "./pages/QuizDetailPage";
+import FaunaFloraDetailPage from "./pages/FaunaFloraDetailPage";
 
 function AppRoutes() {
   return (
@@ -33,6 +39,12 @@ function AppRoutes() {
           }
         ></Route>
         <Route exact path="/hub" element={<ContentHub />} />
+        <Route exact path="/globe" element={<GlobePage />} />
+        <Route exact path="/time-line" element={<TimelinePage />} />
+        <Route exact path="/fauna-flora" element={<FaunaFloraPage />} />
+        <Route path="/documentaries/:id" element={<DocumentaryDetailPage />} />
+        <Route path="/quizzes/:id" element={<QuizDetailPage />} />
+        <Route path="/:category/:id" element={<FaunaFloraDetailPage />} />
       </Routes>
     </Router>
   );
