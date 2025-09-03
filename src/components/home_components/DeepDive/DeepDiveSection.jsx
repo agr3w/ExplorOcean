@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import { Link } from 'react-router-dom';
 
 export default function DeepDiveSection() {
     return (
@@ -28,6 +29,8 @@ export default function DeepDiveSection() {
                 Explorar os Mares
             </Typography>
             <Button
+                component={Link}
+                to="/hub"
                 variant="contained"
                 sx={{
                     background: 'linear-gradient(90deg, #3a3aff 0%, #4f4fff 100%)',

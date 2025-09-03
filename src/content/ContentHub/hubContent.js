@@ -29,6 +29,6 @@ export const hubData = [
     title: "Globo 3D",
     description: "Explore o mundo dos oceanos em 3D.",
     imageUrl: "/src/assets/images/about-hub.jpg", 
-    link: "/about",
+    link: "/globe",
   },
 ];
