@@ -6,7 +6,7 @@ export default function NavigatorTransparent() {
     <NavigatorBase
       transparent
       buttonColor="#fff"
-      sx={{ zIndex: 10, pointerEvents: 'none' }}
+      sx={{ zIndex: 10 }}
     />
   );
 }
