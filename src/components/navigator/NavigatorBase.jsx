@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Toolbar, Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText, ListSubheader, Divider, Typography } from '@mui/material';
+import { MdMenu } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-
-const drawerLinks = [
-  { label: 'Globo 3D', to: '/globe' },
-  { label: 'Fauna e Flora', to: '/fauna-flora' },
-  { label: 'História com o Oceano', to: '/timeline' },
-  { label: 'Documentários', to: '/documentaries' },
-  { label: 'Quizzes', to: '/quizzes' },
-  { label: 'Home', to: '/' },
-  { label: 'Perfil', to: '/perfil' },
-];
+import { navigationLinks } from '../../content/navigatorContet/navigatorLinks';
 
 export default function NavigatorBase({
   transparent = false,
@@ -47,7 +38,7 @@ export default function NavigatorBase({
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Button
-              startIcon={<MenuIcon />}
+              startIcon={<MdMenu size={24} />}
               onClick={handleDrawerOpen}
               sx={{
                 background: transparent ? '#fff' : menuBg,
@@ -72,16 +63,31 @@ export default function NavigatorBase({
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
-        <Box sx={{ width: 260, pt: 2 }}>
-          <List>
-            {drawerLinks.map((item) => (
-              <ListItem key={item.to} disablePadding>
-                <ListItemButton component={Link} to={item.to} onClick={handleDrawerClose}>
-                  <ListItemText primary={item.label} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+        <Box sx={{ width: 280, pt: 2 }}>
+          <Typography variant="h6" sx={{ px: 2, pb: 1, fontWeight: 700 }}>
+            Navegação
+          </Typography>
+          <Divider />
+          {navigationLinks.map((section, idx) => (
+            <List
+              key={section.subheader}
+              subheader={
+                <ListSubheader sx={{ bgcolor: 'transparent', fontWeight: 600, fontSize: '1rem', color: '#1976d2' }}>
+                  {section.subheader}
+                </ListSubheader>
+              }
+            >
+              {section.items.map((item) => (
+                <ListItem key={item.to} disablePadding>
+                  <ListItemButton component={Link} to={item.to} onClick={handleDrawerClose}>
+                    <Box sx={{ minWidth: 32, color: '#1976d2', display: 'flex', alignItems: 'center' }}>  {item.icon && React.createElement(item.icon, { size: 22 })}</Box>
+                    <ListItemText primary={item.label} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              {idx < navigationLinks.length - 1 && <Divider sx={{ my: 1 }} />}
+            </List>
+          ))}
         </Box>
       </Drawer>
     </>
