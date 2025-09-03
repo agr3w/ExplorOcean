@@ -1,24 +1,30 @@
-// src/pages/ContentPageTemplate.jsx
-
-import React, { useState } from "react";
+import React from "react";
 import ContentGrid from "../components/ContentGridComponents/contentGrid/ContentGrid";
-import Navigator from "../components/navigator/Navigator";
 import Footer from "../components/footer/footer";
 import { Box } from "@mui/material";
 import CategoryFilter from "../components/categoryFilter/categoryFilter";
 import { useContentFilter } from "../hooks/useContentFilter";
 import ContentBanner from "../components/contentBanner/contentBanner";
+import NavigatorTransparent from '../components/navigator/NavigatorTransparent';
+import Navigator from "../components/navigator/Navigator";
+import useDiving from "../hooks/useDiving";
+import { AnimatePresence, motion } from "framer-motion";
 
-// O novo componente agora recebe os dados, título e descrição como props
 export default function ContentPageTemplate({ data, title, description, icon }) {
   const { selectedCategory, setSelectedCategory, uniqueCategories, filteredItems } = useContentFilter(data);
+  const scrolled = useDiving(40); // Sai mais rápido
 
   return (
     <>
       <Navigator />
-      <Box sx={{ p: 4 }}>
-        <ContentBanner title={title} description={description} icon={icon} />
-        <Box sx={{ display: { xs: "block", md: "flex" } }}>
+      <Box sx={{ pt: { xs: 8, md: 4 }, px: 0 }}>
+        <ContentBanner
+          title={title}
+          description={description}
+          icon={icon}
+          scrolled={scrolled}
+        />
+        <Box sx={{ px: 4, display: { xs: "block", md: "flex" } }}>
           <Box
             sx={{
               position: "sticky",
