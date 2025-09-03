@@ -16,6 +16,17 @@ const StyledCard = styled(Card)(({ theme }) => ({
   height: "100%",
   display: "flex",
   flexDirection: "column",
+  minHeight: 340, // altura mínima
+  maxHeight: 340, // altura máxima
+  minWidth: 260,  // largura mínima
+  maxWidth: 420,  // largura máxima
+  width: "100%",
+  [theme.breakpoints.down("sm")]: {
+    minHeight: 260,
+    maxHeight: 260,
+    minWidth: "100%",
+    maxWidth: "100%",
+  },
   "&:hover": {
     transform: "translateY(-8px)",
     boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
