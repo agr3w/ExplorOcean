@@ -5,10 +5,8 @@ import { Box } from "@mui/material";
 import CategoryFilter from "../components/categoryFilter/categoryFilter";
 import { useContentFilter } from "../hooks/useContentFilter";
 import ContentBanner from "../components/contentBanner/contentBanner";
-import NavigatorTransparent from '../components/navigator/NavigatorTransparent';
 import Navigator from "../components/navigator/Navigator";
 import useDiving from "../hooks/useDiving";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function ContentPageTemplate({ data, title, description, icon }) {
   const { selectedCategory, setSelectedCategory, uniqueCategories, filteredItems } = useContentFilter(data);
@@ -17,7 +15,13 @@ export default function ContentPageTemplate({ data, title, description, icon }) 
   return (
     <>
       <Navigator />
-      <Box sx={{ pt: { xs: 8, md: 4 }, px: 0 }}>
+      <Box sx={{
+        pt: { xs: 8, md: 4 },
+        px: 0,
+        minHeight: '100vh',
+        background: 'linear-gradient(180deg, #02101a 0%, #0a2540 100%)',
+        position: 'relative',
+      }}>
         <ContentBanner
           title={title}
           description={description}
