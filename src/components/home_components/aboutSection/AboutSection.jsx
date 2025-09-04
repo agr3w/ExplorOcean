@@ -12,11 +12,17 @@ export default function AboutSection() {
         mx: 'auto',
         mt: 8,
         mb: 12,
+        p: 12,
         display: 'flex',
         alignItems: 'flex-start',
         gap: 6,
         px: 2,
         flexDirection: { xs: 'column', md: 'row' },
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: 2,
+        boxShadow: 3,
+        backgroundColor: '#f5f5f5',
       }}
     >
 
