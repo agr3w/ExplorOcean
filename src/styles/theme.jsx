@@ -36,11 +36,20 @@ const theme = createTheme({
       color: '#b3c2d6',
     },
   },
-  shadows: [
-    "none",
-    "0 2px 12px rgba(30,60,120,0.10)",
-    ...Array(23).fill("0 2px 12px rgba(30,60,120,0.10)")
-  ],
+
+  components: {
+    StyledCard: {
+      styleOverrides: {
+        root: {
+          background: 'rgba(255,255,255,0.10)',
+        },
+      },
+    },
+  },
+
 })
 
+
+
+ 
 export default theme
