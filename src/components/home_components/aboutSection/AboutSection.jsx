@@ -16,14 +16,15 @@ export default function AboutSection() {
         alignItems: 'flex-start',
         gap: 6,
         px: 2,
+        flexDirection: { xs: 'column', md: 'row' },
       }}
     >
-      {/* Explicative text and highlights */}
+
+      {/* Texto explicativo e highlights à esquerda */}
       <AboutHighlights />
 
-      {/* Placeholder image/illustration */}
+      {/* Imagem estilizada à direita */}
       <AboutImage />
-
     </Box>
   );
 }

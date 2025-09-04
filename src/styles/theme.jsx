@@ -13,8 +13,8 @@ const theme = createTheme({
       contrastText: '#fff',
     },
     background: {
-      default: 'linear-gradient(180deg, #02101a 0%, #0a2540 100%)', // Fundo gradiente oceano
-      paper: 'rgba(2,16,26,0.85)', // Leve transparência
+      default: '#02101a', // cor sólida
+      paper: 'rgba(2,16,26,0.85)',
     },
     text: {
       primary: '#e3f2fd', // Azul claro para contraste
@@ -38,8 +38,8 @@ const theme = createTheme({
   },
   shadows: [
     "none",
-    "0 2px 12px rgba(30,60,120,0.10)", // Sombra suave para cards/flutuação
-    // ...restante dos shadows
+    "0 2px 12px rgba(30,60,120,0.10)",
+    ...Array(23).fill("0 2px 12px rgba(30,60,120,0.10)")
   ],
 })
 
