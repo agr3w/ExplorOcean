@@ -34,54 +34,52 @@ export default function AboutHighlights() {
             <Box sx={{ display: 'flex', gap: 3 }}>
                 {aboutData.highlights.map((highlight, index) => (
                     <Box key={index} sx={{ textAlign: 'center', position: 'relative', minWidth: 80 }}>
-                        <Tooltip title={`Saiba mais sobre "${highlight.label}"`} arrow>
-                            <motion.div
-                                whileHover={{ scale: 1.2, rotate: -10 }}
-                                animate={active === index ? { rotateY: 180 } : { rotateY: 0 }}
-                                style={{ perspective: 600, display: 'inline-block', position: 'relative' }}
-                                onClick={() => setActive(active === index ? null : index)}
+                        <motion.div
+                            whileHover={{ scale: 1.2, rotate: -10 }}
+                            animate={active === index ? { rotateY: 180 } : { rotateY: 0 }}
+                            style={{ perspective: 600, display: 'inline-block', position: 'relative' }}
+                            onClick={() => setActive(active === index ? null : index)}
+                        >
+                            {/* Onda animada atrás do botão */}
+                            <AnimatePresence>
+                                {active === index && (
+                                    <motion.div
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: 1 }}
+                                        exit={{ scaleX: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            width: '100%',
+                                            height: 16,
+                                            background: 'linear-gradient(90deg, #36d1e0 0%, #1976d2 100%)',
+                                            borderRadius: 8,
+                                            zIndex: 0,
+                                        }}
+                                    />
+                                )}
+                            </AnimatePresence>
+                            <IconButton
+                                sx={{
+                                    background: 'linear-gradient(135deg, #36d1e0 60%, #1976d2 100%)',
+                                    color: '#fff',
+                                    mb: 1,
+                                    boxShadow: '0 2px 8px rgba(30,60,120,0.10)',
+                                    position: 'relative',
+                                    zIndex: 1,
+                                    '&:hover': {
+                                        background: 'linear-gradient(135deg, #1976d2 60%, #36d1e0 100%)',
+                                    },
+                                }}
                             >
-                                {/* Onda animada atrás do botão */}
-                                <AnimatePresence>
-                                    {active === index && (
-                                        <motion.div
-                                            initial={{ scaleX: 0 }}
-                                            animate={{ scaleX: 1 }}
-                                            exit={{ scaleX: 0 }}
-                                            transition={{ duration: 0.5 }}
-                                            style={{
-                                                position: 'absolute',
-                                                left: 0,
-                                                top: '50%',
-                                                transform: 'translateY(-50%)',
-                                                width: '100%',
-                                                height: 16,
-                                                background: 'linear-gradient(90deg, #36d1e0 0%, #1976d2 100%)',
-                                                borderRadius: 8,
-                                                zIndex: 0,
-                                            }}
-                                        />
-                                    )}
-                                </AnimatePresence>
-                                <IconButton
-                                    sx={{
-                                        background: 'linear-gradient(135deg, #36d1e0 60%, #1976d2 100%)',
-                                        color: '#fff',
-                                        mb: 1,
-                                        boxShadow: '0 2px 8px rgba(30,60,120,0.10)',
-                                        position: 'relative',
-                                        zIndex: 1,
-                                        '&:hover': {
-                                            background: 'linear-gradient(135deg, #1976d2 60%, #36d1e0 100%)',
-                                        },
-                                    }}
-                                >
-                                    {highlight.icon && (
-                                        <highlight.icon size={32} />
-                                    )}
-                                </IconButton>
-                            </motion.div>
-                        </Tooltip>
+                                {highlight.icon && (
+                                    <highlight.icon size={32} />
+                                )}
+                            </IconButton>
+                        </motion.div>
                         <Typography variant="subtitle2">{highlight.label}</Typography>
                         <AnimatePresence>
                             {active === index && (
