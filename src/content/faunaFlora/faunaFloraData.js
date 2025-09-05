@@ -7,7 +7,8 @@ export const faunaData = [
     label: 'Baleia Jubarte',
     shortDescription: 'Mamífero marinho gigante conhecido por suas acrobacias e canto complexo.',
     longDescription: 'A baleia-jubarte (Megaptera novaeangliae) é uma das espécies mais carismáticas dos oceanos. Conhecida por suas canções complexas e rituais de acasalamento acrobáticos, ela migra milhares de quilômetros todos os anos. É um símbolo da conservação marinha e um predador importante para o equilíbrio dos ecossistemas. Elas se alimentam de pequenos peixes e krill, utilizando uma técnica de "rede de bolhas" para encurralar suas presas.',
-    imageUrl: 'https://images.unsplash.com/photo-1549487779-11f8e2444381',
+    imageUrl: 'https://wallpapercave.com/wp/YocUFbD.jpg',
+    threeModel: '/models/ChimeraVan.glb',
     secondaryImages: [
       'https://images.unsplash.com/photo-1577960682136-2d573f08b33a',
       'https://images.unsplash.com/photo-1522069792408-9ec1d87e074d'
@@ -28,7 +29,7 @@ export const faunaData = [
     label: 'Tubarão-Branco',
     shortDescription: 'Predador de topo com um olfato apurado, crucial para o equilíbrio dos ecossistemas marinhos.',
     longDescription: 'O tubarão-branco (Carcharodon carcharias) é o maior peixe predador do mundo. Apesar da sua reputação, ataques a humanos são raros, e sua dieta consiste principalmente de leões-marinhos e focas. Sua presença é vital para manter o equilíbrio populacional de outras espécies marinhas.',
-    imageUrl: 'https://images.unsplash.com/photo-1522069792408-9ec1d87e074d',
+    imageUrl: 'https://wallpapercave.com/wp/YocUFbD.jpg',
     secondaryImages: [],
     relatedContent: {
       fauna: [

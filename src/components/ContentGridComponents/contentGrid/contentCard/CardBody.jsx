@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, CardContent } from '@mui/material';
 
-const CardBody = ({ label, icon, category, shortDescription }) => {
+const CardBody = ({ label, icon, category, shortDescription, longDescription }) => {
   return (
     <CardContent sx={{ flexGrow: 1, textAlign: 'left' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
