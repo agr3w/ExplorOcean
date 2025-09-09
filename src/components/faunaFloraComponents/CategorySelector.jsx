@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
+import { FaFish, FaLeaf } from 'react-icons/fa';
 
 export default function CategorySelector({ selectedCategory, onSelectCategory }) {
     return (
@@ -19,9 +20,11 @@ export default function CategorySelector({ selectedCategory, onSelectCategory })
                 <Button
                     variant={selectedCategory === 'fauna' ? 'contained' : 'outlined'}
                     onClick={() => onSelectCategory('fauna')}
+                    startIcon={<FaFish />}
                     sx={{
                         color: 'white',
                         borderColor: 'white',
+                        fontWeight: 600,
                         '&.MuiButton-contained': {
                             backgroundColor: 'primary.main',
                             '&:hover': {
@@ -35,9 +38,11 @@ export default function CategorySelector({ selectedCategory, onSelectCategory })
                 <Button
                     variant={selectedCategory === 'flora' ? 'contained' : 'outlined'}
                     onClick={() => onSelectCategory('flora')}
+                    startIcon={<FaLeaf />}
                     sx={{
                         color: 'white',
                         borderColor: 'white',
+                        fontWeight: 600,
                         '&.MuiButton-contained': {
                             backgroundColor: 'primary.main',
                             '&:hover': {

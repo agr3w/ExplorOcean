@@ -12,7 +12,7 @@ export default function MainBanner() {
             sx={{
                 position: 'relative',
                 width: diving ? '100%' : 'calc(100vw - 48px)',
-                height: diving ? '100vh' : '80vh',
+                height: diving ? '100vh' : '93vh',
                 margin: diving ? 0 : '24px auto',
                 borderRadius: diving ? 0 : 4,
                 overflow: 'hidden',

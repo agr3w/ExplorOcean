@@ -6,6 +6,8 @@ import Navigator from '../components/navigator/Navigator';
 import Footer from '../components/footer/footer';
 import { hubData } from '../content/ContentHub/hubContent';
 import HubCard from '../components/contentHub/hubCard/HubCard';
+import { motion } from 'framer-motion';
+
 
 export default function ContentHub() {
   return (

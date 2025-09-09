@@ -1,5 +1,3 @@
-// src/components/ContentGrid/ContentCard.jsx
-
 import React from "react";
 import { Card } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -16,10 +14,10 @@ const StyledCard = styled(Card)(({ theme }) => ({
   height: "100%",
   display: "flex",
   flexDirection: "column",
-  minHeight: 340, // altura mínima
-  maxHeight: 340, // altura máxima
-  minWidth: 260,  // largura mínima
-  maxWidth: 420,  // largura máxima
+  minHeight: 340,
+  maxHeight: 340,
+  minWidth: 260,
+  maxWidth: 420,
   width: "100%",
   [theme.breakpoints.down("sm")]: {
     minHeight: 260,
@@ -33,13 +31,14 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const ContentCard = ({ item }) => {
+const ContentCard = ({ item, threeModel }) => {
   return (
     <StyledCard>
       <CardHeader
         imageUrl={item.imageUrl}
         rating={item.rating}
         tags={item.tags}
+        threeModel={threeModel}
       />
       <CardBody
         label={item.label}
