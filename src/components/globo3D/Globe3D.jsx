@@ -7,13 +7,15 @@ import PacificPlate from './elements/PacificPlate';
 import StarField from './StarField';
 
 const Globe3D = ({ showFossas, showPlacas, onMarianaClick, onPlateClick }) => {
+  const PLANET_RADIUS = 4;
+
   return (
     <Canvas camera={{ position: [0, 0, 12], fov: 50 }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} />
       <EarthGlobe />
-      {showFossas && <MarianaTrenchPin onClick={onMarianaClick} />}
-      {showPlacas && <PacificPlate onClick={onPlateClick} />}
+      {showFossas && <MarianaTrenchPin onClick={onMarianaClick} radius={PLANET_RADIUS} />}
+      {showPlacas && <PacificPlate onClick={onPlateClick} radius={PLANET_RADIUS} />}
       <OrbitControls enableZoom minDistance={6} maxDistance={20} enablePan={false} />
       <StarField />
     </Canvas>

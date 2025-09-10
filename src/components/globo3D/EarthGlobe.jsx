@@ -6,7 +6,7 @@ import useSlowRotation from '../../hooks/useSlowRotation';
 export default function EarthGlobe() {
   const earthTexture = useLoader(THREE.TextureLoader, '/src/assets/earthmap1k.jpg');
   const meshRef = useRef();
-  useSlowRotation(meshRef, 0.0001);
+  // useSlowRotation(meshRef, 0.0001);
 
   return (
     <mesh ref={meshRef}>
