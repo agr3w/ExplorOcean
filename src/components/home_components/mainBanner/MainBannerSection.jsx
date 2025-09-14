@@ -14,7 +14,7 @@ export default function MainBanner() {
                 width: diving ? '100%' : 'calc(100vw - 48px)',
                 height: diving ? '100vh' : '93vh',
                 margin: diving ? 0 : '24px auto',
-                borderRadius: diving ? 0 : 4,
+                borderRadius: diving ? 0 : 2,
                 overflow: 'hidden',
                 boxShadow: diving ? 'none' : '0 2px 16px rgba(0,0,0,0.15)',
                 transition: 'all 0.6s cubic-bezier(.77,0,.18,1)',
