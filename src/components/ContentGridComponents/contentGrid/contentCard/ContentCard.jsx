@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
+import { Link } from "react-router-dom"; // Adicionado
 
 const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.spacing(2),
@@ -32,22 +33,27 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 const ContentCard = ({ item, threeModel }) => {
+  const contentType =
+    item.type || (item.category === "Quiz" ? "quizzes" : "documentaries");
+
   return (
-    <StyledCard>
-      <CardHeader
-        imageUrl={item.imageUrl}
-        rating={item.rating}
-        tags={item.tags}
-        threeModel={threeModel}
-      />
-      <CardBody
-        label={item.label}
-        icon={item.icon}
-        category={item.category}
-        shortDescription={item.shortDescription}
-      />
-      <CardFooter duration={item.duration} />
-    </StyledCard>
+    <Link to={`/${contentType}/${item.id}`} style={{ textDecoration: "none" }}>
+      <StyledCard>
+        <CardHeader
+          imageUrl={item.imageUrl}
+          rating={item.rating}
+          tags={item.tags}
+          threeModel={threeModel}
+        />
+        <CardBody
+          label={item.label}
+          icon={item.icon}
+          category={item.category}
+          shortDescription={item.shortDescription}
+        />
+        <CardFooter duration={item.duration} />
+      </StyledCard>
+    </Link>
   );
 };
 

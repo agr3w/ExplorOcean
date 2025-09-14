@@ -1,18 +1,21 @@
-// src/pages/GlobePage.jsx
-
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import Navigator from '../components/navigator/Navigator';
 import Footer from '../components/footer/footer';
 import Globe3D from '../components/globo3D/Globe3D';
 import DetailDrawer from '../components/globo3D/DetailDrawer';
+import InterestFilter from '../components/globo3D/InterestFilter';
+import { interestPoints } from '../content/Globe3D/Pins';
+import { generateHandlers } from '../content/Globe3D/generateHandlers'; // Função utilitária
 
 export default function GlobePage() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // Estado para o Drawer
-  const [detailContent, setDetailContent] = useState(null); // Conteúdo do Drawer
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [detailContent, setDetailContent] = useState(null);
+  const [filters, setFilters] = useState({ fossas: true, placas: true });
 
-  const handleOpenDetails = (content) => {
-    setDetailContent(content);
+  // Função para abrir detalhes no drawer
+  const handleOpenDetails = (details) => {
+    setDetailContent(details);
     setIsDrawerOpen(true);
   };
 
@@ -21,37 +24,35 @@ export default function GlobePage() {
     setDetailContent(null);
   };
 
-  const handleMarianaClick = () => {
-    handleOpenDetails({
-      title: 'Fossa das Marianas',
-      text: 'A Fossa das Marianas é o ponto mais profundo dos oceanos, localizada no Oceano Pacífico. Sua profundidade máxima chega a cerca de 11.000 metros.',
-      imageUrl: '/src/assets/marianas-trench.jpg', 
-      details: 'A pressão na parte mais profunda da fossa é cerca de 1.000 vezes maior que a pressão atmosférica ao nível do mar.',
-    });
-  };
-
-  const handlePlateClick = () => {
-    handleOpenDetails({
-      title: 'Placa do Pacífico',
-      text: 'A Placa do Pacífico é uma das maiores placas tectônicas do planeta, cobrindo grande parte do Oceano Pacífico e sendo responsável por muitos terremotos e vulcões na região.',
-      imageUrl: '/src/assets/pacific-plate.jpg', 
-      details: 'Faz parte do Anel de Fogo do Pacífico, uma área com intensa atividade sísmica e vulcânica.',
-    });
-  };
+  // Gera handlers dinamicamente para todos os pontos de interesse
+  const handlers = generateHandlers(interestPoints, handleOpenDetails);
 
   return (
     <Box sx={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', backgroundColor: 'black' }}>
       <Navigator sx={{ position: 'absolute', top: 0, left: 0, width: '100%', zIndex: 10 }} />
 
-      {/* Canvas para o globo 3D e fundo de estrelas */}
-      <Box sx={{ width: '100%', height: '100%' }}>
-        <Globe3D 
-          onMarianaClick={handleMarianaClick} 
-          onPlateClick={handlePlateClick} 
-        />
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'relative',
+        }}
+      >
+        {/* ContentContainer para organizar os elementos */}
+        <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>
+          <Globe3D
+            showFossas={filters.fossas}
+            showPlacas={filters.placas}
+            {...handlers} 
+          />
+          <InterestFilter filters={filters} setFilters={setFilters} />
+        </Box>
       </Box>
 
-      {/* O Drawer de detalhes */}
       <DetailDrawer
         isOpen={isDrawerOpen}
         onClose={handleCloseDetails}
