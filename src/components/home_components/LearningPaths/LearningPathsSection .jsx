@@ -106,26 +106,26 @@ export default function LearningPathsSection() {
                             <Paper
                                 elevation={0}
                                 sx={{
-                                    width: { xs: 180, md: 220 },
-                                    height: { xs: 180, md: 220 },
-                                    background: 'rgba(255,255,255,0.12)',
-                                    borderRadius: 6,
+                                    width: { xs: 160, md: 200 },
+                                    height: { xs: 160, md: 200 },
+                                    background: 'rgba(255,255,255,0.08)', // Mais translúcido
+                                    borderRadius: 5,
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     color: '#fff',
                                     mx: 2,
-                                    backdropFilter: 'blur(16px) saturate(180%)',
-                                    border: `2px solid ${path.color}`,
-                                    boxShadow: '0 4px 24px 0 rgba(30,60,114,0.12)',
-                                    transition: 'transform 0.3s cubic-bezier(.77,0,.18,1), box-shadow 0.3s cubic-bezier(.77,0,.18,1), background 0.3s',
+                                    backdropFilter: 'blur(10px) saturate(140%)',
+                                    border: `1px solid ${path.color}22`, // Bordas suaves
+                                    boxShadow: '0 2px 12px 0 rgba(30,60,114,0.08)', // Sombra leve
+                                    transition: 'transform 0.3s, box-shadow 0.3s, background 0.3s',
                                     cursor: 'pointer',
                                     position: 'relative',
                                     overflow: 'hidden',
                                     '&:hover': {
-                                        background: `linear-gradient(135deg, ${path.color} 30%, #2a5298 100%)`,
-                                        border: `2.5px solid ${path.color}`,
+                                        background: `linear-gradient(135deg, ${path.color}33 30%, #2a5298 100%)`, // Gradiente suave
+                                        boxShadow: '0 6px 24px 0 rgba(30,60,114,0.14)', // Sombra um pouco maior
                                     },
                                 }}
                             >
@@ -147,12 +147,12 @@ export default function LearningPathsSection() {
                                     }}
                                 />
                                 <Box sx={{ zIndex: 1, mb: 2 }}>
-                                    <path.icon size={48} color={path.color} />
+                                    <path.icon size={40} color={path.color} />
                                 </Box>
-                                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, letterSpacing: 1, zIndex: 1 }}>
+                                <Typography variant="h6" sx={{ mb: 2, fontWeight: 500, letterSpacing: 1, zIndex: 1 }}>
                                     {path.label}
                                 </Typography>
-                                <Typography variant="body2" sx={{ textAlign: 'center', px: 2, opacity: 0.85, zIndex: 1 }}>
+                                <Typography variant="body2" sx={{ textAlign: 'center', px: 2, opacity: 0.8, zIndex: 1 }}>
                                     {path.description}
                                 </Typography>
                             </Paper>
