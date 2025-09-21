@@ -33,11 +33,19 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 const ContentCard = ({ item, threeModel }) => {
-  const contentType =
-    item.type || (item.category === "Quiz" ? "quizzes" : "documentaries");
+  let linkTo = "/";
+  if (item.type === "documentaries") {
+    linkTo = `/documentaries/${item.id}`;
+  } else if (item.type === "quizzes") {
+    linkTo = `/quizzes/${item.id}`;
+  } else if (item.category === "Fauna") {
+    linkTo = `/Fauna/${item.id}`;
+  } else if (item.category === "Flora") {
+    linkTo = `/Flora/${item.id}`;
+  }
 
   return (
-    <Link to={`/${contentType}/${item.id}`} style={{ textDecoration: "none" }}>
+    <Link to={linkTo} style={{ textDecoration: "none" }}>
       <StyledCard>
         <CardHeader
           imageUrl={item.imageUrl}
