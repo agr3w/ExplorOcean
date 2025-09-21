@@ -29,7 +29,7 @@ export default function RelatedContentSection({ relatedContent }) {
             <RelatedCard>
               <CardContent>
                 <Typography variant="h6">Período</Typography>
-                <Link to={`/timeline/${relatedContent.geologicalPeriod.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to={"/timeline "} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Button variant="text" sx={{ color: 'white' }}>
                     {relatedContent.geologicalPeriod.label}
                   </Button>
