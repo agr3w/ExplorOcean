@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Typography, Modal, IconButton, Button, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Typography, Modal, IconButton, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { motion } from 'framer-motion';
-import { MdPlayArrow, MdCheckCircle } from 'react-icons/md';
+import { MdPlayArrow, MdCheckCircle, MdQuiz, MdMovie, MdPets, MdEco } from 'react-icons/md';
 import thumb from '../../../assets/introVideoThumb.png';
 import { quizzesData } from '../../../content/contentGrid/quizzesContent';
 import { documentariesData } from '../../../content/contentGrid/documentariesContent';
@@ -15,12 +15,12 @@ export default function IntroVideoSection() {
         <Box
             sx={{
                 width: '100%',
-                maxWidth: { xs: '98vw', md: "1000px" },
+                maxWidth: { xs: '98vw', md: "1100px" },
                 margin: '48px auto',
                 padding: { xs: 2, md: 4 },
                 borderRadius: 3,
                 background: 'linear-gradient(135deg, #1976d2 0%, #43c6ac 100%)',
-                boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+                boxShadow: `0 4px 24px rgba(30,60,120,0.18)`,
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 alignItems: 'center',
@@ -41,7 +41,7 @@ export default function IntroVideoSection() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 2px 12px rgba(30,60,120,0.10)',
+                    boxShadow: '0 2px 12px rgba(30, 60, 120, 0.26)',
                     flexShrink: 0,
                 }}
             >
@@ -118,20 +118,44 @@ export default function IntroVideoSection() {
                 >
                     Assista ao trailer e mergulhe na experiência oceânica!
                 </Typography>
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    justifyContent: { xs: 'flex-start', sm: 'center' },
-                    alignItems: 'center',
-                    gap: { xs: 2, sm: 4, md: 2 },
-                    mt: 4,
-                    mb: 2,
-                    width: '100%',
-                }}>
-                    <AnimatedCounter end={quizzesData.length} label="Quizzes" />
-                    <AnimatedCounter end={documentariesData.length} label="Documentários" />
-                    <AnimatedCounter end={faunaData.length} label="Espécies de Fauna" />
-                    <AnimatedCounter end={floraData.length} label="Espécies de Flora" />
+                {/* Contador animado */}
+                <Box
+                    sx={{
+                        display: 'grid',
+                        gridTemplateColumns: { xs: '1fr 1fr', sm: '1fr 1fr' },
+                        gridTemplateRows: '1fr 1fr',
+                        gap: { xs: 2, sm: 3 },
+                        mt: 4,
+                        mb: 2,
+                        width: '100%',
+                        maxWidth: 340,
+                        mx: 'auto',
+                    }}
+                >
+                    <AnimatedCounter
+                        end={quizzesData.length}
+                        label="Quizzes"
+                        icon={<MdQuiz size={24} color="#aa4fffff" />}
+                        color="#aa4fffff"
+                    />
+                    <AnimatedCounter
+                        end={documentariesData.length}
+                        label="Documentários"
+                        icon={<MdMovie size={24} color="#00e676" />}
+                        color="#00e676"
+                    />
+                    <AnimatedCounter
+                        end={faunaData.length}
+                        label="Fauna"
+                        icon={<MdPets size={24} color="#2979ff" />}
+                        color="#2979ff"
+                    />
+                    <AnimatedCounter
+                        end={floraData.length}
+                        label="Flora"
+                        icon={<MdEco size={24} color="#ffd600" />}
+                        color="#ffd600"
+                    />
                 </Box>
                 <List dense>
                     <ListItem>

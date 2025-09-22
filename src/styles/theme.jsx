@@ -36,6 +36,7 @@ const theme = createTheme({
       color: '#b3c2d6',
     },
   },
+  
 
   components: {
     StyledCard: {
