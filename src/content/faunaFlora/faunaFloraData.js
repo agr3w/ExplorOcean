@@ -66,7 +66,14 @@ export const floraData = [
     label: 'Alga Kelp',
     shortDescription: 'Forma vastas florestas subaquáticas que servem de habitat para diversas espécies marinhas.',
     longDescription: 'As algas kelp são gigantes que crescem em vastas florestas subaquáticas em águas frias e ricas em nutrientes. Elas fornecem abrigo e alimento para uma infinidade de espécies, desde peixes pequenos a lontras-do-mar. Essas florestas são ecossistemas complexos e essenciais para a saúde dos oceanos.',
-    imageUrl: 'https://images.unsplash.com/photo-1596707328154-8e102f646039',
+    details: [
+      { title: "Modo de Vida", text: "As algas kelp crescem rapidamente e formam florestas densas..." },
+      { title: "Alimentação", text: "Realizam fotossíntese e servem de alimento para muitos animais..." },
+      { title: "Habitat", text: "Vivem em águas frias e ricas em nutrientes..." }
+    ],
+    imageUrl: 'https://cdn.britannica.com/26/170926-050-C820CF3E/Giant-kelp-forests-Catalina-Island-California-habitat.jpg',
+    threeModel: '/models/ChimeraVan.glb',
+    backgroundPreset: "sea",
     secondaryImages: [],
     relatedContent: {
       fauna: [

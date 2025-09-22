@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import ModelViewer from './ModelViewer';
 
 export default function DetailPageHeader({ item }) {
   const isQuiz = item.questions;
@@ -16,6 +17,13 @@ export default function DetailPageHeader({ item }) {
         {isQuiz && item.difficulty && ` | Dificuldade: ${item.difficulty}`}
         {isQuiz && item.numberOfQuestions && ` | Perguntas: ${item.numberOfQuestions}`}
       </Typography>
+
+      {/* Visualização 3D do modelo */}
+      {item.threeModel && (
+        <Box sx={{ my: 4 }}>
+          <ModelViewer modelUrl={item.threeModel} backgroundPreset={item.backgroundPreset} />
+        </Box>
+      )}
 
       {/* Exibe o vídeo ou o botão de quiz */}
       {item.videoUrl && (
