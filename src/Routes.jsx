@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { quizzesData } from "./content/contentGrid/quizzesContent";
 import { documentariesData } from "./content/contentGrid/documentariesContent";
@@ -18,11 +18,25 @@ const QuizDetailPage = lazy(() => import("./pages/QuizDetailPage"));
 const FaunaFloraDetailPage = lazy(() => import("./pages/FaunaFloraDetailPage"));
 
 function AppRoutes() {
+  // Simulação de progresso de loading
+  const [loadingPercent, setLoadingPercent] = useState(0);
+
+  useEffect(() => {
+    let percent = 0;
+    const timer = setInterval(() => {
+      percent += 5;
+      setLoadingPercent(percent);
+      if (percent >= 100) clearInterval(timer);
+    }, 40);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Router>
-      <ScrollToTop />
-      <Suspense fallback={<LoadingScreen />}>
+      <Suspense fallback={<LoadingScreen progress={loadingPercent} />}>
+        <ScrollToTop />
         <Routes>
+          <Route path="/test" element={<LoadingScreen />} />
           <Route path="/" element={<Home />} />
           <Route
             path="/documentaries"
