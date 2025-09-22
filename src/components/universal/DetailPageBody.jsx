@@ -47,7 +47,7 @@ export default function DetailPageBody({ item }) {
 
       {/* Seção de Elenco e Equipe */}
       {isDocumentary && item.castAndCrew && <CastAndCrewSection castAndCrew={item.castAndCrew} />}
-      
+
       {/* Descrição Detalhada */}
       <Box component={motion.div} variants={fadeInVariants} initial="hidden" animate="visible" sx={{ mt: 4 }}>
         <Typography variant="h5" component="h2" gutterBottom>
@@ -57,6 +57,17 @@ export default function DetailPageBody({ item }) {
           {item.longDescription}
         </Typography>
       </Box>
+
+      {item.details && item.details.length > 0 && (
+        <Box sx={{ mt: 4 }}>
+          {item.details.map((topic, idx) => (
+            <Box key={idx} sx={{ mb: 2 }}>
+              <Typography variant="h6" sx={{ color: "#36d1e0" }}>{topic.title}</Typography>
+              <Typography variant="body1">{topic.text}</Typography>
+            </Box>
+          ))}
+        </Box>
+      )}
 
       {/* Imagens Secundárias */}
       {item.secondaryImages && item.secondaryImages.length > 0 && (
