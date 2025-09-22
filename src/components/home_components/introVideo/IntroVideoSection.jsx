@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Typography, Modal, IconButton } from '@mui/material';
+import { Box, Typography, Modal, IconButton, Button, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { motion } from 'framer-motion';
-import { MdPlayArrow } from 'react-icons/md';
+import { MdPlayArrow, MdCheckCircle } from 'react-icons/md';
+import thumb from '../../../assets/introVideoThumb.png';
+import { quizzesData } from '../../../content/contentGrid/quizzesContent';
+import { documentariesData } from '../../../content/contentGrid/documentariesContent';
+import { faunaData, floraData } from '../../../content/faunaFlora/faunaFloraData';
+import AnimatedCounter from './AnimatedCounter';
 
 export default function IntroVideoSection() {
     const [open, setOpen] = useState(false);
@@ -10,55 +15,38 @@ export default function IntroVideoSection() {
         <Box
             sx={{
                 width: '100%',
-                maxWidth: "95vw",
+                maxWidth: { xs: '98vw', md: "1000px" },
                 margin: '48px auto',
-                padding: 4,
-                borderRadius: 2,
+                padding: { xs: 2, md: 4 },
+                borderRadius: 3,
                 background: 'linear-gradient(135deg, #1976d2 0%, #43c6ac 100%)',
                 boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                alignItems: 'center',
+                gap: { xs: 4, md: 6 },
                 position: 'relative',
                 overflow: 'hidden',
             }}
         >
-            <Typography
-                variant="h2"
-                sx={{
-                    fontWeight: 900,
-                    color: '#fff',
-                    textAlign: 'center',
-                    letterSpacing: 2,
-                    mb: 1,
-                    fontSize: { xs: '2.2rem', md: '3.5rem' },
-                }}
-            >
-                Explore o Oceano
-            </Typography>
-            <Typography
-                variant="subtitle1"
-                sx={{
-                    color: '#e3f2fd',
-                    textAlign: 'center',
-                    mb: 4,
-                    fontSize: { xs: '1rem', md: '1.3rem' },
-                }}
-            >
-                Assista ao trailer e mergulhe na experiência oceânica!
-            </Typography>
+            {/* Vídeo/Thumbnail com botão play */}
             <Box
                 sx={{
-                    width: '100%',
-                    height: { xs: 220, md: 430 },
+                    width: { xs: '100%', md: 420 },
+                    minWidth: 220,
+                    height: { xs: 220, md: 260 },
                     borderRadius: 2,
                     overflow: 'hidden',
                     position: 'relative',
-                    mb: 2,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    boxShadow: '0 2px 12px rgba(30,60,120,0.10)',
+                    flexShrink: 0,
                 }}
             >
                 <img
-                    src="https://tse2.mm.bing.net/th/id/OIP.FN2xphJKvfoypO5zl63iGwAAAA?r=0&cb=thfvnextucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3"
+                    src={thumb}
                     alt="Vídeo destaque"
                     style={{
                         width: '100%',
@@ -73,14 +61,11 @@ export default function IntroVideoSection() {
                         left: '50%',
                         top: '50%',
                         transform: 'translate(-50%, -50%)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
                         zIndex: 3,
                     }}
                 >
                     <motion.div
-                        whileHover={{ scale: 1.15 }}
+                        whileHover={{ scale: 1.12 }}
                         animate={{ scale: [1, 1.08, 1] }}
                         transition={{ repeat: Infinity, duration: 1.2 }}
                     >
@@ -88,30 +73,88 @@ export default function IntroVideoSection() {
                             aria-label="Assistir trailer"
                             onClick={() => setOpen(true)}
                             sx={{
-                                width: 80,
-                                height: 80,
+                                width: 56,
+                                height: 56,
                                 background: 'rgba(255,255,255,0.92)',
                                 boxShadow: '0 2px 12px rgba(30,60,120,0.18)',
                                 '&:hover': { background: '#e0f7fa' },
                             }}
                         >
-                            <MdPlayArrow size={48} color="#1976d2" />
+                            <MdPlayArrow size={36} color="#1976d2" />
                         </IconButton>
                     </motion.div>
-                    <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: 18, mt: 1 }}>
-                        PLAY VIDEO
-                    </Typography>
                 </Box>
                 {/* Overlay para escurecer imagem */}
                 <Box
                     sx={{
                         position: 'absolute',
                         inset: 0,
-                        background: 'linear-gradient(180deg, rgba(30,60,120,0.25) 0%, rgba(30,60,120,0.55) 100%)',
+                        background: 'linear-gradient(180deg, rgba(30,60,120,0.18) 0%, rgba(30,60,120,0.38) 100%)',
                         zIndex: 2,
                     }}
                 />
             </Box>
+            {/* Texto e destaques */}
+            <Box sx={{ flex: 1, minWidth: 220, width: '100%' }}>
+                <Typography
+                    variant="h3"
+                    sx={{
+                        fontWeight: 900,
+                        color: '#fff',
+                        letterSpacing: 2,
+                        mb: 2,
+                        fontSize: { xs: '2rem', md: '2.6rem' },
+                    }}
+                >
+                    Explore o Oceano
+                </Typography>
+                <Typography
+                    variant="subtitle1"
+                    sx={{
+                        color: '#e3f2fd',
+                        mb: 3,
+                        fontSize: { xs: '1rem', md: '1.2rem' },
+                    }}
+                >
+                    Assista ao trailer e mergulhe na experiência oceânica!
+                </Typography>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    justifyContent: { xs: 'flex-start', sm: 'center' },
+                    alignItems: 'center',
+                    gap: { xs: 2, sm: 4, md: 2 },
+                    mt: 4,
+                    mb: 2,
+                    width: '100%',
+                }}>
+                    <AnimatedCounter end={quizzesData.length} label="Quizzes" />
+                    <AnimatedCounter end={documentariesData.length} label="Documentários" />
+                    <AnimatedCounter end={faunaData.length} label="Espécies de Fauna" />
+                    <AnimatedCounter end={floraData.length} label="Espécies de Flora" />
+                </Box>
+                <List dense>
+                    <ListItem>
+                        <ListItemIcon>
+                            <MdCheckCircle color="#36d1e0" />
+                        </ListItemIcon>
+                        <ListItemText primary="Descubra pontos de interesse interativos" />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <MdCheckCircle color="#36d1e0" />
+                        </ListItemIcon>
+                        <ListItemText primary="Veja modelos 3D de fauna e flora" />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <MdCheckCircle color="#36d1e0" />
+                        </ListItemIcon>
+                        <ListItemText primary="Aprenda com quizzes e documentários" />
+                    </ListItem>
+                </List>
+            </Box>
+            {/* Modal do vídeo */}
             <Modal
                 open={open}
                 onClose={() => setOpen(false)}
@@ -136,7 +179,6 @@ export default function IntroVideoSection() {
                         position: 'relative',
                     }}
                 >
-                    {/* Título e informações acima do vídeo */}
                     <Typography
                         variant="h5"
                         sx={{
@@ -148,20 +190,10 @@ export default function IntroVideoSection() {
                     >
                         Trailer ExplorOcean
                     </Typography>
-                    <Typography
-                        variant="body1"
-                        sx={{
-                            color: '#afafafff',
-                            mb: 2,
-                            textAlign: 'center',
-                        }}
-                    >
-                        Assista ao trailer e mergulhe na experiência oceânica!
-                    </Typography>
                     <iframe
                         width="100%"
                         height="450"
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        src="https://www.youtube.com/embed/JekUNGo-RVk"
                         title="Introdução ExplorOcean"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
