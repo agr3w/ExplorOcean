@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import DetailPageHeader from './DetailPageHeader';
 import DetailPageBody from './DetailPageBody';
 import RelatedContentSection from './RelatedContentSection';
+import NotFoundPage from '../../pages/NotFoundPage';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -16,13 +17,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 
 export default function DetailPage({ item, show3D, setShow3D }) {
   if (!item) {
-    return (
-      <Box sx={{ p: 4, textAlign: 'center' }}>
-        <Typography variant="h6" color="white">
-          Item não encontrado.
-        </Typography>
-      </Box>
-    );
+    return <NotFoundPage />;
   }
 
   return (
