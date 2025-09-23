@@ -16,6 +16,7 @@ const FaunaFloraPage = lazy(() => import("./pages/FaunaFloraPage"));
 const DocumentaryDetailPage = lazy(() => import("./pages/DocumentaryDetailPage"));
 const QuizDetailPage = lazy(() => import("./pages/QuizDetailPage"));
 const FaunaFloraDetailPage = lazy(() => import("./pages/FaunaFloraDetailPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 function AppRoutes() {
   // Simulação de progresso de loading
@@ -66,6 +67,7 @@ function AppRoutes() {
           <Route path="/documentaries/:id" element={<DocumentaryDetailPage />} />
           <Route path="/quizzes/:id" element={<QuizDetailPage />} />
           <Route path="/:category/:id" element={<FaunaFloraDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </Router>

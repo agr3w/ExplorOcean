@@ -4,12 +4,14 @@ import MediaDisplay from "./HeaderComponents/MediaDisplay/MediaDisplay";
 import VideoSection from "./HeaderComponents/VideoSection/VideoSection";
 import QuizButton from "./HeaderComponents/QuizButton/QuizButton";
 import ViewToggleButtons from "./HeaderComponents/ViewToggleButtons/ViewToggleButtons";
+import BreadcrumbNavigation from "./HeaderComponents/BreadcrumbNavigation/BreadcrumbNavigation";
 
 export default function DetailPageHeader({ item, show3D, setShow3D }) {
   const isQuiz = item.questions;
 
   return (
     <>
+      <BreadcrumbNavigation category={item.category} label={item.label} />
       <HeaderTitle
         label={item.label}
         category={item.category}
