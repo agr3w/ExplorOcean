@@ -1,15 +1,59 @@
-import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import React, { useState, Suspense } from 'react';
+import { Box, Typography, Button, Skeleton } from '@mui/material';
 import ModelViewer from './ModelViewer';
+import { MdPhoto, MdViewInAr } from "react-icons/md";
 
-export default function DetailPageHeader({ item }) {
+export default function DetailPageHeader({ item, show3D, setShow3D }) {
   const isQuiz = item.questions;
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
     <>
       <Typography variant="h3" component="h1" gutterBottom>
         {item.label}
       </Typography>
+
+      {/* Botões de alternância */}
+      {typeof show3D === "boolean" && setShow3D && (
+        <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+          <Button
+            onClick={() => setShow3D(true)}
+            variant={show3D ? "contained" : "outlined"}
+            startIcon={<MdViewInAr />}
+            sx={{
+              background: show3D
+                ? "linear-gradient(135deg, #36d1e0 60%, #1976d2 100%)"
+                : "rgba(255,255,255,0.10)",
+              color: show3D ? "#fff" : "#36d1e0",
+              boxShadow: show3D ? "0 2px 8px rgba(30,60,120,0.18)" : "none",
+              "&:hover": {
+                background: "linear-gradient(135deg, #1976d2 60%, #36d1e0 100%)",
+                color: "#fff",
+              },
+            }}
+          >
+            3D
+          </Button>
+          <Button
+            onClick={() => setShow3D(false)}
+            variant={!show3D ? "contained" : "outlined"}
+            startIcon={<MdPhoto />}
+            sx={{
+              background: !show3D
+                ? "linear-gradient(135deg, #36d1e0 60%, #1976d2 100%)"
+                : "rgba(255,255,255,0.10)",
+              color: !show3D ? "#fff" : "#36d1e0",
+              boxShadow: !show3D ? "0 2px 8px rgba(30,60,120,0.18)" : "none",
+              "&:hover": {
+                background: "linear-gradient(135deg, #1976d2 60%, #36d1e0 100%)",
+                color: "#fff",
+              },
+            }}
+          >
+            Imagem
+          </Button>
+        </Box>
+      )}
 
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         {item.category}
@@ -18,12 +62,36 @@ export default function DetailPageHeader({ item }) {
         {isQuiz && item.numberOfQuestions && ` | Perguntas: ${item.numberOfQuestions}`}
       </Typography>
 
-      {/* Visualização 3D do modelo */}
-      {item.threeModel && (
-        <Box sx={{ my: 4 }}>
-          <ModelViewer modelUrl={item.threeModel} backgroundPreset={item.backgroundPreset} />
-        </Box>
-      )}
+      {/* Visualização 3D ou Imagem */}
+      <Box sx={{ my: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {show3D && item.threeModel ? (
+          <Suspense fallback={<Skeleton variant="rectangular" width={600} height={400} sx={{ borderRadius: 3 }} />}>
+            <Box sx={{ my: 4 }}>
+              <ModelViewer modelUrl={item.threeModel} backgroundPreset={item.backgroundPreset} />
+            </Box>
+          </Suspense>
+        ) : item.imageUrl ? (
+          <>
+            {!imgLoaded && (
+              <Skeleton variant="rectangular" width={400} height={400} sx={{ borderRadius: 3 }} />
+            )}
+            <img
+              src={item.imageUrl}
+              alt={item.label}
+              style={{
+                width: 400,
+                height: 400,
+                objectFit: 'cover',
+                borderRadius: 12,
+                display: imgLoaded ? 'block' : 'none'
+              }}
+              onLoad={() => setImgLoaded(true)}
+            />
+          </>
+        ) : (
+          <Skeleton variant="rectangular" width={400} height={400} sx={{ borderRadius: 3 }} />
+        )}
+      </Box>
 
       {/* Exibe o vídeo ou o botão de quiz */}
       {item.videoUrl && (
