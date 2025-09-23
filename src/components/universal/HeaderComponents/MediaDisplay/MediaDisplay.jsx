@@ -5,6 +5,9 @@ import ModelViewer from '../../ModelViewer';
 export default function MediaDisplay({ show3D, item }) {
   const [imgLoaded, setImgLoaded] = useState(false);
 
+  // Se não houver nem modelo 3D nem imagem, não renderiza nada
+  if (!item.threeModel && !item.imageUrl) return null;
+
   return (
     <Box sx={{ my: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       {show3D && item.threeModel ? (
@@ -33,9 +36,7 @@ export default function MediaDisplay({ show3D, item }) {
             onLoad={() => setImgLoaded(true)}
           />
         </>
-      ) : (
-        <Skeleton variant="rectangular" width={500} height={500} sx={{ borderRadius: 3 }} />
-      )}
+      ) : null}
     </Box>
   );
 }
