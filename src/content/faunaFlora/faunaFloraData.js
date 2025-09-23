@@ -73,7 +73,7 @@ export const floraData = [
     ],
     imageUrl: 'https://cdn.britannica.com/26/170926-050-C820CF3E/Giant-kelp-forests-Catalina-Island-California-habitat.jpg',
     threeModel: '/models/ChimeraVan.glb',
-    backgroundPreset: "sea",
+    backgroundPreset: "city",
     secondaryImages: [],
     relatedContent: {
       fauna: [

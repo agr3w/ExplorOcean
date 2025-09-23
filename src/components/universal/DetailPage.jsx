@@ -14,7 +14,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   color: 'white',
 }));
 
-export default function DetailPage({ item }) {
+export default function DetailPage({ item, show3D, setShow3D }) {
   if (!item) {
     return (
       <Box sx={{ p: 4, textAlign: 'center' }}>
@@ -28,7 +28,7 @@ export default function DetailPage({ item }) {
   return (
     <Box sx={{ p: 4, marginTop: 6 }}>
       <StyledPaper>
-        <DetailPageHeader item={item} />
+        <DetailPageHeader item={{ ...item, threeModel: show3D ? item.threeModel : undefined }} show3D={show3D} setShow3D={setShow3D} />
         <DetailPageBody item={item} />
         <RelatedContentSection relatedContent={item.relatedContent} />
       </StyledPaper>
