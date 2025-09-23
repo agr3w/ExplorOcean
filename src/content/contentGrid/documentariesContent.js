@@ -11,12 +11,12 @@ export const documentariesData = [
     longDescription:
       "Este documentário aprofunda a história dos povos nórdicos e sua relação intrínseca com o mar...",
     videoUrl: "https://www.youtube.com/embed/bmFLWmcovfI?autoplay=1&mute=1",
-    imageUrl: "/src/assets/images/doc1.jpg",
+    imageUrl: "",
     rating: "4.5",
     director: "Erik, o Destemido",
     releaseYear: 2022,
     secondaryImages: [
-      "/src/assets/images/naves-vikings.jpg",
+      "/src/assets/images/doc1.jpg",
       "/src/assets/images/estrela-do-norte.jpg",
     ],
     castAndCrew: [
@@ -62,12 +62,12 @@ export const documentariesData = [
     longDescription:
       "O Ponto Nemo é o local do oceano mais distante de qualquer massa de terra...",
     videoUrl: "https://www.youtube.com/embed/bmFLWmcovfI?autoplay=1&mute=1",
-    imageUrl: "/src/assets/earthmap1k.jpg",
+    // imageUrl: "",
     rating: "5.0",
     director: "James Cameron",
     releaseYear: 2020,
     secondaryImages: [
-      "/src/assets/images/creature-deep.jpg",
+      "/src/assets/earthmap1k.jpg",
       "/src/assets/images/abyssal-plain.jpg",
     ],
     castAndCrew: [

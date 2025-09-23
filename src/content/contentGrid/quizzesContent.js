@@ -5,6 +5,7 @@ export const quizzesData = [
     id: "placas-tectonicas-quiz",
     type: "quizzes",
     category: "Geologia Marinha",
+     imageUrl: "/src/assets/earthmap1k.jpg",
     label: "Quiz: Placas Tectônicas",
     shortDescription:
       "Teste seus conhecimentos sobre as placas que moldam o fundo do oceano.",
