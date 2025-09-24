@@ -3,6 +3,7 @@ export const faunaData = [
     id: 'baleia-jubarte',
     category: 'Fauna',
     label: 'Baleia Jubarte',
+    geologicalPeriodId: 'neogeno', // Adicionado
     shortDescription: 'Mamífero marinho gigante conhecido por suas acrobacias e canto complexo.',
     longDescription: 'A baleia-jubarte (Megaptera novaeangliae) é um cetáceo misticeto, uma das espécies de baleias mais carismáticas e estudadas. Famosa por seus saltos espetaculares fora d\'água e por um complexo sistema de vocalização, conhecido como "canto das baleias", que pode durar horas e se espalhar por vastas áreas oceânicas. Realiza uma das maiores migrações do reino animal, viajando de áreas de alimentação em águas polares para zonas de reprodução em águas tropicais. Alimenta-se principalmente de krill e pequenos peixes, utilizando uma técnica sofisticada chamada "rede de bolhas", onde um grupo de baleias expele ar para criar uma cortina de bolhas, aprisionando as presas.',
     details: [
@@ -56,6 +57,7 @@ export const faunaData = [
     id: 'tubarao-branco',
     category: 'Fauna',
     label: 'Tubarão-Branco',
+    geologicalPeriodId: 'neogeno', // Adicionado
     shortDescription: 'Predador de topo com um olfato apurado, crucial para o equilíbrio dos ecossistemas marinhos.',
     longDescription: 'O grande tubarão-branco (Carcharodon carcharias) é o maior peixe predador do mundo, uma máquina de caça evolutivamente aprimorada. É um predador de topo, vital para a saúde dos ecossistemas marinhos, regulando as populações de espécies como leões-marinhos e focas. Seus dentes serrilhados e em fileiras são substituídos continuamente ao longo da vida. Possui órgãos sensoriais, as ampolas de Lorenzini, que detectam os campos elétricos gerados por presas, permitindo-lhe caçar com extrema precisão, mesmo sem visão direta.',
     details: [
@@ -94,6 +96,7 @@ export const faunaData = [
     id: 'tartaruga-marinha',
     category: 'Fauna',
     label: 'Tartaruga-Marinha',
+    geologicalPeriodId: 'cretaceo', // Adicionado
     shortDescription: 'Réptil antigo que viaja milhares de quilômetros para desovar.',
     longDescription: 'As tartarugas-marinhas são répteis pré-históricos que habitam os oceanos há mais de 100 milhões de anos, tendo coexistido com os dinossauros. Existem sete espécies, cada uma adaptada a diferentes dietas e habitats. Elas desempenham papéis ecológicos cruciais, como controlar populações de águas-vivas e manter a saúde de recifes de coral e prados de grama marinha. Seu casco hidrodinâmico e nadadeiras fortes permitem que realizem longas migrações transoceânicas entre áreas de alimentação e as praias onde nasceram para desovar, um fenômeno de navegação ainda não totalmente compreendido pela ciência.',
     details: [
@@ -135,6 +138,7 @@ export const floraData = [
     id: 'alga-kelp',
     category: 'Flora',
     label: 'Alga Kelp',
+    geologicalPeriodId: 'neogeno', // Adicionado
     shortDescription: 'Forma vastas florestas subaquáticas que servem de habitat para diversas espécies marinhas.',
     longDescription: 'As algas kelp (ordem Laminariales) são um tipo de alga marrom que forma ecossistemas subaquáticos altamente produtivos, conhecidos como florestas de kelp. Não são plantas verdadeiras; em vez de raízes, possuem estruturas chamadas grampos (holdfasts) que as ancoram ao fundo do oceano. Suas "folhas" são chamadas de lâminas e flutuam em direção à superfície graças a vesículas cheias de gás chamadas pneumatocistos. Essas florestas verticais criam um habitat tridimensional complexo que serve de abrigo e alimento para centenas de espécies, desde invertebrados a mamíferos marinhos, sendo consideradas as "engenheiras do ecossistema".',
     details: [
@@ -171,6 +175,7 @@ export const floraData = [
     id: 'fitoplancton',
     category: 'Flora',
     label: 'Fitoplâncton',
+    geologicalPeriodId: 'proterozoico', // Adicionado
     shortDescription: 'Micro-organismos vegetais que são a base da cadeia alimentar e produzem grande parte do oxigênio do planeta.',
     longDescription: 'O fitoplâncton é um conjunto diversificado de organismos microscópicos fotossintetizantes que vivem na zona eufótica (iluminada) dos oceanos e corpos de água doce. Embora invisíveis a olho nu, eles formam a base de quase toda a teia alimentar aquática. Através da fotossíntese, eles consomem dióxido de carbono e liberam oxigênio, sendo responsáveis por produzir entre 50% e 80% do oxigênio da atmosfera terrestre. Eventos de proliferação massiva, conhecidos como "blooms", podem ser tão grandes que são visíveis do espaço e têm um impacto profundo no ciclo de carbono global.',
     details: [
@@ -210,6 +215,7 @@ export const floraData = [
     id: 'grama-marinha',
     category: 'Flora',
     label: 'Grama Marinha',
+    geologicalPeriodId: 'cretaceo', // Adicionado
     shortDescription: 'Plantas que formam prados submersos, essenciais para a saúde costeira e como berçário para peixes.',
     longDescription: 'A grama marinha é um grupo de plantas com flores (angiospermas) que se adaptaram a viver totalmente submersas em ambientes marinhos costeiros. Ao contrário das algas, elas possuem raízes, rizomas, folhas, flores e sementes, completando todo o seu ciclo de vida debaixo d\'água. Formam extensos prados subaquáticos em águas rasas e protegidas, que são habitats cruciais para a biodiversidade. Esses prados servem como berçários para muitas espécies de peixes e invertebrados, protegem a costa da erosão ao estabilizar o sedimento com suas raízes e melhoram a qualidade da água ao filtrar poluentes.',
     details: [

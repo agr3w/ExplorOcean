@@ -7,6 +7,8 @@ import ThermostatIcon from '@mui/icons-material/Thermostat';
 import AirIcon from '@mui/icons-material/Air';
 import PublicIcon from '@mui/icons-material/Public';
 
+import LifeInPeriod from './LifeInPeriod';
+
 // Variantes da animação
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -33,7 +35,7 @@ const MotionTypography = motion(Typography);
 
 // 2. Componente para o Card de Status
 const StatusCard = ({ stats }) => (
-  <Paper 
+  <Paper
     elevation={4}
     sx={{
       p: 2,
@@ -89,7 +91,7 @@ const TimelineContent = ({ era, sx }) => {
       <MotionTypography variants={itemVariants} variant="h6" color="text.secondary" gutterBottom>
         {era.period}
       </MotionTypography>
-      
+
       <MotionTypography variants={itemVariants} variant="body1">
         {era.description}
       </MotionTypography>
@@ -100,6 +102,10 @@ const TimelineContent = ({ era, sx }) => {
           <StatusCard stats={era.planetStats} />
         </motion.div>
       )}
+
+      <motion.div variants={itemVariants}>
+        <LifeInPeriod periodId={era.id} />
+      </motion.div>
     </motion.div>
   );
 };
