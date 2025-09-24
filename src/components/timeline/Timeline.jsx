@@ -289,7 +289,7 @@ const Timeline = ({ data, onSelectEra, isVisible, toggleVisibility }) => {
                   sx={{ minWidth: `${periodSpacings[item.id]}%` }}
                 >
                   {keyEvent && (
-                    <Tooltip title={keyEvent.description} arrow placement="top">
+                    <Tooltip title={keyEvent.description} arrow placement="top" sx={{ fontSize: '1.0rem' }}>
                       <EventMarker>
                         {keyEvent.icon}
                       </EventMarker>
