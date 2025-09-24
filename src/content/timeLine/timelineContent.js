@@ -1,14 +1,10 @@
+// src/content/timeLine/timelineContent.js
+
 export const timelineData = [
   // Éon Pré-cambriano
   {
-    id: 'pré-cambriano',
-    label: 'Pré-cambriano',
-    period: '4.6 bilhões a 541 milhões de anos atrás',
-    mapImage: '/src/assets/hadeano-map.jpg',
-    description: 'É o período mais longo da história da Terra, abrangendo a formação do planeta, o surgimento da vida e o acúmulo de oxigênio na atmosfera.'
-  },
-  {
     eon: 'Pré-cambriano',
+    era: 'Pré-cambriano', // Agrupador para os períodos deste Éon
     id: 'hadeano',
     label: 'Hadeano',
     period: '4.6 a 4 bilhões de anos atrás',
@@ -17,6 +13,7 @@ export const timelineData = [
   },
   {
     eon: 'Pré-cambriano',
+    era: 'Pré-cambriano',
     id: 'arqueano',
     label: 'Arqueano',
     period: '4 a 2.5 bilhões de anos atrás',
@@ -25,6 +22,7 @@ export const timelineData = [
   },
   {
     eon: 'Pré-cambriano',
+    era: 'Pré-cambriano',
     id: 'proterozoico',
     label: 'Proterozoico',
     period: '2.5 bilhões a 541 milhões de anos atrás',
@@ -33,24 +31,6 @@ export const timelineData = [
   },
 
   // Éon Fanerozoico - Era Paleozoica
-  {
-    eon: 'Fanerozoico',
-    // era: 'Fanerozoico',
-    id: 'fanerozoico',
-    label: 'Fanerozoico',
-    period: '541 milhões de anos atrás até hoje',
-    mapImage: '/src/assets/paleozoico-map.jpg',
-    description: 'Marcado pela proliferação de vida complexa. É o éon que estamos vivendo, e onde a vida evoluiu de formas simples para a diversidade que vemos hoje.'
-  },
-  {
-    eon: 'Fanerozoico',
-    era: 'Paleozoica',
-    id: 'paleozoica',
-    label: 'Paleozoica',
-    period: '541 a 252 milhões de anos atrás',
-    mapImage: '/src/assets/paleozoico-map.jpg',
-    description: 'A "Era da Vida Antiga". Caracterizada pela diversificação da vida marinha, a colonização da terra por plantas e animais, e a formação do supercontinente Pangeia.'
-  },
   {
     eon: 'Fanerozoico',
     era: 'Paleozoica',
@@ -110,15 +90,6 @@ export const timelineData = [
   {
     eon: 'Fanerozoico',
     era: 'Mesozoica',
-    id: 'mesozoica',
-    label: 'Mesozoica',
-    period: '252 a 66 milhões de anos atrás',
-    mapImage: 'https://tse1.mm.bing.net/th/id/OIP.1hlINxlIO6KuP-GNVNAWrgHaCe?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
-    description: 'A "Era da Vida Intermediária". Conhecida como a era dos dinossauros. A Pangeia se fragmentou, formando os continentes atuais, e as primeiras aves e flores surgiram.'
-  },
-  {
-    eon: 'Fanerozoico',
-    era: 'Mesozoica',
     id: 'triassico',
     label: 'Triássico',
     period: '252 a 201 milhões de anos atrás',
@@ -145,15 +116,6 @@ export const timelineData = [
   },
 
   // Éon Fanerozoico - Era Cenozoica
-  {
-    eon: 'Fanerozoico',
-    era: 'Cenozoica',
-    id: 'cenozoica',
-    label: 'Cenozoica',
-    period: '66 milhões de anos atrás até hoje',
-    mapImage: '/src/assets/cenozoico-map.jpg',
-    description: 'A "Era da Vida Recente", onde os mamíferos se tornaram a forma de vida dominante. Inclui o surgimento e a evolução dos humanos.'
-  },
   {
     eon: 'Fanerozoico',
     era: 'Cenozoica',
