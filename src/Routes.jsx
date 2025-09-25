@@ -1,53 +1,75 @@
-import React from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
 import { quizzesData } from "./content/contentGrid/quizzesContent";
 import { documentariesData } from "./content/contentGrid/documentariesContent";
-import ContentPageTemplate from "./pages/ContentPageTemplate";
-import ContentHub from "./pages/ContentHub";
-import ExplorerHub from "./pages/ExplorerHub";
-import GlobePage from "./pages/GlobePage";
-import TimelinePage from "./pages/TimelinePage";
-import FaunaFloraPage from "./pages/FaunaFloraPage";
-import DocumentaryDetailPage from "./pages/DocumentaryDetailPage";
-import QuizDetailPage from "./pages/QuizDetailPage";
-import FaunaFloraDetailPage from "./pages/FaunaFloraDetailPage";
+import ScrollToTop from "./utils/ScrollToTop";
+import LoadingScreen from "./components/Loading/LoadingScreen";
+
+// Lazy imports
+const Home = lazy(() => import("./pages/Home"));
+const ContentPageTemplate = lazy(() => import("./pages/ContentPageTemplate"));
+const ContentHub = lazy(() => import("./pages/ContentHub"));
+const ExplorerHub = lazy(() => import("./pages/ExplorerHub"));
+const GlobePage = lazy(() => import("./pages/GlobePage"));
+const TimelinePage = lazy(() => import("./pages/TimelinePage"));
+const FaunaFloraPage = lazy(() => import("./pages/FaunaFloraPage"));
+const DocumentaryDetailPage = lazy(() => import("./pages/DocumentaryDetailPage"));
+const QuizDetailPage = lazy(() => import("./pages/QuizDetailPage"));
+const FaunaFloraDetailPage = lazy(() => import("./pages/FaunaFloraDetailPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 function AppRoutes() {
+  // Simulação de progresso de loading
+  const [loadingPercent, setLoadingPercent] = useState(0);
+
+  useEffect(() => {
+    let percent = 0;
+    const timer = setInterval(() => {
+      percent += 5;
+      setLoadingPercent(percent);
+      if (percent >= 100) clearInterval(timer);
+    }, 40);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/documentaries"
-          element={
-            <ContentPageTemplate
-              data={documentariesData}
-              title="Nossos Documentários"
-              description="Assista a documentários incríveis e aprenda sobre a vida marinha e a história dos oceanos."
-            />
-          }
-        />
-        <Route
-          exact
-          path="/quizzes"
-          element={
-            <ContentPageTemplate
-              data={quizzesData}
-              title="Nossos Quizzes"
-              description="Teste seus conhecimentos sobre a vida marinha e a história dos oceanos."
-            />
-          }
-        ></Route>
-        <Route exact path="/hub" element={<ContentHub />} />
-        <Route exact path="/ExplorerHub" element={<ExplorerHub />} />
-        <Route exact path="/globe" element={<GlobePage />} />
-        <Route exact path="/timeline" element={<TimelinePage />} />
-        <Route exact path="/fauna-flora" element={<FaunaFloraPage />} />
-        <Route path="/documentaries/:id" element={<DocumentaryDetailPage />} />
-        <Route path="/quizzes/:id" element={<QuizDetailPage />} />
-        <Route path="/:category/:id" element={<FaunaFloraDetailPage />} />
-      </Routes>
+      <Suspense fallback={<LoadingScreen progress={loadingPercent} />}>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/test" element={<LoadingScreen />} />
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/documentaries"
+            element={
+              <ContentPageTemplate
+                data={documentariesData}
+                title="Nossos Documentários"
+                description="Assista a documentários incríveis e aprenda sobre a vida marinha e a história dos oceanos."
+              />
+            }
+          />
+          <Route
+            path="/quizzes"
+            element={
+              <ContentPageTemplate
+                data={quizzesData}
+                title="Nossos Quizzes"
+                description="Teste seus conhecimentos sobre a vida marinha e a história dos oceanos."
+              />
+            }
+          />
+          <Route path="/hub" element={<ContentHub />} />
+          <Route path="/ExplorerHub" element={<ExplorerHub />} />
+          <Route path="/globe" element={<GlobePage />} />
+          <Route path="/timeline" element={<TimelinePage />} />
+          <Route path="/fauna-flora" element={<FaunaFloraPage />} />
+          <Route path="/documentaries/:id" element={<DocumentaryDetailPage />} />
+          <Route path="/quizzes/:id" element={<QuizDetailPage />} />
+          <Route path="/:category/:id" element={<FaunaFloraDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }
