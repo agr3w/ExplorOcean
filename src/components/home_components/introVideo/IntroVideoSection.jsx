@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Modal, IconButton, List, ListItem, ListItemIcon, Paper, ListItemText } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { MdPlayArrow, MdCheckCircle, MdQuiz, MdMovie, MdPets, MdEco } from 'react-icons/md';
+import { MdPlayArrow, MdCheckCircle, MdQuiz, MdMovie, MdPets, MdEco, MdClose } from 'react-icons/md';
 import thumb from '../../../assets/introVideoThumb.png';
 import { quizzesData } from '../../../content/contentGrid/quizzesContent';
 import { documentariesData } from '../../../content/contentGrid/documentariesContent';
@@ -100,16 +100,83 @@ export default function IntroVideoSection() {
                     </List>
                 </motion.div>
 
-                <Modal open={open} onClose={() => setOpen(false)} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Box sx={{ width: { xs: '90vw', md: 800 }, bgcolor: 'background.paper', borderRadius: 2, boxShadow: 24, p: 4, outline: 'none', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
-                        <Typography variant="h5" sx={{ color: '#1976d2', fontWeight: 700, mb: 2, textAlign: 'center' }}>
-                            Trailer ExplorOcean
-                        </Typography>
-                        <iframe width="100%" height="450" src="https://www.youtube.com/embed/JekUNGo-RVk" title="Introdução ExplorOcean" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ borderRadius: 8, marginBottom: 8 }} />
-                        <IconButton aria-label="Fechar" onClick={() => setOpen(false)} sx={{ position: 'absolute', top: 8, right: 8, background: '#36d1e0', color: '#fff', '&:hover': { background: '#1976d2' } }}>
-                            X
-                        </IconButton>
-                    </Box>
+                {/* --- MODAL COM O NOVO ESTILO --- */}
+                <Modal
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backdropFilter: 'blur(5px)',
+                    }}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                    >
+                        <Box sx={{
+                            width: { xs: '90vw', md: 800 },
+                            bgcolor: 'rgba(2, 16, 26, 0.7)',
+                            backdropFilter: 'blur(15px)',
+                            border: '1.5px solid rgba(54, 209, 224, 0.3)',
+                            borderRadius: 4,
+                            boxShadow: '0 8px 32px rgba(2, 16, 26, 0.5)',
+                            p: { xs: 2, md: 4 },
+                            outline: 'none',
+                            position: 'relative',
+                        }}>
+                            <Typography variant="h5" sx={{
+                                color: '#e3f2fd',
+                                fontWeight: 700,
+                                mb: 2,
+                                textAlign: 'center'
+                            }}>
+                                Trailer ExplorOcean
+                            </Typography>
+                            <Box sx={{
+                                position: 'relative',
+                                paddingTop: '56.25%',
+                                width: '100%',
+                                borderRadius: 2,
+                                overflow: 'hidden',
+                            }}>
+                                <iframe
+                                    src="https://www.youtube.com/embed/JekUNGo-RVk"
+                                    title="Introdução ExplorOcean"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                />
+                            </Box>
+                            <IconButton
+                                aria-label="Fechar"
+                                onClick={() => setOpen(false)}
+                                sx={{
+                                    position: 'absolute',
+                                    top: 8,
+                                    right: 8,
+                                    width: 32,
+                                    height: 32,
+                                    background: 'rgba(54, 209, 224, 0.2)',
+                                    color: '#e3f2fd',
+                                    '&:hover': {
+                                        background: 'rgba(54, 209, 224, 0.4)',
+                                    }
+                                }}
+                            >
+                                <MdClose size={20} />
+                            </IconButton>
+                        </Box>
+                    </motion.div>
                 </Modal>
             </Paper>
         </motion.div>
