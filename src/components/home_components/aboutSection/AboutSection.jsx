@@ -25,12 +25,22 @@ export default function AboutSection() {
         backgroundColor: '#f5f5f5',
       }}
     >
-
       {/* Texto explicativo e highlights à esquerda */}
-      <AboutHighlights />
+      <Box sx={{ flex: 1, minWidth: 220, width: '100%', textAlign: 'center' }}>
+        <AboutHighlights />
+      </Box>
 
       {/* Imagem estilizada à direita */}
-      <AboutImage />
+      <Box sx={{
+        flex: 1,
+        minWidth: 220,
+        width: '100%',
+        display: 'flex',
+        justifyContent: { xs: 'center', md: 'flex-end' },
+        alignItems: 'center',
+      }}>
+        <AboutImage />
+      </Box>
     </Box>
   );
 }

@@ -1,66 +1,33 @@
-import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import React from "react";
+import HeaderTitle from "./HeaderComponents/Title/HeaderTitle";
+import MediaDisplay from "./HeaderComponents/MediaDisplay/MediaDisplay";
+import VideoSection from "./HeaderComponents/VideoSection/VideoSection";
+import QuizButton from "./HeaderComponents/QuizButton/QuizButton";
+import ViewToggleButtons from "./HeaderComponents/ViewToggleButtons/ViewToggleButtons";
+import BreadcrumbNavigation from "./HeaderComponents/BreadcrumbNavigation/BreadcrumbNavigation";
+import { getSectionFromItem } from "../../utils/getSectionFromItem";
 
-export default function DetailPageHeader({ item }) {
+export default function DetailPageHeader({ item, show3D, setShow3D }) {
+  const section = getSectionFromItem(item);
   const isQuiz = item.questions;
 
   return (
     <>
-      <Typography variant="h3" component="h1" gutterBottom>
-        {item.label}
-      </Typography>
-
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        {item.category}
-        {item.duration && ` | Duração: ${item.duration}`}
-        {isQuiz && item.difficulty && ` | Dificuldade: ${item.difficulty}`}
-        {isQuiz && item.numberOfQuestions && ` | Perguntas: ${item.numberOfQuestions}`}
-      </Typography>
-
-      {/* Exibe o vídeo ou o botão de quiz */}
-      {item.videoUrl && (
-        <Box
-          sx={{
-            position: 'relative',
-            paddingTop: '56.25%', // Proporção de aspecto 16:9
-            height: 0,
-            overflow: 'hidden',
-            borderRadius: 3,
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.1)',
-            border: '2px solid rgba(255, 255, 255, 0.2)',
-            backdropFilter: 'blur(5px)',
-            backgroundColor: 'rgba(0, 10, 20, 0.7)',
-            '&:hover': {
-              boxShadow: '0 6px 25px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.2)',
-            },
-            transition: 'all 0.3s ease-in-out',
-          }}
-        >
-          <iframe
-            src={item.videoUrl}
-            title={item.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-            allowFullScreen
-            auto
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-            }}
-          />
-        </Box>
+      <BreadcrumbNavigation section={section} label={item.label} item={item} />
+      <HeaderTitle
+        label={item.label}
+        category={item.category}
+        duration={item.duration}
+        isQuiz={isQuiz}
+        difficulty={item.difficulty}
+        numberOfQuestions={item.numberOfQuestions}
+      />
+      {typeof show3D === "boolean" && setShow3D && (
+        <ViewToggleButtons show3D={show3D} setShow3D={setShow3D} />
       )}
-
-      {isQuiz && (
-        <Box sx={{ my: 4, textAlign: 'center' }}>
-          <Button variant="contained" color="primary" size="large">
-            Iniciar Quiz
-          </Button>
-        </Box>
-      )}
+      <MediaDisplay show3D={show3D} item={item} />
+      <VideoSection videoUrl={item.videoUrl} title={item.title} />
+      <QuizButton isQuiz={isQuiz} />
     </>
   );
 }

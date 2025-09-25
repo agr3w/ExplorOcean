@@ -1,161 +1,132 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, IconButton } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Box } from '@mui/material';
+import { motion } from 'framer-motion';
+import { keyEventsData } from '../../content/timeLine/keyEventsContent';
+import { MotionTimelineContainer } from './TimelineStyled';
+import ToggleHandle from './TimelineParts/ToggleHandle';
+import EonsSelector from './TimelineParts/EonsSelector';
+import ErasSelector from './TimelineParts/ErasSelector';
+import PeriodsTimeline from './TimelineParts/PeriodsTimeline';
 
-const TimelineContainer = styled(Box)(({ theme, isVisible }) => ({
-  display: isVisible ? 'flex' : 'none',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: theme.spacing(2),
-  gap: theme.spacing(2),
-  position: 'relative',
-  zIndex: 1,
-  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(5px)',
-  borderRadius: theme.spacing(2),
-  margin: theme.spacing(0, 4, 4, 4),
-}));
+// --- Timeline Principal ---
+const panelVariants = {
+  hidden: { y: 'calc(100% - 40px)', opacity: 1 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100, damping: 20 } },
+};
 
-const NavButton = styled(Button)(({ theme, isSelected }) => ({
-  whiteSpace: 'nowrap',
-  backgroundColor: isSelected ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
-  color: 'white',
-  '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-}));
+const Timeline = ({ data, onSelectEra, isVisible, toggleVisibility }) => {
+  const [selectedItemId, setSelectedItemId] = useState(data[0].id);
+  const scrollContainerRef = useRef(null);
+  const nodeRefs = useRef({});
 
-const Timeline = ({ data, onSelectEra, isVisible }) => {
-  const [selectedEon, setSelectedEon] = useState(data[0].eon);
-  const [selectedEraGroup, setSelectedEraGroup] = useState(data[0].era || data[0].id);
-  const [selectedItem, setSelectedItem] = useState(data[0]);
+  const { groupedData, dataById } = useMemo(() => {
+    const grouped = data.reduce((acc, item) => {
+      if (!acc[item.eon]) acc[item.eon] = {};
+      if (!acc[item.eon][item.era]) acc[item.eon][item.era] = [];
+      acc[item.eon][item.era].push(item);
+      return acc;
+    }, {});
+    const byId = data.reduce((acc, item) => {
+      acc[item.id] = item;
+      return acc;
+    }, {});
+    return { groupedData: grouped, dataById: byId };
+  }, [data]);
+
+  const selectedItem = dataById[selectedItemId];
+  const { eon: selectedEon, era: selectedEra } = selectedItem;
+  const periodsInSelectedEra = groupedData[selectedEon][selectedEra];
+  const currentPeriodIndex = periodsInSelectedEra.findIndex(p => p.id === selectedItemId);
+
+  const periodSpacings = useMemo(() => {
+    const durations = periodsInSelectedEra.map(p => ({
+      id: p.id,
+      logDuration: Math.log10((p.start - p.end) + 1)
+    }));
+    const totalLogDuration = durations.reduce((sum, p) => sum + p.logDuration, 0);
+    if (totalLogDuration === 0) {
+      return { [durations[0].id]: 100 };
+    }
+    const spacings = {};
+    durations.forEach(p => {
+      const percentage = (p.logDuration / totalLogDuration) * 100;
+      spacings[p.id] = Math.max(percentage, 8);
+    });
+    return spacings;
+  }, [periodsInSelectedEra]);
 
   useEffect(() => {
-    onSelectEra(selectedItem);
-  }, [selectedItem, onSelectEra]);
-
-  const groupedData = data.reduce((acc, item) => {
-    if (!acc[item.eon]) {
-      acc[item.eon] = { label: item.eon, eras: {} };
+    if (selectedItem) onSelectEra(selectedItem);
+    const activeNode = nodeRefs.current[selectedItemId];
+    if (activeNode) {
+      activeNode.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
     }
-    const eraKey = item.era || 'eonOnly';
-    if (!acc[item.eon].eras[eraKey]) {
-      acc[item.eon].eras[eraKey] = [];
-    }
-    acc[item.eon].eras[eraKey].push(item);
-    return acc;
-  }, {});
+  }, [selectedItemId, onSelectEra, selectedItem]);
 
-  const visibleItems = groupedData[selectedEon].eras[selectedEraGroup];
-  const selectedIndex = visibleItems ? visibleItems.findIndex(era => era.id === selectedItem.id) : -1;
+  const handleSelectEon = (eonKey) => {
+    const firstEraKey = Object.keys(groupedData[eonKey])[0];
+    const firstItem = groupedData[eonKey][firstEraKey][0];
+    setSelectedItemId(firstItem.id);
+  };
+
+  const handleSelectEra = (eraKey) => {
+    const firstItem = groupedData[selectedEon][eraKey][0];
+    setSelectedItemId(firstItem.id);
+  };
 
   const handlePrev = () => {
-    if (selectedIndex > 0) {
-      setSelectedItem(visibleItems[selectedIndex - 1]);
-    }
+    if (currentPeriodIndex > 0) setSelectedItemId(periodsInSelectedEra[currentPeriodIndex - 1].id);
   };
 
   const handleNext = () => {
-    if (selectedIndex < visibleItems.length - 1) {
-      setSelectedItem(visibleItems[selectedIndex + 1]);
-    }
+    if (currentPeriodIndex < periodsInSelectedEra.length - 1) setSelectedItemId(periodsInSelectedEra[currentPeriodIndex + 1].id);
   };
 
-  const handleSelectEon = (eon) => {
-    setSelectedEon(eon);
-    const eraKeys = Object.keys(groupedData[eon].eras);
-    const firstEraKey = eraKeys.includes('eonOnly') && eraKeys.length > 1 ? eraKeys.find(key => key !== 'eonOnly') : eraKeys[0];
-    
-    setSelectedEraGroup(firstEraKey);
-    setSelectedItem(groupedData[eon].eras[firstEraKey][0]);
-  };
-
-  const handleSelectEraGroup = (eraKey) => {
-    setSelectedEraGroup(eraKey);
-    setSelectedItem(groupedData[selectedEon].eras[eraKey][0]);
-  };
-  
-  const showErasSection = selectedEon && Object.keys(groupedData[selectedEon].eras).length > 1;
+  const keyEventsMap = useMemo(() => {
+    return keyEventsData.reduce((acc, event) => {
+      acc[event.periodId] = event;
+      return acc;
+    }, {});
+  }, []);
 
   return (
-    <TimelineContainer isVisible={isVisible}>
-      <Typography variant="h6" gutterBottom>
-        Éons
-      </Typography>
-      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-        {Object.keys(groupedData).map(eonKey => (
-          <NavButton
-            key={eonKey}
-            onClick={() => handleSelectEon(eonKey)}
-            isSelected={selectedEon === eonKey}
-          >
-            {eonKey}
-          </NavButton>
-        ))}
+    <MotionTimelineContainer
+      variants={panelVariants}
+      initial="hidden"
+      animate={isVisible ? 'visible' : 'hidden'}
+      exit="hidden"
+    >
+      <ToggleHandle isVisible={isVisible} toggleVisibility={toggleVisibility} />
+      <Box sx={{ mt: 2, width: '100%' }}>
+        <EonsSelector
+          groupedData={groupedData}
+          selectedEon={selectedItem.eon}
+          handleSelectEon={handleSelectEon}
+        />
+        <ErasSelector
+          groupedData={groupedData}
+          selectedEon={selectedItem.eon}
+          selectedEra={selectedItem.era}
+          handleSelectEra={handleSelectEra}
+        />
+        <PeriodsTimeline
+          periods={periodsInSelectedEra}
+          selectedItemId={selectedItemId}
+          setSelectedItemId={setSelectedItemId}
+          currentPeriodIndex={currentPeriodIndex}
+          handlePrev={handlePrev}
+          handleNext={handleNext}
+          scrollContainerRef={scrollContainerRef}
+          nodeRefs={nodeRefs}
+          periodSpacings={periodSpacings}
+          keyEventsMap={keyEventsMap}
+        />
       </Box>
-
-      {showErasSection && (
-        <>
-          <Typography variant="h6" gutterBottom>
-            Eras
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-            {Object.keys(groupedData[selectedEon].eras)
-              .filter(eraKey => eraKey !== 'eonOnly')
-              .map(eraKey => (
-                <NavButton
-                  key={eraKey}
-                  onClick={() => handleSelectEraGroup(eraKey)}
-                  isSelected={selectedEraGroup === eraKey}
-                >
-                  {eraKey}
-                </NavButton>
-              ))}
-          </Box>
-        </>
-      )}
-
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%', justifyContent: 'center' }}>
-        <IconButton onClick={handlePrev} disabled={selectedIndex === 0}>
-          <ArrowBackIosIcon sx={{ color: 'white' }} />
-        </IconButton>
-        <Box
-          sx={{
-            display: 'flex',
-            overflowX: 'auto',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            '&::-webkit-scrollbar': { display: 'none' },
-            gap: 2,
-            p: 1,
-          }}
-        >
-          {visibleItems && visibleItems.map(item => (
-            <Button
-              key={item.id}
-              onClick={() => setSelectedItem(item)}
-              variant={item.id === selectedItem.id ? 'contained' : 'text'}
-              sx={{
-                whiteSpace: 'nowrap',
-                backgroundColor: item.id === selectedItem.id ? 'primary.main' : 'rgba(255, 255, 255, 0.1)',
-                color: 'white',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                },
-              }}
-            >
-              {item.label}
-            </Button>
-          ))}
-        </Box>
-        <IconButton onClick={handleNext} disabled={!visibleItems || selectedIndex === visibleItems.length - 1}>
-          <ArrowForwardIosIcon sx={{ color: 'white' }} />
-        </IconButton>
-      </Box>
-    </TimelineContainer>
+    </MotionTimelineContainer>
   );
 };
 

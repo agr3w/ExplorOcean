@@ -101,7 +101,7 @@ export default function LearningPathsSection() {
                             initial={{ opacity: 0, y: 40 }}
                             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
                             transition={{ delay: idx * 0.15, duration: 0.6, ease: 'easeOut' }}
-                            whileHover={{ scale: 1.08, boxShadow: '0 12px 32px 0 rgba(30,60,114,0.22)' }}
+                            whileHover={{ scale: 1.04, boxShadow: '0 12px 32px 0 rgba(30,60,114,0.22)' }}
                         >
                             <Paper
                                 elevation={0}
@@ -117,15 +117,13 @@ export default function LearningPathsSection() {
                                     color: '#fff',
                                     mx: 2,
                                     backdropFilter: 'blur(16px) saturate(180%)',
-                                    border: `2px solid ${path.color}`,
                                     boxShadow: '0 4px 24px 0 rgba(30,60,114,0.12)',
                                     transition: 'transform 0.3s cubic-bezier(.77,0,.18,1), box-shadow 0.3s cubic-bezier(.77,0,.18,1), background 0.3s',
                                     cursor: 'pointer',
                                     position: 'relative',
                                     overflow: 'hidden',
                                     '&:hover': {
-                                        background: `linear-gradient(135deg, ${path.color} 30%, #2a5298 100%)`,
-                                        border: `2.5px solid ${path.color}`,
+                                        background: '#2a5298',
                                     },
                                 }}
                             >
