@@ -1,17 +1,13 @@
-// src/content/contentGrid/documentariesContent.js
-
 export const documentariesData = [
   {
     id: "nordicos-navegacoes",
     type: "documentaries",
     category: "Oceanografia",
     label: "Nórdicos à Navegações",
-    shortDescription:
-      "Uma jornada visual e histórica que explora a navegação nórdica.",
-    longDescription:
-      "Este documentário aprofunda a história dos povos nórdicos e sua relação intrínseca com o mar...",
+    shortDescription: "Uma jornada visual e histórica que explora a navegação nórdica.",
+    longDescription: "Este documentário aprofunda a história dos povos nórdicos e sua relação intrínseca com o mar, detalhando suas embarcações, técnicas de navegação e o impacto de suas explorações no mundo.",
     videoUrl: "https://www.youtube.com/embed/bmFLWmcovfI?autoplay=1&mute=1",
-    imageUrl: "",
+    imageUrl: "https://images.unsplash.com/photo-1591815942339-2b813454b4cb?auto=format&fit=crop&w=800&q=80",
     rating: "4.5",
     director: "Erik, o Destemido",
     releaseYear: 2022,
@@ -20,7 +16,6 @@ export const documentariesData = [
       "/src/assets/images/estrela-do-norte.jpg",
     ],
     castAndCrew: [
-      // Novo campo adicionado
       {
         name: "Bjorn Ironside",
         role: "Historiador",
@@ -37,19 +32,13 @@ export const documentariesData = [
     duration: "1h 30min",
     location: {
       name: "Oceanos Atlântico e Ártico",
-      description:
-        "A história se passa nas águas frias e turbulentas do Atlântico Norte e do Ártico...",
+      description: "A história se passa nas águas frias e turbulentas do Atlântico Norte e do Ártico, seguindo as rotas dos antigos exploradores.",
     },
     relatedContent: {
       fauna: [
         { label: "Baleia Jubarte", id: "baleia-jubarte" },
-        { label: "Baleia Orca", id: "baleia-orca" },
       ],
       flora: [{ label: "Alga Kelp", id: "alga-kelp" }],
-      geologicalPeriod: {
-        label: "Holoceno",
-        id: "holoceno",
-      },
     },
   },
   {
@@ -57,12 +46,10 @@ export const documentariesData = [
     type: "documentaries",
     category: "Biologia Marinha",
     label: "Ponto NEMO",
-    shortDescription:
-      "Conheça o local mais inacessível da Terra e os mistérios de sua biologia marinha.",
-    longDescription:
-      "O Ponto Nemo é o local do oceano mais distante de qualquer massa de terra...",
-    videoUrl: "https://www.youtube.com/embed/bmFLWmcovfI?autoplay=1&mute=1",
-    // imageUrl: "",
+    shortDescription: "Conheça o local mais inacessível da Terra e os mistérios de sua biologia marinha.",
+    longDescription: "O Ponto Nemo é o local do oceano mais distante de qualquer massa de terra, conhecido como o 'cemitério de naves espaciais'. Este documentário explora tanto os detritos tecnológicos quanto a vida extremófila que pode existir neste ambiente isolado.",
+    videoUrl: "https://www.youtube.com/embed/p1KkXy_QO-4?autoplay=1&mute=1",
+    imageUrl: "https://images.unsplash.com/photo-1579487785973-74d3094a4645?auto=format&fit=crop&w=800&q=80",
     rating: "5.0",
     director: "James Cameron",
     releaseYear: 2020,
@@ -71,7 +58,6 @@ export const documentariesData = [
       "/src/assets/images/abyssal-plain.jpg",
     ],
     castAndCrew: [
-      // Novo campo adicionado
       {
         name: "Dr. Evelyn Reed",
         role: "Bióloga Marinha",
@@ -83,23 +69,128 @@ export const documentariesData = [
         photo: "/src/assets/images/mike-evans.jpg",
       },
     ],
-    tags: ["Oceanografia", "Biologia"],
+    tags: ["Oceanografia", "Biologia", "Tecnologia"],
     icon: "🎥",
     duration: "45min",
     location: {
       name: "Ponto Nemo, Oceano Pacífico",
-      description: "Localizado no sul do Oceano Pacífico...",
+      description: "Localizado no sul do Oceano Pacífico, é o ponto mais remoto e de difícil acesso do nosso planeta.",
+    },
+    relatedContent: {
+      fauna: [],
+      flora: [],
+    },
+  },
+
+  // --- NOVOS ITENS DE DOCUMENTÁRIOS ---
+  {
+    id: "professor-polvo",
+    type: "documentaries",
+    category: "Biologia Marinha",
+    label: "Professor Polvo",
+    shortDescription: "Um cineasta cria um laço surpreendente com um polvo em uma floresta de kelp na África do Sul.",
+    longDescription: "Vencedor do Oscar, este documentário segue o cineasta Craig Foster, que, ao mergulhar diariamente, estabelece uma relação de confiança com um polvo fêmea. Ele documenta a curta e extraordinária vida do animal, suas táticas de caça, sua incrível inteligência e sua luta pela sobrevivência, revelando uma conexão profunda entre humanos e a natureza.",
+    videoUrl: "https://www.youtube.com/embed/3s0LTDhqe5A?autoplay=1&mute=1",
+    imageUrl: "https://images.unsplash.com/photo-1616682132148-9f3ce53f562e?auto=format&fit=crop&w=800&q=80",
+    rating: "4.9",
+    director: "Pippa Ehrlich & James Reed",
+    releaseYear: 2020,
+    secondaryImages: [],
+    castAndCrew: [
+      {
+        name: "Craig Foster",
+        role: "Naturalista e Protagonista",
+        photo: "/src/assets/images/craig-foster.jpg",
+      },
+    ],
+    tags: ["Natureza", "Biologia", "Conservação"],
+    icon: "🎥",
+    duration: "1h 25min",
+    location: {
+      name: "Floresta de Kelp, África do Sul",
+      description: "Filmado nas águas frias e ricas em biodiversidade da costa da Cidade do Cabo, África do Sul.",
+    },
+    relatedContent: {
+      fauna: [{ label: "Polvo-Comum", id: "polvo-comum" }],
+      flora: [{ label: "Alga Kelp", id: "alga-kelp" }],
+    },
+  },
+  {
+    id: "em-busca-dos-corais",
+    type: "documentaries",
+    category: "Conservação",
+    label: "Em Busca dos Corais",
+    shortDescription: "Mergulhadores e cientistas investigam o desaparecimento em massa dos recifes de coral.",
+    longDescription: "Uma equipe de cinegrafistas e cientistas se une para documentar o alarmante fenômeno do branqueamento de corais. Eles enfrentam desafios técnicos para desenvolver a primeira câmera time-lapse capaz de registrar o processo, revelando a devastação causada pelo aquecimento dos oceanos e fazendo um apelo urgente à ação.",
+    videoUrl: "https://www.youtube.com/embed/b6fHA9R2cKI?autoplay=1&mute=1",
+    imageUrl: "https://images.unsplash.com/photo-1551201323-ba8a735a42f8?auto=format&fit=crop&w=800&q=80",
+    rating: "4.8",
+    director: "Jeff Orlowski",
+    releaseYear: 2017,
+    secondaryImages: [],
+    castAndCrew: [
+      {
+        name: "Zack Rago",
+        role: "Técnico de Câmera",
+        photo: "/src/assets/images/zack-rago.jpg",
+      },
+      {
+        name: "Dr. J.E.N. Veron",
+        role: "Cientista Chefe",
+        photo: "/src/assets/images/jen-veron.jpg",
+      },
+    ],
+    tags: ["Mudanças Climáticas", "Conservação", "Oceanografia"],
+    icon: "🎥",
+    duration: "1h 29min",
+    location: {
+      name: "Recifes de Coral Globais",
+      description: "As filmagens ocorrem em diversos locais, incluindo a Grande Barreira de Corais na Austrália e recifes no Havaí e Bahamas.",
+    },
+    relatedContent: {
+      fauna: [{ label: "Peixe-Palhaço", id: "peixe-palhaco" }],
+      flora: [{ label: "Recifes de Coral", id: "recifes-de-coral" }],
+    },
+  },
+  {
+    id: "planeta-azul-2",
+    type: "documentaries",
+    category: "História Natural",
+    label: "Planeta Azul II",
+    shortDescription: "Uma exploração épica das maravilhas dos oceanos, revelando novas criaturas e comportamentos surpreendentes.",
+    longDescription: "Narrada por Sir David Attenborough, esta série da BBC utiliza tecnologia de filmagem de ponta para explorar os oceanos como nunca antes. De costas rochosas a trincheiras abissais, cada episódio revela descobertas científicas, comportamentos animais inéditos e a profunda influência humana nos mares.",
+    videoUrl: "https://www.youtube.com/embed/r9PeYNlc0sQ?autoplay=1&mute=1",
+    imageUrl: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=800&q=80",
+    rating: "5.0",
+    director: "BBC Studios Natural History Unit",
+    releaseYear: 2017,
+    secondaryImages: [],
+    castAndCrew: [
+      {
+        name: "David Attenborough",
+        role: "Narrador",
+        photo: "/src/assets/images/david-attenborough.jpg",
+      },
+      {
+        name: "Hans Zimmer",
+        role: "Compositor",
+        photo: "/src/assets/images/hans-zimmer.jpg",
+      },
+    ],
+    tags: ["Vida Selvagem", "Natureza", "Cinematografia"],
+    icon: "🎥",
+    duration: "Série (7 episódios)",
+    location: {
+      name: "Oceanos do Mundo Inteiro",
+      description: "Filmado em todos os oceanos do planeta, desde os mares gelados do Ártico até os vibrantes recifes de coral tropicais.",
     },
     relatedContent: {
       fauna: [
-        { label: "Lula Gigante", id: "lula-gigante" },
-        { label: "Peixe-Dragão", id: "peixe-dragao" },
+        { label: "Baleia Jubarte", id: "baleia-jubarte" },
+        { label: "Tubarão-Baleia", id: "tubarao-baleia" },
+        { label: "Polvo-Comum", id: "polvo-comum" },
       ],
       flora: [],
-      geologicalPeriod: {
-        label: "Holoceno",
-        id: "holoceno",
-      },
     },
-  },
+  }
 ];
