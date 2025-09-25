@@ -3,21 +3,21 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#36d1e0', // Turquesa oceano
-      dark: '#1976d2', // Azul profundo
+      main: '#36d1e0',
+      dark: '#1976d2',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#00bcd4', // Azul claro
+      main: '#00bcd4',
       dark: '#0097a7',
       contrastText: '#fff',
     },
     background: {
-      default: '#02101a', // cor sólida
+      default: '#02101a',
       paper: 'rgba(2,16,26,0.85)',
     },
     text: {
-      primary: '#e3f2fd', // Azul claro para contraste
+      primary: '#e3f2fd',
       secondary: '#b3c2d6',
     },
   },
@@ -36,7 +36,22 @@ const theme = createTheme({
       color: '#b3c2d6',
     },
   },
-  
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          background: 'rgba(255,255,255,0.10)',
+        },
+      },
+    },
+  },
 
   components: {
     StyledCard: {
@@ -46,11 +61,12 @@ const theme = createTheme({
         },
       },
     },
+
   },
 
 })
 
 
 
- 
+
 export default theme
