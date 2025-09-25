@@ -48,7 +48,7 @@ export const faunaData = [
       { title: "Termorregulação", text: "É um dos poucos peixes capazes de manter a temperatura corporal mais alta que a da água ao seu redor (endotermia), o que lhe confere maior força e resistência muscular." },
       { title: "Sentidos Apurados", text: "Possui um olfato extremamente apurado, capaz de detectar uma gota de sangue a quilômetros de distância." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d',
+    imageUrl: 'https://wallpapercave.com/wp/YocUFbD.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "night",
     secondaryImages: [
