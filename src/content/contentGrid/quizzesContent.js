@@ -3,7 +3,7 @@ export const quizzesData = [
     id: "placas-tectonicas-quiz",
     type: "quizzes",
     category: "Geologia Marinha",
-    imageUrl: "https://images.unsplash.com/photo-1614036728523-1ac5590f2390?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://img.freepik.com/vector-gratis/mapa-mundial-que-muestra-limites-placas-tectonicas_1308-68915.jpg?w=996&t=st=1693626198~exp=1693626798~hmac=e285a5d48ea94f605e1ee1fda7c57e21a532bbf55333eaba7065e6261f56f78e",
     label: "Quiz: Placas Tectônicas",
     shortDescription: "Teste seus conhecimentos sobre as placas que moldam o fundo do oceano.",
     longDescription: "Este quiz desafia você a mergulhar nas profundezas da geologia marinha. Responda perguntas sobre a formação de montanhas submarinas, zonas de subducção e a deriva continental, tudo relacionado ao assoalho oceânico. Prepare-se para testar o seu conhecimento sobre o nosso planeta em constante movimento.",
@@ -55,7 +55,7 @@ export const quizzesData = [
         options: ["Placa do Pacífico e Placa Norte-Americana", "Placa de Nazca e Placa Sul-Americana", "Placa Indiana e Placa Eurasiática", "Placa Africana e Placa Antártica"],
         correctAnswer: "Placa Indiana e Placa Eurasiática",
       },
-       {
+      {
         question: "Qual camada da Terra é composta pelas placas tectônicas?",
         options: ["Núcleo", "Manto", "Litosfera", "Astenosfera"],
         correctAnswer: "Litosfera",
@@ -66,14 +66,14 @@ export const quizzesData = [
     id: "criaturas-profundezas-quiz",
     type: "quizzes",
     category: "Biologia Marinha",
-    imageUrl: "https://images.unsplash.com/photo-1575550959108-27b6a4b19dea?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://i.pinimg.com/originals/9a/6d/a6/9a6da6f66a023d18a03e9c4991fb6d9e.jpg",
     label: "Quiz: Criaturas das Profundezas",
     shortDescription: "Você consegue identificar as criaturas mais estranhas e fascinantes do abismo?",
     longDescription: "Prepare-se para encontrar as criaturas mais bizarras e adaptadas do fundo do oceano. Este quiz testará sua capacidade de reconhecer peixes que brilham no escuro, lulas gigantes e outros seres que vivem em um ambiente de pressão extrema e ausência de luz. Descubra o quão bem você conhece o abismo marinho!",
     link: "link-para-o-quiz",
     bgColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     difficulty: "Difícil",
-    numberOfQuestions: 8, // Atualizado
+    numberOfQuestions: 8,
     duration: "15-20 min",
     relatedContent: {
       fauna: [
@@ -117,7 +117,7 @@ export const quizzesData = [
         options: ["Lançar tinta preta", "Ejetar uma nuvem de muco bioluminescente", "Nadar em alta velocidade", "Fingir-se de morta"],
         correctAnswer: "Ejetar uma nuvem de muco bioluminescente",
       },
-       {
+      {
         question: "Qual a principal adaptação dos peixes abissais à imensa pressão da água?",
         options: ["Corpos com ossos muito densos", "Ausência de bexiga natatória", "Corpos gelatinosos e com pouca estrutura óssea", "Escamas muito grossas"],
         correctAnswer: "Corpos gelatinosos e com pouca estrutura óssea",
@@ -128,14 +128,14 @@ export const quizzesData = [
     id: "mares-e-lua-quiz",
     type: "quizzes",
     category: "Astronomia",
-    imageUrl: "https://images.unsplash.com/photo-1446776811953-b23d579212c5?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://th.bing.com/th/id/OIP.kqkWd01Yfnc8ymK9mqjk9gHaD4?w=323&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
     label: "Quiz: Marés e Lua",
     shortDescription: "Entenda a relação entre a astronomia e as marés oceânicas.",
     longDescription: "Este quiz explora a incrível conexão entre o espaço e os oceanos. Você vai responder perguntas sobre como a atração gravitacional da Lua e do Sol influenciam as marés e por que elas variam de intensidade. Uma maneira divertida de entender a física por trás das ondas que chegam à praia.",
     link: "link-para-o-quiz",
     bgColor: "linear-gradient(135deg, #53E6BA 0%, #30A6F4 100%)",
     difficulty: "Fácil",
-    numberOfQuestions: 6, // Atualizado
+    numberOfQuestions: 6,
     duration: "5-10 min",
     relatedContent: {},
     questions: [
@@ -150,7 +150,7 @@ export const quizzesData = [
         correctAnswer: "Marés com a maior amplitude",
       },
       // --- PERGUNTAS ADICIONAIS ---
-       {
+      {
         question: "Quando ocorrem as marés de sizígia (marés vivas)?",
         options: ["Apenas durante o verão", "Quando o Sol, a Terra e a Lua estão alinhados (Lua Nova e Cheia)", "Quando o Sol e a Lua estão em ângulos retos em relação à Terra", "Apenas durante eclipses"],
         correctAnswer: "Quando o Sol, a Terra e a Lua estão alinhados (Lua Nova e Cheia)",
@@ -160,7 +160,7 @@ export const quizzesData = [
         options: ["Marés com a menor amplitude", "Marés com a maior amplitude", "Marés que ocorrem de dia", "Marés que ocorrem em rios"],
         correctAnswer: "Marés com a menor amplitude",
       },
-       {
+      {
         question: "Quantas marés altas ocorrem, tipicamente, em um período de 24 horas em uma área costeira?",
         options: ["Uma", "Duas", "Três", "Quatro"],
         correctAnswer: "Duas",
@@ -173,12 +173,11 @@ export const quizzesData = [
     ],
   },
 
-  // --- NOVOS QUIZZES ---
   {
     id: "recifes-de-coral-quiz",
     type: "quizzes",
     category: "Ecossistemas",
-    imageUrl: "https://images.unsplash.com/photo-1551201323-ba8a735a42f8?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://tse1.mm.bing.net/th/id/OIP.jMor3cIeOz-jrkXNobP0mgHaEP?rs=1&pid=ImgDetMain&o=7&rm=3",
     label: "Quiz: Recifes de Coral",
     shortDescription: "Você conhece a importância e a fragilidade das 'florestas tropicais do mar'?",
     longDescription: "Mergulhe no ecossistema mais biodiverso do planeta! Este quiz aborda a biologia dos corais, a incrível variedade de vida que eles abrigam e as ameaças que enfrentam, como o branqueamento. Teste seu conhecimento sobre essas cidades subaquáticas.",
@@ -239,7 +238,7 @@ export const quizzesData = [
     id: "cetaceos-quiz",
     type: "quizzes",
     category: "Biologia Marinha",
-    imageUrl: "https://images.unsplash.com/photo-1604135404139-58b6811a26a7?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://portalmorada.com.br/wp-content/uploads/2022/01/planeta-terra-inicia-serie-gigantes-do-oceano-4NGn-1920x1079.jpg",
     label: "Quiz: Gigantes do Oceano",
     shortDescription: "Teste seu conhecimento sobre os mamíferos mais inteligentes e majestosos do mar.",
     longDescription: "De golfinhos ágeis a baleias colossais, os cetáceos dominam os oceanos com sua inteligência e complexidade social. Este quiz vai desafiar o que você sabe sobre esses gigantes, abordando tópicos como comunicação, ecolocalização e suas incríveis migrações.",

@@ -11,27 +11,27 @@ export default function MediaDisplay({ show3D, item }) {
   return (
     <Box sx={{ my: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       {show3D && item.threeModel ? (
-        <Suspense fallback={<Skeleton variant="rectangular" width={700} height={500} sx={{ borderRadius: 3 }} />}>
-          <Box sx={{ width: 700, height: 500, maxWidth: '100%', maxHeight: '60vh' }}>
+        <Suspense fallback={<Skeleton variant="rectangular" width={800} height={500} sx={{ borderRadius: 3 }} />}>
+          <Box sx={{ width: 800, height: 500, maxWidth: '100%', maxHeight: '60vh' }}>
             <ModelViewer modelUrl={item.threeModel} backgroundPreset={item.backgroundPreset} />
           </Box>
         </Suspense>
       ) : item.imageUrl ? (
         <>
           {!imgLoaded && (
-            <Skeleton variant="rectangular" width={500} height={500} sx={{ borderRadius: 3 }} />
+            <Skeleton variant="rectangular" width={600} height={500} sx={{ borderRadius: 3 }} />
           )}
           <img
             src={item.imageUrl}
             alt={item.label}
             style={{
-              width: 500,
+              width: 800,
               height: 500,
               objectFit: 'cover',
               borderRadius: 12,
               display: imgLoaded ? 'block' : 'none',
               maxWidth: '100%',
-              maxHeight: '60vh'
+              maxHeight: '80vh'
             }}
             onLoad={() => setImgLoaded(true)}
           />
