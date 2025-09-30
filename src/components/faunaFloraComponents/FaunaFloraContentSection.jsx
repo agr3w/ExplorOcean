@@ -1,32 +1,33 @@
+// src/pages/faunaFlora/FaunaFloraContentSection.jsx
+
 import { Box } from "@mui/material";
 import CategorySelector from "../../components/faunaFloraComponents/CategorySelector";
 import ContentGrid from "../../components/ContentGridComponents/contentGrid/ContentGrid";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function FaunaFloraContentSection({
   selectedCategory,
   setSelectedCategory,
-  pageTitle,
-  pageDescription,
   itemsToShow,
   show3D,
 }) {
   return (
     <Box
       sx={{
-        p: 4,
+        pt: 6, pb: 4, px: 4,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         position: "relative",
+        backgroundColor: '#02101a',
       }}
     >
       <CategorySelector
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       />
+
       <ContentGrid
-        title={pageTitle}
-        description={pageDescription}
         items={itemsToShow}
         show3D={show3D}
       />

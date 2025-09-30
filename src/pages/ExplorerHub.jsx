@@ -44,7 +44,7 @@ export default function ExplorerHub() {
           <motion.div variants={gridVariants}>
             <Grid container spacing={4} justifyContent="center" alignItems="stretch">
               {explorerItems.map((item, index) => (
-                <Grid item xs={12} sm={6} md={4} key={item.title} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid item xs={12} sm={6} md={4} key={item.title} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'stretch' }}>
                   <HubCard item={item} />
                 </Grid>
               ))}
