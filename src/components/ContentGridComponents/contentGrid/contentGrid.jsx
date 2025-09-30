@@ -34,7 +34,7 @@ export default function ContentGrid({ items, show3D }) {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ type: 'spring', stiffness: 180, damping: 25 }}
                 style={{
-                  width: 300,      // largura padrão
+                  width: 400,      // largura padrão
                   minHeight: 370,  // altura mínima padrão
                   maxWidth: '100%',
                   display: 'flex',
