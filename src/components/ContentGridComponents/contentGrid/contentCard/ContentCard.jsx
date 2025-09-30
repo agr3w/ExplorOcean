@@ -4,31 +4,28 @@ import { styled } from "@mui/material/styles";
 import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
-import { Link } from "react-router-dom"; // Adicionado
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  borderRadius: theme.spacing(2),
-  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-  transition:
-    "transform 0.3s cubic-bezier(.77,0,.18,1), box-shadow 0.3s cubic-bezier(.77,0,.18,1)",
+const StyledCard = styled(motion.div)(({ theme }) => ({
+  borderRadius: theme.spacing(3),
+  border: "1.5px solid rgba(54, 209, 224, 0.25)",
   cursor: "pointer",
+  color: "#fff",
   height: "100%",
   display: "flex",
   flexDirection: "column",
-  minHeight: 340,
-  maxHeight: 340,
-  minWidth: 260,
-  maxWidth: 420,
   width: "100%",
+  padding: theme.spacing(1),
+
+  // 3. EFEITO GLASSMORPHISM AUTÊNTICO
+  background: "linear-gradient(135deg, rgba(2,16,26,0.7) 60%, rgba(54,209,224,0.15) 100%)",
+  backdropFilter: "blur(12px)",
+  WebkitBackdropFilter: "blur(12px)",
+  boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+  minHeight: 340,
   [theme.breakpoints.down("sm")]: {
     minHeight: 260,
-    maxHeight: 260,
-    minWidth: "100%",
-    maxWidth: "100%",
-  },
-  "&:hover": {
-    transform: "translateY(-8px)",
-    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
   },
 }));
 
@@ -44,9 +41,22 @@ const ContentCard = ({ item, threeModel }) => {
     linkTo = `/Flora/${item.id}`;
   }
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+  };
+
   return (
-    <Link to={linkTo} style={{ textDecoration: "none" }}>
-      <StyledCard>
+    <Link to={linkTo} style={{ textDecoration: "none", height: '100%' }}>
+      <StyledCard
+        variants={cardVariants}
+        whileHover={{
+          y: -10,
+          boxShadow: "0 12px 36px rgba(54, 209, 224, 0.3), 0 4px 16px rgba(0,0,0,0.2)", // Efeito "glow"
+          borderColor: "rgba(54, 209, 224, 0.8)",
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      >
         <CardHeader
           imageUrl={item.imageUrl}
           rating={item.rating}
