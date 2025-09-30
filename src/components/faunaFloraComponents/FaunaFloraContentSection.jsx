@@ -3,7 +3,7 @@
 import { Box, Typography } from "@mui/material";
 import CategorySelector from "../../components/faunaFloraComponents/CategorySelector";
 import ContentGrid from "../../components/ContentGridComponents/contentGrid/ContentGrid";
-import FeaturedCard from "../../components/faunaFloraComponents/FeaturedCard"; // 1. Importe o novo componente
+import FeaturedCard from "../../components/faunaFloraComponents/FeaturedCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FaunaFloraContentSection({
@@ -12,13 +12,14 @@ export default function FaunaFloraContentSection({
   itemsToShow,
   show3D,
 }) {
+
   const filteredItems = itemsToShow.filter(item =>
     item.category.toLowerCase() === selectedCategory
   );
 
-  // 2. SEPARE O ITEM DE DESTAQUE DO RESTANTE DA GRADE
-  const featuredItem = filteredItems.length > 0 ? filteredItems[0] : null;
-  const gridItems = filteredItems.length > 1 ? filteredItems.slice(1) : [];
+  // Busca o item destacado por 'featured: true', senão pega o primeiro
+  const featuredItem = filteredItems.find(item => item.featured) || filteredItems[0] || null;
+  const gridItems = filteredItems.filter(item => item !== featuredItem);
 
   return (
     <Box
