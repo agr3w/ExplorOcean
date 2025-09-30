@@ -40,6 +40,7 @@ export const faunaData = [
     id: 'tubarao-branco',
     category: 'Fauna',
     label: 'Tubarão-Branco',
+    featured: true,
     geologicalPeriodId: 'neogeno',
     shortDescription: 'Predador de topo com um olfato apurado, crucial para o equilíbrio dos ecossistemas marinhos.',
     longDescription: 'O grande tubarão-branco (Carcharodon carcharias) é o maior peixe predador do mundo, uma máquina de caça evolutivamente aprimorada. É um predador de topo, vital para a saúde dos ecossistemas marinhos, regulando as populações de espécies como leões-marinhos e focas. Seus dentes serrilhados e em fileiras são substituídos continuamente ao longo da vida. Possui órgãos sensoriais, as ampolas de Lorenzini, que detectam os campos elétricos gerados por presas, permitindo-lhe caçar com extrema precisão, mesmo sem visão direta.',
