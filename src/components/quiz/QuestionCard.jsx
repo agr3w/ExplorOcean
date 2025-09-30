@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, LinearProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import QuestionProgress from './quizComponents/QuestionProgress';
+import ContinueButton from './quizComponents/ContinueButton';
+import QuestionTitle from './quizComponents/QuestionTitle';
+import OptionsList from './quizComponents/OptionsList';
 
-export default function QuestionCard({ question, options, correctAnswer, questionNumber, totalQuestions, onAnswerSubmit }) {
+export default function QuestionCard({
+  question,
+  options,
+  correctAnswer,
+  questionNumber,
+  totalQuestions,
+  onAnswerSubmit
+}) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
 
@@ -38,41 +47,18 @@ export default function QuestionCard({ question, options, correctAnswer, questio
         exit={{ opacity: 0, x: -100 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="overline" color="primary.light">
-            PERGUNTA {questionNumber} DE {totalQuestions}
-          </Typography>
-          <LinearProgress variant="determinate" value={(questionNumber / totalQuestions) * 100} />
-        </Box>
-
-        <Typography variant="h5" color="white" sx={{ my: 3, fontWeight: 'bold' }}>
-          {question}
-        </Typography>
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, my: 3 }}>
-          {options.map((option, index) => (
-            <Button
-              key={index}
-              variant="outlined"
-              onClick={() => handleOptionClick(option)}
-              disabled={isAnswered && selectedOption !== option && option !== correctAnswer}
-              sx={{
-                justifyContent: 'flex-start', textAlign: 'left', py: 1.5,
-                transition: 'all 0.3s ease',
-                ...getButtonSx(option)
-              }}
-              endIcon={isAnswered ? (option === correctAnswer ? <CheckCircleIcon /> : (option === selectedOption ? <CancelIcon /> : null)) : null}
-            >
-              {option}
-            </Button>
-          ))}
-        </Box>
+        <QuestionProgress questionNumber={questionNumber} totalQuestions={totalQuestions} />
+        <QuestionTitle question={question} />
+        <OptionsList
+          options={options}
+          selectedOption={selectedOption}
+          isAnswered={isAnswered}
+          correctAnswer={correctAnswer}
+          handleOptionClick={handleOptionClick}
+          getButtonSx={getButtonSx}
+        />
         {isAnswered && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-            <Button variant="contained" size="large" onClick={() => onAnswerSubmit(selectedOption)} sx={{ width: '100%', mt: 2 }}>
-              Continuar
-            </Button>
-          </motion.div>
+          <ContinueButton onClick={() => onAnswerSubmit(selectedOption)} />
         )}
       </motion.div>
     </Box>
