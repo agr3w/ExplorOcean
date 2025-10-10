@@ -6,7 +6,7 @@ import { Box, Typography, TextField, Button, Link } from '@mui/material';
 export default function RegisterForm({ onToggle }) {
   return (
     <Box sx={{
-        width: '100%', height: '100%', p: 4, borderRadius: 4,
+        width: '100%', height: '90%', p: 4, borderRadius: 4,
         display: 'flex', flexDirection: 'column', gap: 2, // Gap menor para mais campos
         backgroundColor: 'rgba(2, 16, 26, 0.7)',
         backdropFilter: 'blur(12px)',
