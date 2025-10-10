@@ -24,7 +24,7 @@ export default function LoginForm({ onToggle }) {
       exit={{ opacity: 0, rotateY: -30, filter: 'blur(8px)' }}
       transition={{ duration: 0.7, ease: [0.4, 0.8, 0.3, 1] }}
       sx={{
-        width: '100%', height: '100%', p: 4, borderRadius: 4,
+        width: '100%', height: '90%', p: 4, borderRadius: 4,
         display: 'flex', flexDirection: 'column',
         backgroundColor: 'rgba(2, 16, 26, 0.7)',
         backdropFilter: 'blur(12px)',
