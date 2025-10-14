@@ -3,6 +3,7 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -39,6 +40,38 @@ router.post('/register', async (req, res) => {
         }
         // Outros erros
         res.status(500).json({ message: "Erro ao criar usuário.", error: error.message });
+    }
+});
+
+// Rota: POST /api/users/login
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email e senha são obrigatórios." });
+    }
+
+    try {
+        // Procura o usuário pelo email no banco
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        // Se o usuário não for encontrado, ou se a senha não bater...
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ message: "Email ou senha inválidos." });
+        }
+
+        // Se deu tudo certo, gera um token de autenticação
+        const token = jwt.sign(
+            { userId: user.id, username: user.username }, // O que queremos guardar no token
+            process.env.JWT_SECRET, // Nossa chave secreta
+            { expiresIn: '24h' } // Duração do token
+        );
+
+        // Retorna o token para o front-end
+        res.status(200).json({ token });
+
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao fazer login.", error: error.message });
     }
 });
 

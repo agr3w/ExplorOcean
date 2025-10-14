@@ -1,24 +1,28 @@
 import React from 'react';
-import { Box, Typography, TextField, Button, Link } from '@mui/material';
+import { Box, Typography, TextField, Button, Link, CircularProgress, Alert } from '@mui/material';
 import { motion } from 'framer-motion';
 import { MdAlternateEmail, MdLockOutline } from 'react-icons/md';
+import { useAuthForm } from '../../hooks/useAuthForm';
 
-// Variantes para animação dos campos
-const fieldVariants = {
-  hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
-  visible: i => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { delay: i * 0.13, type: 'spring', stiffness: 80 }
-  }),
-};
+export default function LoginForm({ onToggle, onSuccess, onError, setError, setMood }) {
+  const { formData, isLoading, handleChange, handleSubmit } = useAuthForm(
+    true, onToggle, onSuccess, onError, setError, setMood
+  );
 
-export default function LoginForm({ onToggle }) {
+  const fieldVariants = {
+    hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
+    visible: i => ({
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { delay: i * 0.13, type: 'spring', stiffness: 80 }
+    }),
+  };
+
   return (
-    // O pai pode aplicar o flip 3D, aqui só a animação dos campos
     <Box
-      component={motion.div}
+      component={motion.form}
+      onSubmit={handleSubmit}
       initial={{ opacity: 0, rotateY: 30, filter: 'blur(8px)' }}
       animate={{ opacity: 1, rotateY: 0, filter: 'blur(0px)' }}
       exit={{ opacity: 0, rotateY: -30, filter: 'blur(8px)' }}
@@ -38,18 +42,20 @@ export default function LoginForm({ onToggle }) {
         Login
       </Typography>
 
-      {/* Campos animados individualmente */}
       <motion.div custom={0} variants={fieldVariants} initial="hidden" animate="visible">
         <TextField
           label="Email"
+          name="email"
+          value={formData.email || ''}
+          onChange={handleChange}
           variant="standard"
           InputProps={{
-            startAdornment: <MdAlternateEmail size={20} style={{ marginRight: '12px', color: 'rgba(255,255,255,0.5)' }}/>
+            startAdornment: <MdAlternateEmail size={20} style={{ marginRight: '12px', color: 'rgba(255,255,255,0.5)' }} />
           }}
           sx={{
             width: '100%',
             '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255, 255, 255, 0.3)' },
-            '& .MuiInput-underline:after': { 
+            '& .MuiInput-underline:after': {
               borderBottom: '2px solid #36d1e0',
               boxShadow: '0 5px 15px -5px #36d1e0',
             },
@@ -61,16 +67,19 @@ export default function LoginForm({ onToggle }) {
       <motion.div custom={1} variants={fieldVariants} initial="hidden" animate="visible">
         <TextField
           label="Senha"
+          name="password"
+          value={formData.password || ''}
+          onChange={handleChange}
           type="password"
           variant="standard"
           InputProps={{
-            startAdornment: <MdLockOutline size={20} style={{ marginRight: '12px', color: 'rgba(255,255,255,0.5)' }}/>
+            startAdornment: <MdLockOutline size={20} style={{ marginRight: '12px', color: 'rgba(255,255,255,0.5)' }} />
           }}
           sx={{
             width: '100%',
             mt: 3,
             '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255, 255, 255, 0.3)' },
-            '& .MuiInput-underline:after': { 
+            '& .MuiInput-underline:after': {
               borderBottom: '2px solid #36d1e0',
               boxShadow: '0 5px 15px -5px #36d1e0',
             },
@@ -80,9 +89,8 @@ export default function LoginForm({ onToggle }) {
         />
       </motion.div>
 
-      {/* Botão com efeito pulsar */}
       <motion.div whileTap={{ scale: 0.95 }} custom={2} variants={fieldVariants} initial="hidden" animate="visible">
-        <Button variant="contained" size="large" sx={{
+        <Button type="submit" variant="contained" size="large" disabled={isLoading} sx={{
           width: '100%', mt: 4, py: 1.5,
           borderRadius: '50px',
           fontWeight: 'bold',
@@ -93,7 +101,7 @@ export default function LoginForm({ onToggle }) {
             boxShadow: '0 0 30px rgba(54, 209, 224, 0.7)',
           }
         }}>
-          Entrar
+          {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Entrar'}
         </Button>
       </motion.div>
 
