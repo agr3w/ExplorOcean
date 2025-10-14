@@ -1,0 +1,20 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // Usando SQLite para simplicidade
+  url      = env("DATABASE_URL")
+}
+
+// Tabela para nossos usuários
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @unique
+  password  String   // Vamos armazenar a senha criptografada (hash)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
