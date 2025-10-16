@@ -100,7 +100,7 @@ export default function NavigatorBase({
           {/* --- SEÇÃO DIREITA --- */}
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
             <Tooltip title="Acessar Perfil" arrow>
-              <IconButton component={Link} to="/perfil" sx={{ color: buttonColor }}>
+              <IconButton component={Link} to="/auth" sx={{ color: buttonColor }}>
                 <MdPerson size={26} />
               </IconButton>
             </Tooltip>
