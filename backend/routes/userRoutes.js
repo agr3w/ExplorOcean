@@ -89,8 +89,9 @@ router.get('/me', authMiddleware, async (req, res) => {
 
 // ROTA PARA ATUALIZAR AS CONFIGURAÇÕES E PREFERÊNCIAS DO USUÁRIO
 router.put('/me', authMiddleware, async (req, res) => {
-    const { username, email, password, enable3d, notifications } = req.body;
-    
+    // 1. ADICIONE 'oldPassword' À DESESTRUTURAÇÃO
+    const { username, email, password, oldPassword, enable3d, notifications } = req.body;
+
     try {
         const dataToUpdate = {};
         if (username !== undefined) dataToUpdate.username = username;
@@ -98,7 +99,20 @@ router.put('/me', authMiddleware, async (req, res) => {
         if (enable3d !== undefined) dataToUpdate.enable3d = enable3d;
         if (notifications !== undefined) dataToUpdate.notifications = notifications;
 
+        // 2. LÓGICA DE VERIFICAÇÃO DE SENHA
         if (password) {
+            if (!oldPassword) {
+                return res.status(400).json({ message: 'A senha antiga é necessária para definir uma nova.' });
+            }
+
+            const user = await prisma.user.findUnique({ where: { id: req.user.userId } });
+
+            const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+            if (!isPasswordCorrect) {
+                return res.status(401).json({ message: 'A senha antiga está incorreta.' });
+            }
+
+            // Se a senha antiga estiver correta, criptografa a nova
             dataToUpdate.password = await bcrypt.hash(password, 10);
         }
 
