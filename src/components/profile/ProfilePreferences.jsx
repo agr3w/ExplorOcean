@@ -1,10 +1,9 @@
-// src/components/profile/ProfilePreferences.jsx
-
 import React, { useState } from 'react';
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { updateUserProfile } from '../../services/userService';
 
-// 1. COMPONENTE DE SWITCH ESTILIZADO
+// Switch estilizado
 const ThemedSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
@@ -17,7 +16,7 @@ const ThemedSwitch = styled(Switch)(({ theme }) => ({
       color: '#fff',
       transform: 'translateX(22px)',
       '& .MuiSwitch-thumb': {
-        backgroundColor: theme.palette.primary.main, // Ciano quando ligado
+        backgroundColor: theme.palette.primary.main,
       },
       '& + .MuiSwitch-track': {
         opacity: 1,
@@ -38,25 +37,30 @@ const ThemedSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function ProfilePreferences() {
+export default function ProfilePreferences({ user, setUser }) {
   const [prefs, setPrefs] = useState({
-    enable3d: true,
-    notifications: false,
+    enable3d: user.enable3d,
+    notifications: user.notifications,
   });
 
-  const handleChange = (event) => {
-    setPrefs({
-      ...prefs,
-      [event.target.name]: event.target.checked,
-    });
+  const handleChange = async (event) => {
+    const { name, checked } = event.target;
+    setPrefs(prev => ({ ...prev, [name]: checked }));
+
+    try {
+      const { data } = await updateUserProfile({ [name]: checked });
+      setUser(prevUser => ({ ...prevUser, ...data }));
+    } catch (error) {
+      console.error("Erro ao salvar preferência", error);
+    }
   };
 
   return (
     <Box sx={{
-        mb: 4, p: 3, borderRadius: 3,
-        background: 'rgba(2,16,26,0.5)',
-        boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
-        backdropFilter: 'blur(8px)',
+      mb: 4, p: 3, borderRadius: 3,
+      background: 'rgba(2,16,26,0.5)',
+      boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
+      backdropFilter: 'blur(8px)',
     }}>
       <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>Preferências</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>

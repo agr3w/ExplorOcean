@@ -1,24 +1,21 @@
-// backend/routes/userRoutes.js
-
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middleware/authMiddleware'); // Importe o middleware
 
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// Rota: POST /api/users/register
+// Rotas públicas (sem alterações)
 router.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
 
-    // Validação simples
     if (!username || !email || !password) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 
     try {
-        // Criptografa a senha antes de salvar
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = await prisma.user.create({
@@ -29,21 +26,17 @@ router.post('/register', async (req, res) => {
             },
         });
 
-        // Retorna o usuário criado (sem a senha!)
         const { password: _, ...userWithoutPassword } = newUser;
         res.status(201).json(userWithoutPassword);
 
     } catch (error) {
-        // Verifica se o erro é de campo único (email ou username já existe)
         if (error.code === 'P2002') {
             return res.status(409).json({ message: "Email ou nome de usuário já cadastrado." });
         }
-        // Outros erros
         res.status(500).json({ message: "Erro ao criar usuário.", error: error.message });
     }
 });
 
-// Rota: POST /api/users/login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -52,25 +45,84 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        // Procura o usuário pelo email no banco
         const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
-        // Se o usuário não for encontrado, ou se a senha não bater...
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ message: "Email ou senha inválidos." });
         }
 
-        // Se deu tudo certo, gera um token de autenticação
         const token = jwt.sign(
-            { userId: user.id, username: user.username }, // O que queremos guardar no token
-            process.env.JWT_SECRET, // Nossa chave secreta
-            { expiresIn: '24h' } // Duração do token
+            { userId: user.id, username: user.username },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
         );
 
-        // Retorna o token para o front-end
         res.status(200).json({ token });
 
     } catch (error) {
         res.status(500).json({ message: "Erro ao fazer login.", error: error.message });
+    }
+});
+
+// --- NOVAS ROTAS PROTEGIDAS ---
+
+// ROTA PARA BUSCAR DADOS DO USUÁRIO LOGADO
+router.get('/me', authMiddleware, async (req, res) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: req.user.userId },
+            select: {
+                id: true,
+                username: true,
+                email: true,
+                createdAt: true,
+                enable3d: true,
+                notifications: true,
+                history: true
+            }
+        });
+        if (!user) return res.status(404).json({ message: 'Usuário não encontrado.' });
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar dados do usuário.' });
+    }
+});
+
+// ROTA PARA ATUALIZAR AS CONFIGURAÇÕES E PREFERÊNCIAS DO USUÁRIO
+router.put('/me', authMiddleware, async (req, res) => {
+    const { username, email, password, enable3d, notifications } = req.body;
+    
+    try {
+        const dataToUpdate = {};
+        if (username !== undefined) dataToUpdate.username = username;
+        if (email !== undefined) dataToUpdate.email = email.toLowerCase();
+        if (enable3d !== undefined) dataToUpdate.enable3d = enable3d;
+        if (notifications !== undefined) dataToUpdate.notifications = notifications;
+
+        if (password) {
+            dataToUpdate.password = await bcrypt.hash(password, 10);
+        }
+
+        const updatedUser = await prisma.user.update({
+            where: { id: req.user.userId },
+            data: dataToUpdate,
+        });
+
+        const { password: _, ...userWithoutPassword } = updatedUser;
+        res.json(userWithoutPassword);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao atualizar usuário.' });
+    }
+});
+
+// ROTA PARA DELETAR O USUÁRIO
+router.delete('/me', authMiddleware, async (req, res) => {
+    try {
+        await prisma.user.delete({
+            where: { id: req.user.userId },
+        });
+        res.status(200).json({ message: 'Conta excluída com sucesso.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao excluir conta.' });
     }
 });
 
