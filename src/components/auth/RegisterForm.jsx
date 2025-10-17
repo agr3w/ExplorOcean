@@ -18,7 +18,7 @@ export default function RegisterForm({ onToggle, setError, setSuccess, setMood }
         backdropFilter: 'blur(12px)',
         border: '1.5px solid rgba(54, 209, 224, 0.3)',
         boxShadow: '0 8px 32px rgba(2, 16, 26, 0.5)',
-        color: 'white'
+        color: 'white',
       }}
     >
       <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'center', mb: 1 }}>Cadastro</Typography>
@@ -57,7 +57,7 @@ export default function RegisterForm({ onToggle, setError, setSuccess, setMood }
       </Button>
       <Typography variant="body2" sx={{ textAlign: 'center', mt: 'auto', pt: 1 }}>
         Já tem uma conta?{' '}
-        <Link component="button" variant="body2" onClick={onToggle} sx={{ fontWeight: 'bold' }}>
+        <Link component="button" type="button" variant="body2" onClick={onToggle} sx={{ fontWeight: 'bold' }}>
           Fazer Login
         </Link>
       </Typography>

@@ -137,7 +137,7 @@ export default function LoginForm({ onToggle, setError, setSuccess, setMood }) {
         <motion.div custom={3} variants={fieldVariants} initial="hidden" animate="visible" style={{ marginTop: 'auto' }}>
           <Typography variant="body2" sx={{ textAlign: 'center', pt: 2 }}>
             Não tem uma conta?{' '}
-            <Link component="button" variant="body2" onClick={onToggle} sx={{ fontWeight: 'bold' }}>
+            <Link component="button" type="button" variant="body2" onClick={onToggle} sx={{ fontWeight: 'bold' }}>
               Cadastre-se
             </Link>
           </Typography>
