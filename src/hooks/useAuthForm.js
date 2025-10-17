@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../services/authService';
+import { useAuth } from '../context/AuthContext'; 
 
-// O hook agora recebe 'setSuccess'
 export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) => {
   const navigate = useNavigate();
+  const { login } = useAuth(); 
   const [formData, setFormData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
@@ -62,7 +63,8 @@ export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) =>
     try {
       if (isLogin) {
         const { data } = await loginUser(submissionData);
-        localStorage.setItem('authToken', data.token);
+        // Use o contexto para login e navegação
+        login(data.token);
         setMood && setMood('happy');
         setSuccess && setSuccess('Login bem-sucedido! Bem-vindo(a) de volta.');
         setTimeout(() => navigate('/profile'), 1500);

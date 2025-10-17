@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-// 1. Importações adicionais do MUI para as novas funcionalidades
 import {
   AppBar, Toolbar, Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText,
-  ListSubheader, Divider, Typography, IconButton, Tooltip, Slide, useScrollTrigger
+  ListSubheader, Divider, Typography, IconButton, Tooltip
 } from '@mui/material';
-import { MdMenu, MdHome, MdPerson } from 'react-icons/md';
+import { MdMenu, MdHome, MdPerson, MdLogout } from 'react-icons/md'; // Adicione o ícone de Logout
 import { Link } from 'react-router-dom';
 import { navigationLinks } from '../../content/navigatorContet/navigatorLinks';
-
-
+import { useAuth } from '../../context/AuthContext'; // Importe o useAuth
 
 export default function NavigatorBase({
   transparent = false,
@@ -17,6 +15,7 @@ export default function NavigatorBase({
   menuBg = '#b2ebf2',
   menuText = '#333',
 }) {
+  const { token, logout } = useAuth(); // Pegue o token e a função de logout do contexto
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerOpen = () => setDrawerOpen(true);
@@ -24,7 +23,6 @@ export default function NavigatorBase({
 
   return (
     <>
-
       <AppBar
         position={transparent ? 'absolute' : 'fixed'}
         sx={{
@@ -49,7 +47,6 @@ export default function NavigatorBase({
         >
           {/* --- SEÇÃO ESQUERDA --- */}
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
-            {/* Botão "Explorar" responsivo */}
             <Button
               startIcon={<MdMenu size={24} />}
               onClick={handleDrawerOpen}
@@ -97,13 +94,33 @@ export default function NavigatorBase({
             </Typography>
           </Box>
 
-          {/* --- SEÇÃO DIREITA --- */}
+          {/* --- SEÇÃO DIREITA ATUALIZADA --- */}
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-            <Tooltip title="Acessar Perfil" arrow>
-              <IconButton component={Link} to="/auth" sx={{ color: buttonColor }}>
-                <MdPerson size={26} />
+            <Tooltip title="Início" arrow>
+              <IconButton component={Link} to="/" sx={{ color: buttonColor }}>
+                <MdHome size={26} />
               </IconButton>
             </Tooltip>
+            {token ? (
+              <>
+                <Tooltip title="Acessar Perfil" arrow>
+                  <IconButton component={Link} to="/profile" sx={{ color: buttonColor }}>
+                    <MdPerson size={26} />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Sair" arrow>
+                  <IconButton onClick={logout} sx={{ color: buttonColor }}>
+                    <MdLogout size={26} />
+                  </IconButton>
+                </Tooltip>
+              </>
+            ) : (
+              <Tooltip title="Acessar" arrow>
+                <IconButton component={Link} to="/auth" sx={{ color: buttonColor }}>
+                  <MdPerson size={26} />
+                </IconButton>
+              </Tooltip>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
