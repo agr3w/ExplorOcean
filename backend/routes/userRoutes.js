@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
         const newUser = await prisma.user.create({
             data: {
                 username,
-                email,
+                email: email.toLowerCase(),
                 password: hashedPassword,
             },
         });
@@ -53,8 +53,7 @@ router.post('/login', async (req, res) => {
 
     try {
         // Procura o usuário pelo email no banco
-        const user = await prisma.user.findUnique({ where: { email } });
-
+        const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
         // Se o usuário não for encontrado, ou se a senha não bater...
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ message: "Email ou senha inválidos." });

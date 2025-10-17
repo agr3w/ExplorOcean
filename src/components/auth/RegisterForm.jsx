@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Typography, TextField, Button, Link, CircularProgress, Alert } from '@mui/material';
-import { useAuthForm } from '../../hooks/useAuthForm';
+import { Box, Typography, TextField, Button, Link, CircularProgress } from '@mui/material';
+import { useAuthForm } from '@/hooks/useAuthForm';
 
-export default function RegisterForm({ onToggle, onSuccess, onError, setError, setMood }) {
-  const { formData, isLoading, success, handleChange, handleSubmit } = useAuthForm(
-    false, onToggle, onSuccess, onError, setError, setMood
+export default function RegisterForm({ onToggle, setError, setSuccess, setMood }) {
+  const { formData, isLoading, validationErrors, handleChange, handleSubmit } = useAuthForm(
+    false, onToggle, setSuccess, setError, setMood
   );
 
   return (
@@ -12,7 +12,7 @@ export default function RegisterForm({ onToggle, onSuccess, onError, setError, s
       component="form"
       onSubmit={handleSubmit}
       sx={{
-        width: '100%', height: '100%', p: 4, borderRadius: 4,
+        width: '100%', height: '90%', p: 4, borderRadius: 4,
         display: 'flex', flexDirection: 'column',
         backgroundColor: 'rgba(2, 16, 26, 0.7)',
         backdropFilter: 'blur(12px)',
@@ -28,6 +28,8 @@ export default function RegisterForm({ onToggle, onSuccess, onError, setError, s
         value={formData.username || ''}
         onChange={handleChange}
         variant="standard"
+        error={!!validationErrors.username}
+        helperText={validationErrors.username || ' '}
       />
       <TextField
         label="Email"
@@ -35,6 +37,8 @@ export default function RegisterForm({ onToggle, onSuccess, onError, setError, s
         value={formData.email || ''}
         onChange={handleChange}
         variant="standard"
+        error={!!validationErrors.email}
+        helperText={validationErrors.email || ' '}
         sx={{ mt: 2 }}
       />
       <TextField
@@ -44,6 +48,8 @@ export default function RegisterForm({ onToggle, onSuccess, onError, setError, s
         onChange={handleChange}
         type="password"
         variant="standard"
+        error={!!validationErrors.password}
+        helperText={validationErrors.password || ' '}
         sx={{ mt: 2 }}
       />
       <Button type="submit" variant="contained" size="large" disabled={isLoading} sx={{ mt: 2 }}>

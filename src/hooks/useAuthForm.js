@@ -1,50 +1,84 @@
-// src/hooks/useAuthForm.js
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../services/authService';
 
-// ...existing code...
-export const useAuthForm = (isLogin, onToggle, onSuccess, onError, setError, setMood) => {
-    // Remova o estado local de erro do hook!
-    const [formData, setFormData] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const [success, setSuccess] = useState('');
+// O hook agora recebe 'setSuccess'
+export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({ ...prevState, [name]: value }));
-    };
+  useEffect(() => {
+    setValidationErrors({});
+    setError && setError('');
+    setSuccess && setSuccess('');
+    setFormData({});
+  }, [isLogin, setError, setSuccess]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setSuccess('');
-        setError && setError('');
-        setMood && setMood('idle');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({ ...prevState, [name]: value }));
+    if (validationErrors[name]) {
+      setValidationErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
+    }
+  };
 
-        try {
-            if (isLogin) {
-                const { data } = await loginUser(formData);
-                localStorage.setItem('authToken', data.token);
-                onSuccess && onSuccess();
-                setMood && setMood('happy');
-                setTimeout(() => navigate('/'), 1000);
-            } else {
-                await registerUser(formData);
-                setSuccess('Cadastro realizado! Redirecionando para o login...');
-                onSuccess && onSuccess();
-                setMood && setMood('happy');
-                setTimeout(() => onToggle(), 2000);
-            }
-        } catch (err) {
-            setError && setError(err.response?.data?.message || 'Ocorreu um erro. Tente novamente.');
-            setMood && setMood('sad');
-            onError && onError();
-        } finally {
-            setIsLoading(false);
-        }
-    };
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    return { formData, isLoading, success, handleChange, handleSubmit };
+    if (!isLogin) {
+      if (!formData.username?.trim()) errors.username = "Nome de usuário é obrigatório.";
+    }
+    if (!formData.email?.trim()) {
+      errors.email = "Email é obrigatório.";
+    } else if (!emailRegex.test(formData.email)) {
+      errors.email = "Por favor, insira um email válido.";
+    }
+    if (!formData.password?.trim()) {
+      errors.password = "Senha é obrigatória.";
+    } else if (!isLogin && formData.password.length < 6) {
+      errors.password = "A senha deve ter no mínimo 6 caracteres.";
+    }
+    return errors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError && setError('');
+    setSuccess && setSuccess('');
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setValidationErrors(formErrors);
+      setMood && setMood('sad');
+      return;
+    }
+    setIsLoading(true);
+    setValidationErrors({});
+
+    const submissionData = { ...formData, email: formData.email.toLowerCase() };
+
+    try {
+      if (isLogin) {
+        const { data } = await loginUser(submissionData);
+        localStorage.setItem('authToken', data.token);
+        setMood && setMood('happy');
+        setSuccess && setSuccess('Login bem-sucedido! Bem-vindo(a) de volta.');
+        setTimeout(() => navigate('/profile'), 1500);
+      } else {
+        await registerUser(submissionData);
+        setMood && setMood('happy');
+        setSuccess && setSuccess('Cadastro realizado! Redirecionando para o login...');
+        setTimeout(() => onToggle(), 2000);
+      }
+    } catch (err) {
+      setError && setError(err.response?.data?.message || 'Ocorreu um erro. Tente novamente.');
+      setMood && setMood('sad');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { formData, isLoading, validationErrors, handleChange, handleSubmit };
 };
