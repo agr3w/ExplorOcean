@@ -13,7 +13,7 @@ export default function ProfileHistory({ history }) { // Recebe o histórico via
     if (!history || history.length === 0) {
         return (
             <Box sx={{
-                mb: 4, p: 3, borderRadius: 3,
+                mb: 4, p: 3, borderRadius: 2,
                 background: 'rgba(2,16,26,0.5)',
                 boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
                 backdropFilter: 'blur(8px)',
@@ -27,7 +27,7 @@ export default function ProfileHistory({ history }) { // Recebe o histórico via
     }
     return (
         <Box sx={{
-            mb: 4, p: 3, borderRadius: 3,
+            mb: 4, p: 3, borderRadius: 2,
             background: 'rgba(2,16,26,0.5)',
             boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
             backdropFilter: 'blur(8px)',
