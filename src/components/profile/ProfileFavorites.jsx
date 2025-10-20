@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Typography, Paper, Avatar, Button, Modal } from '@mui/material';
+import { Box, Typography, Paper, Avatar, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import DetailsModal from './DetailsModal'; // 1. Importe o novo modal
 
-const MAX_VISIBLE = 6;
+const MAX_ITEMS_TO_SHOW = 4;
 
 const FavoriteChip = styled(Paper)(({ theme }) => ({
   display: 'flex',
@@ -23,30 +24,6 @@ const FavoriteChip = styled(Paper)(({ theme }) => ({
     backgroundColor: 'rgba(54, 209, 224, 0.15)',
   },
 }));
-
-function FavoriteList({ favorites, onChipClick }) {
-  return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
-      {favorites.map(fav => {
-        const linkTo = `/${fav.category || fav.type}/${fav.id}`;
-        return (
-          <FavoriteChip
-            key={fav.id}
-            component={Link}
-            to={linkTo}
-            elevation={4}
-            onClick={onChipClick}
-          >
-            <Avatar src={fav.imageUrl} alt={fav.label} sx={{ width: 44, height: 44, marginRight: 1.5 }} />
-            <Typography variant="body2" sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-              {fav.label}
-            </Typography>
-          </FavoriteChip>
-        );
-      })}
-    </Box>
-  );
-}
 
 export default function ProfileFavorites({ favorites }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -69,55 +46,44 @@ export default function ProfileFavorites({ favorites }) {
     );
   }
 
-  const visibleFavorites = favorites.slice(0, MAX_VISIBLE);
-  const hasMore = favorites.length > MAX_VISIBLE;
+  const recentFavorites = favorites.slice(0, MAX_ITEMS_TO_SHOW);
 
   return (
-    <Box sx={containerSx}>
-      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>Meus Favoritos</Typography>
-      <FavoriteList favorites={visibleFavorites} />
-      {hasMore && (
-        <Button
-          variant="outlined"
-          sx={{ mt: 3, borderColor: '#36d1e0', color: '#36d1e0', fontWeight: 'bold' }}
-          onClick={() => setModalOpen(true)}
-        >
-          Ver todos
-        </Button>
-      )}
-      <Modal
+    <>
+      <Box sx={containerSx}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>Meus Favoritos</Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
+          {recentFavorites.map(fav => {
+            const linkTo = `/${fav.category || fav.type}/${fav.id}`;
+            return (
+              <FavoriteChip
+                key={fav.id}
+                component={Link}
+                to={linkTo}
+                elevation={4}
+              >
+                <Avatar src={fav.imageUrl} alt={fav.label} sx={{ width: 44, height: 44, marginRight: 1.5 }} />
+                <Typography variant="body2" sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                  {fav.label}
+                </Typography>
+              </FavoriteChip>
+            );
+          })}
+        </Box>
+        {favorites.length > MAX_ITEMS_TO_SHOW && (
+          <Box sx={{ mt: 3, textAlign: 'center' }}>
+            <Button variant="outlined" onClick={() => setModalOpen(true)}>
+              Ver Todos os Favoritos
+            </Button>
+          </Box>
+        )}
+      </Box>
+      <DetailsModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        sx={{ backdropFilter: 'blur(6px)' }}
-      >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          bgcolor: 'rgba(2,16,26,0.97)',
-          border: '2px solid #36d1e0',
-          borderRadius: 4,
-          boxShadow: 24,
-          p: 4,
-          minWidth: { xs: '90vw', sm: 500 },
-          maxWidth: 700,
-        }}>
-          <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#36d1e0', mb: 3 }}>
-            Todos os Favoritos
-          </Typography>
-          <FavoriteList favorites={favorites} onChipClick={() => setModalOpen(false)} />
-          <Button
-            variant="contained"
-            sx={{ mt: 4 }}
-            onClick={() => setModalOpen(false)}
-            color="primary"
-            fullWidth
-          >
-            Fechar
-          </Button>
-        </Box>
-      </Modal>
-    </Box>
+        title="Todos os Meus Favoritos"
+        items={favorites}
+      />
+    </>
   );
 }
