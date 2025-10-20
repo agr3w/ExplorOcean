@@ -1,5 +1,3 @@
-// src/pages/faunaFlora/FaunaFloraContentSection.jsx
-
 import { Box, Typography } from "@mui/material";
 import CategorySelector from "../../components/faunaFloraComponents/CategorySelector";
 import ContentGrid from "../../components/ContentGridComponents/contentGrid/ContentGrid";
@@ -37,7 +35,6 @@ export default function FaunaFloraContentSection({
         onSelectCategory={setSelectedCategory}
       />
 
-      {/* 3. RENDERIZE O FEATURED CARD COM ANIMAÇÃO */}
       <AnimatePresence mode="wait">
         <motion.div
           key={`featured-${selectedCategory}`}
@@ -52,7 +49,6 @@ export default function FaunaFloraContentSection({
         </motion.div>
       </AnimatePresence>
 
-      {/* 4. RENDERIZE O RESTO DA GRADE ABAIXO */}
       {gridItems.length > 0 && (
         <Box sx={{ width: '100%', mt: 6 }}>
           <Typography variant="h4" sx={{ color: 'white', fontWeight: 'bold', textAlign: 'center', mb: 4 }}>

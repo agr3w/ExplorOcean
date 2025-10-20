@@ -16,6 +16,7 @@
     "@mui/material": "^7.3.1",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
+    "axios": "^1.12.2",
     "framer-motion": "^12.23.12",
     "maath": "^0.10.8",
     "react": "^19.1.1",

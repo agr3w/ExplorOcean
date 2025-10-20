@@ -51,9 +51,6 @@ const theme = createTheme({
         },
       },
     },
-  },
-
-  components: {
     StyledCard: {
       styleOverrides: {
         root: {
@@ -61,7 +58,6 @@ const theme = createTheme({
         },
       },
     },
-
   },
 
 })
