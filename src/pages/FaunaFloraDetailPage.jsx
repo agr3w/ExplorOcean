@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; 
+import { addHistoryItem } from '../services/userActionsService';
 import DetailPage from '../components/universal/DetailPage';
 import Navigator from '../components/navigator/Navigator';
 import Footer from '../components/footer/footer';
@@ -8,6 +10,7 @@ import { faunaData, floraData } from '../content/faunaFlora/faunaFloraData';
 
 export default function FaunaFloraDetailPage() {
     const { category, id } = useParams();
+    const { token } = useAuth();
 
     const dataToSearch = category === 'Fauna' ? faunaData : floraData;
     const item = dataToSearch.find(i => i.id === id);
@@ -32,6 +35,16 @@ export default function FaunaFloraDetailPage() {
             console.error("Erro ao salvar preferência no localStorage", error);
         }
     }, [show3D]);
+
+    useEffect(() => {
+        if (token && item) {
+            addHistoryItem({
+                type: item.category, 
+                name: item.label,
+                contentId: item.id,
+            }).catch(err => console.error("Falha ao registrar histórico", err));
+        }
+    }, [token, item]);
 
     return (
         <Box sx={{ backgroundColor: '#000000', color: '#ffffff', minHeight: '100vh', marginTop: 6 }}>
