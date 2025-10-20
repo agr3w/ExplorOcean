@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Container, Grid, Divider, CircularProgress, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
@@ -22,10 +22,14 @@ const itemVariants = {
 };
 
 export default function ProfilePage() {
-    // 2. PEGUE OS DADOS DIRETAMENTE DO CONTEXTO
-    const { user, logout } = useAuth();
+    // 2. PEGUE a função 'refetchUser' do contexto
+    const { user, logout, refetchUser } = useAuth();
 
-    // 3. Mostra um loading enquanto o usuário ainda não foi carregado pelo contexto
+    // 3. ADICIONE ESTE useEffect
+    useEffect(() => {
+        refetchUser();
+    }, [refetchUser]);
+
     if (!user) {
         return (
             <Box sx={{

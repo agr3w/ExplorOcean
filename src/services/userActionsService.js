@@ -3,8 +3,8 @@
 import axios from 'axios';
 import apiClient from './api';
 
-export const addHistoryItem = (historyData) => {
-  return apiClient.post('/history/add', historyData);
+export const addHistoryItem = (historyData, config = {}) => {
+  return apiClient.post('/history/add', historyData, config); // Passe a config para o post
 };
 
 export const addFavoriteItem = (favoriteData) => {
