@@ -1,0 +1,36 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  enable3d      Boolean @default(true)
+  notifications Boolean @default(false)
+
+  history ActivityHistory[]
+}
+
+// NOVA TABELA PARA HISTÓRICO DE ATIVIDADES
+model ActivityHistory {
+  id          Int      @id @default(autoincrement())
+  type        String  
+  name        String 
+  score       String? 
+  completedAt DateTime @default(now())
+  
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
