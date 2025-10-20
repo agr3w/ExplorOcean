@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; 
+import { useAuth } from '../context/AuthContext';
 import { addHistoryItem } from '../services/userActionsService';
 import DetailPage from '../components/universal/DetailPage';
 import Navigator from '../components/navigator/Navigator';
@@ -36,14 +36,36 @@ export default function FaunaFloraDetailPage() {
         }
     }, [show3D]);
 
+    // EFEITO DE HISTÓRICO CORRIGIDO
     useEffect(() => {
-        if (token && item) {
-            addHistoryItem({
-                type: item.category, 
-                name: item.label,
-                contentId: item.id,
-            }).catch(err => console.error("Falha ao registrar histórico", err));
-        }
+        if (!token || !item) return;
+
+        const controller = new AbortController();
+
+        const recordHistory = async () => {
+            try {
+                await addHistoryItem(
+                    {
+                        type: item.category,
+                        name: item.label,
+                        contentId: item.id,
+                    },
+                    { signal: controller.signal }
+                );
+            } catch (error) {
+                if (error.name === 'CanceledError') {
+                    console.log('Requisição de histórico cancelada na desmontagem.');
+                } else {
+                    console.error("Falha ao registrar histórico", error);
+                }
+            }
+        };
+
+        recordHistory();
+
+        return () => {
+            controller.abort();
+        };
     }, [token, item]);
 
     return (
