@@ -8,11 +8,10 @@ import { Link } from 'react-router-dom';
 
 // Mapeamento de ícones para ser usado no modal
 const iconMap = {
-    Quiz: <MdQuiz color="#8d14ffff" />,
-    Documentaries: <MdMovie color="#00e676" />,
+    quizzes: <MdQuiz color="#8d14ffff" />,
+    documentaries: <MdMovie color="#00e676" />,
     Fauna: <MdPets color="#2979ff" />,
     Flora: <MdEco color="#ffd600" />,
-    Favorite: <MdFavorite color="#f5576c" />,
 };
 
 export default function DetailsModal({ open, onClose, title, items }) {
@@ -61,8 +60,19 @@ export default function DetailsModal({ open, onClose, title, items }) {
                     }}>
                         <List sx={{ pt: 0 }}>
                             {items.map((item, idx) => {
-                                const linkTo = `/${item.contentType || item.type}/${item.contentId}`;
-                                return (
+                            const contentType = item.category || item.type;
+
+                            let linkTo = "/";
+                            if (item.type === "documentaries" || item.category === "Documentaries") {
+                                linkTo = `/documentaries/${item.contentId || item.id}`;
+                            } else if (item.type === "quizzes" || item.category === "Quiz") {
+                                linkTo = `/quizzes/${item.contentId || item.id}`;
+                            } else if (item.category === "Fauna") {
+                                linkTo = `/Fauna/${item.contentId || item.id}`;
+                            } else if (item.category === "Flora") {
+                                linkTo = `/Flora/${item.contentId || item.id}`;
+                            }                              
+                              return (
                                     <React.Fragment key={item.id || idx}>
                                         <ListItem
                                             button

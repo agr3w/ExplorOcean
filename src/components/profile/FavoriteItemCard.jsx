@@ -64,19 +64,19 @@ const TypeIconWrapper = styled(Box)(({ theme }) => ({
 }));
 
 const iconMap = {
-  Quiz: <MdQuiz size={16} />,
-  Documentaries: <MdMovie size={16} />,
-  Fauna: <MdPets size={16} />,
-  Flora: <MdEco size={16} />,
+    quizzes: <MdQuiz color="#8d14ffff" />,
+    documentaries: <MdMovie color="#00e676" />,
+    Fauna: <MdPets color="#2979ff" />,
+    Flora: <MdEco color="#ffd600" />,
 };
 
 export default function FavoriteItemCard({ item }) {
   const contentType = item.category || item.type;
-  // const linkTo = `/${contentType}/${item.contentId}`;  
 
   let linkTo = "/";
   if (item.type === "documentaries" || item.category === "Documentaries") {
     linkTo = `/documentaries/${item.contentId || item.id}`;
+    
   } else if (item.type === "quizzes" || item.category === "Quiz") {
     linkTo = `/quizzes/${item.contentId || item.id}`;
   } else if (item.category === "Fauna") {
