@@ -1,39 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Typography, Paper, Avatar, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
-import DetailsModal from './DetailsModal'; // 1. Importe o novo modal
+import { Box, Typography, Button } from '@mui/material';
+import DetailsModal from './DetailsModal';
+import FavoriteItemCard from './FavoriteItemCard'; 
 
 const MAX_ITEMS_TO_SHOW = 4;
 
-const FavoriteChip = styled(Paper)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  height: '60px',
-  padding: theme.spacing(1),
-  paddingRight: theme.spacing(2),
-  backgroundColor: 'rgba(2, 16, 26, 0.7)',
+const containerSx = {
+  mb: 4, p: 3, borderRadius: 2,
+  background: 'rgba(2,16,26,0.5)',
+  boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
   backdropFilter: 'blur(8px)',
-  borderRadius: '30px',
-  border: '1px solid rgba(54, 209, 224, 0.3)',
-  color: 'white',
-  textDecoration: 'none',
-  transition: 'transform 0.3s ease, background-color 0.3s ease',
-  '&:hover': {
-    transform: 'translateY(-3px)',
-    backgroundColor: 'rgba(54, 209, 224, 0.15)',
-  },
-}));
+};
 
 export default function ProfileFavorites({ favorites }) {
   const [modalOpen, setModalOpen] = useState(false);
-
-  const containerSx = {
-    mb: 4, p: 3, borderRadius: 3,
-    background: 'rgba(2,16,26,0.5)',
-    boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
-    backdropFilter: 'blur(8px)',
-  };
 
   if (!favorites || favorites.length === 0) {
     return (
@@ -52,23 +32,17 @@ export default function ProfileFavorites({ favorites }) {
     <>
       <Box sx={containerSx}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>Meus Favoritos</Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
-          {recentFavorites.map(fav => {
-            const linkTo = `/${fav.category || fav.type}/${fav.id}`;
-            return (
-              <FavoriteChip
-                key={fav.id}
-                component={Link}
-                to={linkTo}
-                elevation={4}
-              >
-                <Avatar src={fav.imageUrl} alt={fav.label} sx={{ width: 44, height: 44, marginRight: 1.5 }} />
-                <Typography variant="body2" sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                  {fav.label}
-                </Typography>
-              </FavoriteChip>
-            );
-          })}
+        <Box sx={{
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: { xs: 1.5, sm: 2.5, md: 3 },
+    mt: 2,
+    justifyContent: { xs: 'flex-start', sm: 'center' },
+    alignItems: 'stretch',
+  }}>
+          {recentFavorites.map(fav => (
+            <FavoriteItemCard key={fav.id} item={fav} />
+          ))}
         </Box>
         {favorites.length > MAX_ITEMS_TO_SHOW && (
           <Box sx={{ mt: 3, textAlign: 'center' }}>

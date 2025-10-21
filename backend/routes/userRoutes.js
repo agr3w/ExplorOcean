@@ -77,11 +77,10 @@ router.get('/me', authMiddleware, async (req, res) => {
                 createdAt: true,
                 enable3d: true,
                 notifications: true,
-                history: { 
-                    orderBy: {
-                        completedAt: 'desc' 
-                    }
-                }
+                history: {
+                    orderBy: { completedAt: 'desc' }
+                },
+                favorites: true 
             }
         });
         if (!user) return res.status(404).json({ message: 'Usuário não encontrado.' });

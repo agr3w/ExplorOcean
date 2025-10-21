@@ -19,7 +19,7 @@ export default function DetailPageHeader({ item, show3D, setShow3D }) {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [loadingFavorite, setLoadingFavorite] = useState(false);
 
-  // 1. LÓGICA REATIVA PARA DETERMINAR SE É FAVORITO
+  // LÓGICA REATIVA para saber se o item atual é um favorito
   const isFavorite = useMemo(() => {
     if (!user?.favorites || !item) return false;
     return user.favorites.some(fav => fav.contentId === item.id);
