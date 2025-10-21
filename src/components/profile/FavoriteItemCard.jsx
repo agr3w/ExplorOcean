@@ -72,7 +72,18 @@ const iconMap = {
 
 export default function FavoriteItemCard({ item }) {
   const contentType = item.category || item.type;
-  const linkTo = `/${contentType}/${item.contentId}`;
+  // const linkTo = `/${contentType}/${item.contentId}`;  
+
+  let linkTo = "/";
+  if (item.type === "documentaries" || item.category === "Documentaries") {
+    linkTo = `/documentaries/${item.contentId || item.id}`;
+  } else if (item.type === "quizzes" || item.category === "Quiz") {
+    linkTo = `/quizzes/${item.contentId || item.id}`;
+  } else if (item.category === "Fauna") {
+    linkTo = `/Fauna/${item.contentId || item.id}`;
+  } else if (item.category === "Flora") {
+    linkTo = `/Flora/${item.contentId || item.id}`;
+  }
 
   return (
     <Link to={linkTo} style={{ textDecoration: 'none' }}>
