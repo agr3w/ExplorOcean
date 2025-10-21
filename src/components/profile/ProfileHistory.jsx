@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, ListItemIcon, Divider, Button } from '@mui/material';
-import { MdQuiz, MdMovie, MdPets, MdEco } from 'react-icons/md';
-import DetailsModal from './DetailsModal'; // 1. Importe o novo modal
+import { Box, Typography, List, ListItem, ListItemText, ListItemIcon, Divider, Button, IconButton } from '@mui/material';
+import { MdQuiz, MdMovie, MdPets, MdEco, MdChevronRight } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import DetailsModal from './DetailsModal';
 
 const iconMap = {
     Quiz: <MdQuiz color="#8d14ffff" />,
@@ -42,7 +43,23 @@ export default function ProfileHistory({ history }) {
                 <List dense>
                     {recentHistory.map((item, idx) => (
                         <React.Fragment key={item.id}>
-                            <ListItem>
+                            <ListItem
+                                secondaryAction={
+                                    <IconButton
+                                        component={Link}
+                                        to={`/${item.contentType || item.type}/${item.contentId}`}
+                                        edge="end"
+                                        aria-label="ver detalhes"
+                                        sx={{
+                                            color: 'rgba(227, 242, 253, 0.7)',
+                                            transition: 'color 0.2s',
+                                            '&:hover': { color: '#36d1e0' }
+                                        }}
+                                    >
+                                        <MdChevronRight size={24} />
+                                    </IconButton>
+                                }
+                            >
                                 <ListItemIcon sx={{ minWidth: 40, fontSize: 24 }}>
                                     {iconMap[item.type] || <MdPets />}
                                 </ListItemIcon>
@@ -56,7 +73,6 @@ export default function ProfileHistory({ history }) {
                         </React.Fragment>
                     ))}
                 </List>
-                {/* 2. BOTÃO "VER MAIS" CONDICIONAL */}
                 {history.length > MAX_ITEMS_TO_SHOW && (
                     <Box sx={{ mt: 2, textAlign: 'center' }}>
                         <Button variant="outlined" onClick={() => setModalOpen(true)}>
@@ -65,7 +81,6 @@ export default function ProfileHistory({ history }) {
                     </Box>
                 )}
             </Box>
-            {/* 3. RENDERIZA O MODAL */}
             <DetailsModal
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
