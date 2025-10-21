@@ -36,7 +36,6 @@ export default function FaunaFloraDetailPage() {
         }
     }, [show3D]);
 
-    // EFEITO DE HISTÓRICO CORRIGIDO
     useEffect(() => {
         if (!token || !item) return;
 

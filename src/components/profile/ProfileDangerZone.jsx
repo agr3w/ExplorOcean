@@ -34,7 +34,7 @@ export default function ProfileDangerZone({ onAccountDelete }) {
   return (
     <>
       <Box sx={{
-        mt: 4, p: 3, borderRadius: 3,
+        mt: 4, p: 3, borderRadius: 2,
         background: 'linear-gradient(90deg, rgba(255,23,68,0.1) 0%, rgba(2,16,26,0.3) 100%)',
         border: '1.5px solid rgba(255,23,68,0.3)',
         boxShadow: '0 2px 12px rgba(255,23,68,0.10)',

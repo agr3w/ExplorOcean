@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import DetailsModal from './DetailsModal';
 
 const iconMap = {
-    Quiz: <MdQuiz color="#8d14ffff" />,
-    Documentário: <MdMovie color="#00e676" />,
+    quizzes: <MdQuiz color="#8d14ffff" />,
+    documentaries: <MdMovie color="#00e676" />,
     Fauna: <MdPets color="#2979ff" />,
     Flora: <MdEco color="#ffd600" />,
 };
