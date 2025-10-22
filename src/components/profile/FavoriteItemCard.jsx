@@ -63,23 +63,31 @@ const TypeIconWrapper = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.light,
 }));
 
-const RemoveButton = styled(IconButton)(({ theme }) => ({
+// Azul mais suave e efeito liquidGlass
+const RemoveButton = styled(motion.button)(({ theme }) => ({
   position: 'absolute',
   top: 4,
   left: 4,
-  width: 28,
-  height: 28,
-  backgroundColor: 'rgba(255, 50, 50, 0.7)',
-  backdropFilter: 'blur(5px)',
-  color: 'white',
-  padding: 0,
-  zIndex: 3,
+  width: 32,
+  height: 32,
+  borderRadius: '50%',
+  background: 'linear-gradient(135deg, rgba(54,209,224,0.45) 0%, rgba(41,121,255,0.35) 100%)',
+  backdropFilter: 'blur(10px)',
+  color: '#36d1e0',
+  border: '1.5px solid rgba(54,209,224,0.18)',
+  boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  padding: 0,
+  zIndex: 3,
+  cursor: 'pointer',
+  outline: 'none',
+  transition: 'background 0.2s, color 0.2s, box-shadow 0.2s',
   '&:hover': {
-    backgroundColor: 'rgba(255, 50, 50, 0.9)',
-    boxShadow: '0 0 8px 2px #f5576c',
+    background: 'linear-gradient(135deg, rgba(54,209,224,0.7) 0%, rgba(41,121,255,0.5) 100%)',
+    color: '#fff',
+    boxShadow: '0 0 18px 2px #36d1e0',
   },
 }));
 
@@ -121,16 +129,37 @@ export default function FavoriteItemCard({ item, onRemove, isLoading }) {
       layout
     >
       <Tooltip title="Remover dos Favoritos" arrow placement="top">
-        <RemoveButton onClick={handleRemoveClick}>
+        <RemoveButton
+          as={IconButton}
+          onClick={handleRemoveClick}
+          whileHover={{ scale: 1.18, boxShadow: '0 0 24px 4px #36d1e0' }}
+          whileTap={{ scale: 0.95 }}
+        >
           {isLoading
-            ? <motion.div
-                initial={{ scale: 0.8, opacity: 0.7 }}
-                animate={{ scale: 1.2, opacity: 1 }}
-                transition={{ repeat: Infinity, duration: 0.8, repeatType: "reverse" }}
+            ? (
+              <motion.div
+                initial={{ scale: 1, opacity: 0.7 }}
+                animate={{ scale: [1, 1.25, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{ repeat: Infinity, duration: 1.1, repeatType: "loop" }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
               >
-                <CircularProgress size={20} color="inherit" thickness={5} />
+                <MdFavorite size={22} style={{ filter: 'drop-shadow(0 0 8px #36d1e0)' }} />
+                <CircularProgress
+                  size={26}
+                  color="inherit"
+                  thickness={5}
+                  sx={{
+                    position: 'absolute',
+                    left: 3,
+                    top: 3,
+                    zIndex: 2,
+                    color: '#36d1e0',
+                    opacity: 0.45,
+                  }}
+                />
               </motion.div>
-            : <MdFavorite size={18} />
+            )
+            : <MdFavorite size={20} />
           }
         </RemoveButton>
       </Tooltip>

@@ -7,10 +7,11 @@ import ViewToggleButtons from "./HeaderComponents/ViewToggleButtons/ViewToggleBu
 import BreadcrumbNavigation from "./HeaderComponents/BreadcrumbNavigation/BreadcrumbNavigation";
 import { getSectionFromItem } from "../../utils/getSectionFromItem";
 import QuizModal from "../quiz/QuizModal";
-import { IconButton, Tooltip, Box } from "@mui/material";
+import { IconButton, Tooltip, Box, Snackbar, Alert } from "@mui/material";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import { addFavoriteItem, removeFavoriteItem } from "../../services/userActionsService";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DetailPageHeader({ item, show3D, setShow3D }) {
   const { token, user, refetchUser } = useAuth();
@@ -18,6 +19,8 @@ export default function DetailPageHeader({ item, show3D, setShow3D }) {
   const isQuiz = item.questions;
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [loadingFavorite, setLoadingFavorite] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [pop, setPop] = useState(false);
 
   // LÓGICA REATIVA para saber se o item atual é um favorito
   const isFavorite = useMemo(() => {
@@ -33,14 +36,33 @@ export default function DetailPageHeader({ item, show3D, setShow3D }) {
     try {
       if (isFavorite) {
         await removeFavoriteItem(favoriteData);
+        setSnackOpen(true);
       } else {
         await addFavoriteItem(favoriteData);
+        setSnackOpen(true);
+        setPop(true);
+        setTimeout(() => setPop(false), 600); // animação mais longa e suave
       }
       await refetchUser();
     } catch (error) {
       console.error("Erro ao atualizar favoritos", error);
     } finally {
       setLoadingFavorite(false);
+    }
+  };
+
+  // Framer Motion variants para animação suave e contínua
+  const heartVariants = {
+    initial: { scale: 1, boxShadow: 'none' },
+    pop: {
+      scale: [1, 1.18, 1.08, 1],
+      boxShadow: [
+        'none',
+        '0 0 24px 4px #36d1e0',
+        '0 0 12px 2px #36d1e0',
+        'none'
+      ],
+      transition: { duration: 0.6, ease: 'easeInOut' }
     }
   };
 
@@ -58,9 +80,54 @@ export default function DetailPageHeader({ item, show3D, setShow3D }) {
         />
         {token && (
           <Tooltip title={isFavorite ? "Remover dos Favoritos" : "Adicionar aos Favoritos"} arrow>
-            <IconButton onClick={handleFavoriteToggle} disabled={loadingFavorite} color="primary" size="large">
-              {isFavorite ? <MdFavorite size={32} /> : <MdFavoriteBorder size={32} />}
-            </IconButton>
+            <motion.div
+              variants={heartVariants}
+              animate={pop ? "pop" : "initial"}
+              style={{
+                display: 'inline-block',
+                borderRadius: '50%',
+                boxShadow: pop ? '0 0 24px 4px #36d1e0' : 'none',
+                transition: 'box-shadow 0.3s',
+              }}
+            >
+              <IconButton
+                onClick={handleFavoriteToggle}
+                disabled={loadingFavorite}
+                color="primary"
+                size="large"
+                sx={{
+                  transition: 'transform 0.2s',
+                  background: 'linear-gradient(135deg, rgba(54,209,224,0.15) 0%, rgba(41,121,255,0.10) 100%)',
+                  borderRadius: '50%',
+                }}
+              >
+                <AnimatePresence mode="wait">
+                  {isFavorite ? (
+                    <motion.span
+                      key="fav"
+                      initial={{ scale: 1 }}
+                      animate={{ scale: pop ? 1.18 : 1 }}
+                      exit={{ scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <MdFavorite size={32} style={{ color: '#36d1e0' }} />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="notfav"
+                      initial={{ scale: 1 }}
+                      animate={{ scale: pop ? 1.18 : 1 }}
+                      exit={{ scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <MdFavoriteBorder size={32} style={{ color: '#36d1e0' }} />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </IconButton>
+            </motion.div>
           </Tooltip>
         )}
       </Box>
@@ -77,6 +144,20 @@ export default function DetailPageHeader({ item, show3D, setShow3D }) {
           quizData={item}
         />
       )}
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={1800}
+        onClose={() => setSnackOpen(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={() => setSnackOpen(false)}
+          severity={isFavorite ? "info" : "success"}
+          sx={{ bgcolor: 'rgba(54,209,224,0.15)', color: '#36d1e0', fontWeight: 'bold', boxShadow: 2 }}
+        >
+          {isFavorite ? "Removido dos favoritos!" : "Adicionado aos favoritos!"}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
