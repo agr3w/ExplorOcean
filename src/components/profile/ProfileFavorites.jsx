@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, CircularProgress } from '@mui/material';
 import DetailsModal from './DetailsModal';
-import FavoriteItemCard from './FavoriteItemCard'; 
+import FavoriteItemCard from './FavoriteItemCard';
+import { useAuth } from '../../context/AuthContext';
+import { removeFavoriteItem } from '../../services/userActionsService';
 
 const MAX_ITEMS_TO_SHOW = 4;
 
@@ -14,6 +16,25 @@ const containerSx = {
 
 export default function ProfileFavorites({ favorites }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const { refetchUser } = useAuth();
+  const [removingId, setRemovingId] = useState(null);
+
+  const handleRemoveFavorite = async (itemToRemove) => {
+    const contentId = itemToRemove.contentId || itemToRemove.id;
+    setRemovingId(contentId);
+    const favoriteData = {
+      contentId,
+      contentType: itemToRemove.category || itemToRemove.type,
+    };
+    try {
+      await removeFavoriteItem(favoriteData);
+      await refetchUser();
+    } catch (error) {
+      console.error("Erro ao remover favorito:", error);
+    } finally {
+      setRemovingId(null);
+    }
+  };
 
   if (!favorites || favorites.length === 0) {
     return (
@@ -33,15 +54,35 @@ export default function ProfileFavorites({ favorites }) {
       <Box sx={containerSx}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>Meus Favoritos</Typography>
         <Box sx={{
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: { xs: 1.5, sm: 2.5, md: 3 },
-    mt: 2,
-    justifyContent: { xs: 'flex-start', sm: 'center' },
-    alignItems: 'stretch',
-  }}>
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: { xs: 1.5, sm: 2.5, md: 3 },
+          mt: 2,
+          justifyContent: { xs: 'flex-start', sm: 'center' },
+          alignItems: 'stretch',
+        }}>
           {recentFavorites.map(fav => (
-            <FavoriteItemCard key={fav.id} item={fav} />
+            <Box key={fav.contentId || fav.id} sx={{ position: 'relative' }}>
+              <FavoriteItemCard
+                item={fav}
+                onRemove={() => handleRemoveFavorite(fav)}
+                isLoading={removingId === (fav.contentId || fav.id)}
+              />
+              {removingId === (fav.contentId || fav.id) && (
+                <Box sx={{
+                  position: 'absolute',
+                  top: 0, left: 0, right: 0, bottom: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  bgcolor: 'rgba(0,0,0,0.25)',
+                  zIndex: 10,
+                  borderRadius: 3,
+                }}>
+                  <CircularProgress size={32} color="error" />
+                </Box>
+              )}
+            </Box>
           ))}
         </Box>
         {favorites.length > MAX_ITEMS_TO_SHOW && (
