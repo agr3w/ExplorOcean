@@ -82,7 +82,7 @@ export default function ProfilePage() {
                     </Grid>
                     <Divider sx={{ my: 4, borderColor: 'rgba(54, 209, 224, 0.2)' }} />
                     <motion.div variants={itemVariants}>
-                        <ProfileDangerZone logout={logout} />
+                        <ProfileDangerZone onAccountDelete={logout} />
                     </motion.div>
                 </motion.div>
             </Container>

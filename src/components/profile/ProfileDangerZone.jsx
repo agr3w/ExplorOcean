@@ -27,7 +27,6 @@ export default function ProfileDangerZone({ onAccountDelete }) {
       onAccountDelete();
     } catch (error) {
       console.error("Erro ao excluir conta", error);
-      // Aqui você pode mostrar um alerta de erro para o usuário se quiser
     }
   };
 
