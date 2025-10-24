@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Box } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainBannerText from './MainBannerText/mainBannerText';
 import useDiving from '../../../hooks/useDiving';
@@ -11,17 +12,16 @@ const backgroundImages = [
     'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?auto=format&fit=crop&w=1920&q=80'
 ];
 
-// Variantes para animação do banner
 const bannerVariants = {
-  undived: {
+  undived: { 
     width: 'calc(100vw - 48px)',
     height: '93vh',
     margin: '24px auto',
-    borderRadius: '16px',
+    borderRadius: '16px', 
     boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
     transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.6 }
   },
-  dived: {
+  dived: { 
     width: '100vw',
     height: '100vh',
     margin: '0px auto',
@@ -41,8 +41,8 @@ export default function MainBanner() {
     return (
         <motion.div
             variants={bannerVariants}
-            animate={diving ? 'dived' : 'undived'}
-            style={{
+            animate={diving ? 'dived' : 'undived'} 
+            style={{ 
                 position: 'relative',
                 overflow: 'hidden',
                 background: `url("${randomBackground}") center/cover, #02101a`,
@@ -55,11 +55,13 @@ export default function MainBanner() {
             }}
         >
             <MainBannerText diving={diving} />
+            
             <AnimatePresence>
                 {!diving && (
-                    <MainBannerButton diving={diving} />
+                    <MainBannerButton />
                 )}
             </AnimatePresence>
-        </motion.div>
+        
+        </motion.div> 
     );
 }

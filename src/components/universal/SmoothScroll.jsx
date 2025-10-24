@@ -12,81 +12,89 @@ function isMobile() {
 }
 
 export default function SmoothScroll({ children }) {
+  // Usamos o ref para PERSISTIR a instância do Lenis entre re-renderizações
+  // e invocações do StrictMode.
   const lenisRef = useRef(null);
+  const rafRef = useRef(null); // Ref para controlar o requestAnimationFrame
   const location = useLocation();
 
-  // Efeito principal para configurar e limpar o Lenis
+  // Efeito principal: Configura e limpa o Lenis e o listener de resize
   useEffect(() => {
-    let lenisInstance = null;
-    let rafId = null;
-
     function setupLenis() {
-      // --- Limpeza Preventiva ---
-      if (lenisInstance) {
-        lenisInstance.destroy();
-        lenisInstance = null;
+      // --- Limpeza Primeiro ---
+      // Destrói instância ANTERIOR, se existir (usando o Ref)
+      if (lenisRef.current) {
+        console.log("SmoothScroll: Destruindo instância Lenis anterior.");
+        lenisRef.current.destroy();
         lenisRef.current = null;
       }
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
+      // Cancela loop de animação ANTERIOR, se existir
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
-      // Sempre reseta o overflow primeiro
+      // Garante que o scroll nativo esteja habilitado antes de decidir
       document.body.style.overflow = 'auto';
-      // --- Fim da Limpeza ---
+      // --- Fim Limpeza ---
 
       if (isMobile()) {
-        console.log("SmoothScroll: Lenis desativado (Mobile).");
-        // Não fazemos mais nada, scroll nativo está ativo.
+        console.log("SmoothScroll: Lenis desativado (Mobile). Scroll nativo ativo.");
+        // Não fazemos mais nada.
       } else {
-        // Desktop: Ativa o Lenis imediatamente
-        console.log("SmoothScroll: Lenis ativado (Desktop).");
-        document.body.style.overflow = 'hidden'; // Esconde o scroll nativo
+        // Desktop: Cria e configura o Lenis
+        console.log("SmoothScroll: Ativando Lenis (Desktop). Desativando scroll nativo.");
+        document.body.style.overflow = 'hidden'; // Esconde scroll nativo
 
-        lenisInstance = new Lenis({
+        const lenis = new Lenis({
           duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          // smoothTouch: true, // Pode ser desnecessário/causar problemas em alguns desktops
+          // smoothTouch: false, // Recomendo desativar para evitar conflitos
         });
-        lenisRef.current = lenisInstance; // Atualiza o ref
+        lenisRef.current = lenis; // GUARDA a nova instância no Ref
 
         function raf(time) {
-          lenisInstance?.raf(time);
-          rafId = requestAnimationFrame(raf);
+          // Acessa a instância ATUAL pelo Ref dentro do loop
+          lenisRef.current?.raf(time);
+          rafRef.current = requestAnimationFrame(raf);
         }
-        rafId = requestAnimationFrame(raf);
+        rafRef.current = requestAnimationFrame(raf); // Inicia o loop
       }
     }
 
-    // Chama a configuração diretamente após o mount
+    // Chama a configuração inicial APÓS a montagem
     setupLenis();
 
-    // Listener para redimensionamento
+    // Adiciona o listener de resize que REEXECUTA a configuração
     window.addEventListener('resize', setupLenis);
 
-    // Função de limpeza robusta
+    // Função de limpeza robusta: Garante que tudo seja limpo ao desmontar
     return () => {
+      console.log("SmoothScroll: Limpando no desmontar...");
       window.removeEventListener('resize', setupLenis);
-      if (lenisInstance) {
-        lenisInstance.destroy();
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+        lenisRef.current = null;
       }
-      if (rafId) {
-        cancelAnimationFrame(rafId);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
-      // Garante que o scroll sempre volte ao normal ao desmontar
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto'; // Garante scroll nativo ao sair
     };
-  }, []); // Roda apenas uma vez no mount
+  }, []); // Array vazio: Roda apenas no mount e cleanup no unmount
 
-  // Efeito para rolar para o topo (sem alterações)
+  // Efeito para rolar para o topo quando a rota muda
   useEffect(() => {
     const currentLenis = lenisRef.current;
     if (currentLenis) {
       currentLenis.scrollTo(0, { immediate: true });
     } else {
-      window.scrollTo(0, 0);
+      // Apenas rola nativamente se NÃO estivermos usando Lenis
+      if (isMobile()) {
+         window.scrollTo(0, 0);
+      }
     }
-  }, [location]);
+  }, [location]); // Depende da 'location'
 
   return <>{children}</>;
 }
