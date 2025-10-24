@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography, Modal } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
-import { deleteUserProfile } from '../../services/userService';
+import { deleteUserProfile } from '@/services/userService';
 
 const modalVariants = {
   hidden: { opacity: 0, scale: 0.85, y: 40 },
@@ -76,7 +76,7 @@ export default function ProfileDangerZone({ onAccountDelete }) {
               <Box sx={{
                 bgcolor: 'rgba(2, 16, 26, 0.93)',
                 border: '1.5px solid #ff5252',
-                borderRadius: 4,
+                borderRadius: 2,
                 boxShadow: 24,
                 p: { xs: 3, md: 4 },
                 textAlign: 'center',

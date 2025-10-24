@@ -71,13 +71,13 @@ export default function ProfileFavorites({ favorites }) {
               {removingId === (fav.contentId || fav.id) && (
                 <Box sx={{
                   position: 'absolute',
-                  top: 0, left: 0, right: 0, bottom: 0,
+                  top: -10, left: 0, right: 0, bottom: 0,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   bgcolor: 'rgba(0,0,0,0.25)',
                   zIndex: 10,
-                  borderRadius: 3,
+                  borderRadius: 1,
                 }}>
                   <CircularProgress size={32} color="error" />
                 </Box>

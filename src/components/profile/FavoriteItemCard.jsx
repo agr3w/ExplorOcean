@@ -3,11 +3,11 @@ import { Box, Typography, IconButton, Tooltip, CircularProgress } from '@mui/mat
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MdQuiz, MdMovie, MdPets, MdEco, MdFavorite } from 'react-icons/md';
+import { MdClose, MdQuiz, MdMovie, MdPets, MdEco } from 'react-icons/md';
 
 const CardContainer = styled(motion.div)(({ theme }) => ({
   width: '180px',
-  height: '100px',
+  height: '110px',
   borderRadius: theme.spacing(2),
   overflow: 'hidden',
   position: 'relative',
@@ -63,52 +63,53 @@ const TypeIconWrapper = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.light,
 }));
 
-// Azul mais suave e efeito liquidGlass
-const RemoveButton = styled(motion.button)(({ theme }) => ({
+const RemoveButton = styled(IconButton)(({ theme }) => ({
   position: 'absolute',
   top: 4,
   left: 4,
-  width: 32,
-  height: 32,
-  borderRadius: '50%',
-  background: 'linear-gradient(135deg, rgba(54,209,224,0.45) 0%, rgba(41,121,255,0.35) 100%)',
-  backdropFilter: 'blur(10px)',
-  color: '#36d1e0',
-  border: '1.5px solid rgba(54,209,224,0.18)',
-  boxShadow: '0 2px 12px rgba(54,209,224,0.10)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  width: 28,
+  height: 28,
+  backgroundColor: 'rgba(255, 50, 50, 0.7)',
+  backdropFilter: 'blur(5px)',
+  color: 'white',
   padding: 0,
   zIndex: 3,
-  cursor: 'pointer',
-  outline: 'none',
-  transition: 'background 0.2s, color 0.2s, box-shadow 0.2s',
   '&:hover': {
-    background: 'linear-gradient(135deg, rgba(54,209,224,0.7) 0%, rgba(41,121,255,0.5) 100%)',
-    color: '#fff',
-    boxShadow: '0 0 18px 2px #36d1e0',
+    backgroundColor: 'rgba(255, 50, 50, 0.9)',
   },
 }));
 
-const iconMap = {
-  quizzes: <MdQuiz color="#8d14ffff" />,
-  documentaries: <MdMovie color="#00e676" />,
-  Fauna: <MdPets color="#2979ff" />,
-  Flora: <MdEco color="#ffd600" />,
+// Mapeamento de ícones padronizado para os tipos
+export const iconMap = {
+    'quizzes': <MdQuiz size={16} color="#8d14ffff" />,
+    'documentaries': <MdMovie size={16} color="#00e676" />,
+    'fauna': <MdPets size={16} color="#2979ff" />,
+    'flora': <MdEco size={16} color="#ffd600" />,
 };
 
+// Função para normalizar o tipo
+function normalizeType(type) {
+  if (!type) return '';
+  const t = type.toLowerCase();
+  if (t.includes('doc')) return 'documentaries';
+  if (t.includes('quiz')) return 'quizzes';
+  if (t.includes('fauna')) return 'Fauna';
+  if (t.includes('flora')) return 'Flora';
+  return type;
+}
+
 export default function FavoriteItemCard({ item, onRemove, isLoading }) {
-  const contentType = item.category || item.type;
+  // Normaliza o tipo para garantir o ícone e o link corretos
+  const contentType = normalizeType(item.contentType || item.category || item.type);
 
   let linkTo = "/";
-  if (item.type === "documentaries" || item.category === "Documentaries") {
+  if (contentType === "documentaries") {
     linkTo = `/documentaries/${item.contentId || item.id}`;
-  } else if (item.type === "quizzes" || item.category === "Quiz") {
+  } else if (contentType === "quizzes") {
     linkTo = `/quizzes/${item.contentId || item.id}`;
-  } else if (item.category === "Fauna") {
+  } else if (contentType === "Fauna") {
     linkTo = `/Fauna/${item.contentId || item.id}`;
-  } else if (item.category === "Flora") {
+  } else if (contentType === "Flora") {
     linkTo = `/Flora/${item.contentId || item.id}`;
   }
 
@@ -129,38 +130,8 @@ export default function FavoriteItemCard({ item, onRemove, isLoading }) {
       layout
     >
       <Tooltip title="Remover dos Favoritos" arrow placement="top">
-        <RemoveButton
-          as={IconButton}
-          onClick={handleRemoveClick}
-          whileHover={{ scale: 1.18, boxShadow: '0 0 24px 4px #36d1e0' }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {isLoading
-            ? (
-              <motion.div
-                initial={{ scale: 1, opacity: 0.7 }}
-                animate={{ scale: [1, 1.25, 1], opacity: [0.7, 1, 0.7] }}
-                transition={{ repeat: Infinity, duration: 1.1, repeatType: "loop" }}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
-              >
-                <MdFavorite size={22} style={{ filter: 'drop-shadow(0 0 8px #36d1e0)' }} />
-                <CircularProgress
-                  size={26}
-                  color="inherit"
-                  thickness={5}
-                  sx={{
-                    position: 'absolute',
-                    left: 3,
-                    top: 3,
-                    zIndex: 2,
-                    color: '#36d1e0',
-                    opacity: 0.45,
-                  }}
-                />
-              </motion.div>
-            )
-            : <MdFavorite size={20} />
-          }
+        <RemoveButton onClick={handleRemoveClick} disabled={isLoading}>
+          {isLoading ? <CircularProgress size={16} color="inherit" /> : <MdClose size={16} />}
         </RemoveButton>
       </Tooltip>
       <img

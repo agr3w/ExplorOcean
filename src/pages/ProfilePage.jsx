@@ -11,6 +11,8 @@ import ProfileDangerZone from '../components/profile/ProfileDangerZone';
 import Navigator from '../components/navigator/Navigator';
 import Footer from '../components/footer/footer';
 import ProfileFavorites from '../components/profile/ProfileFavorites';
+import { iconMap, normalizeType } from '../utils/contentIcons';
+
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -22,10 +24,8 @@ const itemVariants = {
 };
 
 export default function ProfilePage() {
-    // 2. PEGUE a função 'refetchUser' do contexto
     const { user, logout, refetchUser } = useAuth();
 
-    // 3. ADICIONE ESTE useEffect
     useEffect(() => {
         refetchUser();
     }, [refetchUser]);
@@ -44,7 +44,6 @@ export default function ProfilePage() {
         );
     }
 
-    // Lógica para "hidratar" os favoritos
     const enrichedFavorites = React.useMemo(() => {
         if (!user?.favorites) return [];
         return user.favorites.map(fav => {
@@ -64,22 +63,21 @@ export default function ProfilePage() {
                     <motion.div variants={itemVariants}>
                         <ProfileHeader user={user} />
                     </motion.div>
-                    <Grid container spacing={4} sx={{ mt: 2 }}>
-                        <Grid item xs={12} md={7}>
+                    <Grid container columns={12} spacing={4} sx={{ mt: 2 }}>
+                        <Grid size={7} sx={{ width: { xs: '100%', md: '41.666%' } }}>
                             <motion.div variants={itemVariants}>
-                                <ProfileSettings user={user} setUser={() => {}} />
+                                <ProfileSettings user={user} setUser={() => { }} />
                             </motion.div>
                             <motion.div variants={itemVariants}>
-                                <ProfilePreferences user={user} setUser={() => {}} />
+                                <ProfilePreferences user={user} setUser={() => { }} />
                             </motion.div>
                         </Grid>
-                        <Grid item xs={12} md={5}>
+                        <Grid size={5} sx={{ width: { xs: '100%', md: '41.666%' } }}>
                             <motion.div variants={itemVariants}>
-                                <ProfileHistory history={user.history} />
+                                <ProfileHistory history={user.history} iconMap={iconMap} normalizeType={normalizeType} />
                             </motion.div>
                             <motion.div variants={itemVariants}>
-                                <ProfileFavorites favorites={enrichedFavorites} />
-                            </motion.div>
+                                <ProfileFavorites favorites={enrichedFavorites} iconMap={iconMap} normalizeType={normalizeType} />                            </motion.div>
                         </Grid>
                     </Grid>
                     <Divider sx={{ my: 4, borderColor: 'rgba(54, 209, 224, 0.2)' }} />
