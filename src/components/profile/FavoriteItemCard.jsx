@@ -3,7 +3,7 @@ import { Box, Typography, IconButton, Tooltip, CircularProgress } from '@mui/mat
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MdClose, MdQuiz, MdMovie, MdPets, MdEco } from 'react-icons/md';
+import { MdClose, MdQuiz, MdMovie, MdPets, MdEco, MdFavorite } from 'react-icons/md';
 
 const CardContainer = styled(motion.div)(({ theme }) => ({
   width: '180px',
@@ -69,13 +69,14 @@ const RemoveButton = styled(IconButton)(({ theme }) => ({
   left: 4,
   width: 28,
   height: 28,
-  backgroundColor: 'rgba(255, 50, 50, 0.7)',
+  backgroundColor: 'rgba(2, 16, 26, 0.6)',
   backdropFilter: 'blur(5px)',
-  color: 'white',
   padding: 0,
   zIndex: 3,
+  border: '1px solid rgba(255, 107, 107, 0.4)',
   '&:hover': {
-    backgroundColor: 'rgba(255, 50, 50, 0.9)',
+    backgroundColor: 'rgba(2, 16, 26, 0.8)',
+    borderColor: 'rgba(255, 107, 107, 0.8)',
   },
 }));
 
@@ -83,8 +84,8 @@ const RemoveButton = styled(IconButton)(({ theme }) => ({
 export const iconMap = {
     'quizzes': <MdQuiz size={16} color="#8d14ffff" />,
     'documentaries': <MdMovie size={16} color="#00e676" />,
-    'fauna': <MdPets size={16} color="#2979ff" />,
-    'flora': <MdEco size={16} color="#ffd600" />,
+    'Fauna': <MdPets size={16} color="#2979ff" />,
+    'Flora': <MdEco size={16} color="#ffd600" />,
 };
 
 // Função para normalizar o tipo
@@ -131,7 +132,7 @@ export default function FavoriteItemCard({ item, onRemove, isLoading }) {
     >
       <Tooltip title="Remover dos Favoritos" arrow placement="top">
         <RemoveButton onClick={handleRemoveClick} disabled={isLoading}>
-          {isLoading ? <CircularProgress size={16} color="inherit" /> : <MdClose size={16} />}
+          {isLoading ? <CircularProgress size={16} color="inherit" /> : <MdFavorite size={16} style={{ color: '#ff6b6b' }} />}
         </RemoveButton>
       </Tooltip>
       <img
