@@ -45,7 +45,7 @@ export default function IntroVideoSection() {
                     maxWidth: { xs: '98vw', md: "1100px" },
                     margin: '48px auto',
                     padding: { xs: 2, md: 4 },
-                    borderRadius: 4,
+                    borderRadius: 2,
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
                     alignItems: 'center',

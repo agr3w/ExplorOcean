@@ -147,28 +147,28 @@ export default function ProfileSettings({ user, setUser }) {
                 style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 24, minHeight: fieldBoxMinHeight || 260 }}
                 ref={fieldBoxRef}
             >
-                <TextField
-                    disabled={!isEditing}
-                    name="username"
-                    label="Nome de Usuário"
-                    value={formData.username}
-                    onChange={handleChange}
-                    variant="standard"
-                    fullWidth
-                    sx={inputStyles}
-                    aria-label="Nome de Usuário"
-                />
-                <TextField
-                    disabled={!isEditing}
-                    name="email"
-                    label="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    variant="standard"
-                    fullWidth
-                    sx={inputStyles}
-                    aria-label="Email"
-                />
+            <TextField
+                disabled={!isEditing}
+                name="username"
+                label="Nome de Usuário"
+                value={formData.username ?? ''}
+                onChange={handleChange}
+                variant="standard"
+                fullWidth
+                sx={inputStyles}
+                aria-label="Nome de Usuário"
+            />
+            <TextField
+                disabled={!isEditing}
+                name="email"
+                label="Email"
+                value={formData.email ?? ''}
+                onChange={handleChange}
+                variant="standard"
+                fullWidth
+                sx={inputStyles}
+                aria-label="Email"
+            />
                 <AnimatePresence>
                     {isEditing && (
                         <motion.div
@@ -181,7 +181,7 @@ export default function ProfileSettings({ user, setUser }) {
                                 name="password"
                                 label="Nova Senha"
                                 type="password"
-                                value={formData.password}
+                                value={formData.password ?? ''}
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
@@ -195,11 +195,11 @@ export default function ProfileSettings({ user, setUser }) {
                                         animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 80, damping: 18 } }}
                                         exit={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
                                     >
-                                        <TextField
+                                       <TextField
                                             name="oldPassword"
                                             label="Senha Antiga"
                                             type="password"
-                                            value={oldPassword}
+                                            value={oldPassword ?? ''}
                                             onChange={e => { setOldPassword(e.target.value); setModalError(''); }}
                                             variant="standard"
                                             fullWidth
