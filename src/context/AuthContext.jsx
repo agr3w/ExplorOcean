@@ -1,17 +1,16 @@
 // src/context/AuthContext.jsx
 
-import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserProfile } from '../services/userService'; // Importe o serviço de perfil
+import { getUserProfile } from '../services/userService';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('authToken'));
-  const [user, setUser] = useState(null); // 1. NOVO ESTADO PARA OS DADOS DO USUÁRIO
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // 2. FUNÇÃO PARA BUSCAR E ATUALIZAR OS DADOS DO USUÁRIO
   const fetchAndSetUser = useCallback(async () => {
     const currentToken = localStorage.getItem('authToken');
     if (currentToken) {
@@ -20,38 +19,36 @@ export const AuthProvider = ({ children }) => {
         setUser(data);
       } catch (error) {
         console.error("Sessão inválida, deslogando.", error);
-        logoutAction(); // Se o token for inválido, desloga
+        logoutAction();
       }
     } else {
       setUser(null);
     }
   }, []);
 
-  // Busca os dados do usuário quando o app carrega ou o token muda
   useEffect(() => {
     fetchAndSetUser();
   }, [token, fetchAndSetUser]);
 
-  const loginAction = (newToken) => {
+  const loginAction = useCallback((newToken) => {
     localStorage.setItem('authToken', newToken);
     setToken(newToken);
-    // O useEffect acima cuidará de buscar o usuário e redirecionar
-  };
+  }, []);
 
-  const logoutAction = () => {
+  const logoutAction = useCallback(() => {
     localStorage.removeItem('authToken');
     setToken(null);
     setUser(null);
-    navigate('/auth');
-  };
+    navigate('/login');
+  }, [navigate]);
 
-  const value = {
+  const value = useMemo(() => ({
     token,
-    user, // 3. Exponha o usuário
+    user,
     login: loginAction,
     logout: logoutAction,
-    refetchUser: fetchAndSetUser, // 4. Exponha uma função para refazer o fetch
-  };
+    refetchUser: fetchAndSetUser,
+  }), [token, user, loginAction, logoutAction, fetchAndSetUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

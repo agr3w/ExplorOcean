@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { navigationLinks } from '../../content/navigatorContet/navigatorLinks';
 import { useAuth } from '../../context/AuthContext'; // Importe o useAuth
 
-export default function NavigatorBase({
+function NavigatorBase({
   transparent = false,
   sx = {},
   buttonColor = '#fff',
@@ -209,3 +209,5 @@ export default function NavigatorBase({
     </>
   );
 }
+
+export default React.memo(NavigatorBase);
