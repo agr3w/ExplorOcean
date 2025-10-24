@@ -41,7 +41,7 @@ export default function NavigatorBase({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            px: { xs: 2, md: 6 },
+            px: { xs: 4.5, md: 6 },
             pt: transparent ? 6 : 0,
           }}
         >
@@ -52,15 +52,31 @@ export default function NavigatorBase({
               onClick={handleDrawerOpen}
               sx={{
                 display: { xs: 'none', md: 'inline-flex' },
-                background: transparent ? '#fff' : menuBg,
-                color: transparent ? '#333' : menuText,
-                borderRadius: transparent ? 4 : 2,
                 textTransform: 'none',
                 fontWeight: 500,
-                px: transparent ? 3 : 2,
-                py: 1,
+                px: 3, py: 1,
                 fontSize: '1rem',
-                boxShadow: transparent ? '0 2px 8px rgba(0,0,0,0.08)' : undefined,
+                borderRadius: 4,
+                transition: 'all 0.3s ease',
+                ...(transparent
+                  ? {
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    backdropFilter: 'blur(5px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                    }
+                  }
+                  : {
+                    backgroundColor: 'rgba(54, 209, 224, 0.1)',
+                    border: '1px solid rgba(54, 209, 224, 0.2)',
+                    color: '#e3f2fd',
+                    '&:hover': {
+                      backgroundColor: 'rgba(54, 209, 224, 0.2)',
+                    }
+                  }
+                ),
               }}
             >
               Explore os recursos
@@ -70,7 +86,18 @@ export default function NavigatorBase({
               sx={{
                 display: { xs: 'inline-flex', md: 'none' },
                 color: buttonColor,
-                background: transparent ? '#fff' : 'rgba(255,255,255,0.1)',
+                transition: 'all 0.3s ease',
+                ...(transparent
+                  ? {
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    backdropFilter: 'blur(5px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                  }
+                  : {
+                    backgroundColor: 'rgba(54, 209, 224, 0.1)',
+                    border: '1px solid rgba(54, 209, 224, 0.2)',
+                  }
+                ),
               }}
             >
               <MdMenu size={24} />
@@ -125,17 +152,36 @@ export default function NavigatorBase({
         </Toolbar>
       </AppBar>
 
-      <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={handleDrawerClose}
+        // 1. Adicione a prop PaperProps para estilizar o fundo do Drawer
+        PaperProps={{
+          sx: {
+            backgroundColor: 'rgba(2, 16, 26, 0.85)', // Fundo escuro e mais opaco
+            backdropFilter: 'blur(10px)',
+            borderRight: '1px solid rgba(54, 209, 224, 0.2)',
+            color: '#e3f2fd', // Cor de texto padrão para branco suave
+          }
+        }}
+      >
         <Box sx={{ width: 280, pt: 2 }}>
           <Typography variant="h6" sx={{ px: 2, pb: 1, fontWeight: 700 }}>
             Navegação
           </Typography>
-          <Divider />
+          <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
           {navigationLinks.map((section, idx) => (
             <List
               key={section.subheader}
               subheader={
-                <ListSubheader sx={{ bgcolor: 'transparent', fontWeight: 600, fontSize: '1rem', color: '#1976d2' }}>
+                <ListSubheader sx={{
+                  bgcolor: 'transparent',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  // 2. Ajuste as cores do texto e ícones para o novo fundo escuro
+                  color: '#36d1e0', // Ciano para destaque
+                }}>
                   {section.subheader}
                 </ListSubheader>
               }
@@ -143,14 +189,19 @@ export default function NavigatorBase({
               {section.items.map((item) => (
                 <ListItem key={item.to} disablePadding>
                   <ListItemButton component={Link} to={item.to} onClick={handleDrawerClose}>
-                    <Box sx={{ minWidth: 32, color: '#1976d2', display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{
+                      minWidth: 32,
+                      color: '#36d1e0', // Ciano para o ícone
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}>
                       {item.icon && React.createElement(item.icon, { size: 22 })}
                     </Box>
                     <ListItemText primary={item.label} />
                   </ListItemButton>
                 </ListItem>
               ))}
-              {idx < navigationLinks.length - 1 && <Divider sx={{ my: 1 }} />}
+              {idx < navigationLinks.length - 1 && <Divider sx={{ my: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }} />}
             </List>
           ))}
         </Box>
