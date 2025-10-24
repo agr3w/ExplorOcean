@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react'
-import { Box, Button } from '@mui/material';
+import React, { useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import MainBannerText from './MainBannerText/mainBannerText';
 import useDiving from '../../../hooks/useDiving';
 import MainBannerButton from './MainBannerButton/mainBannerButton';
@@ -11,6 +11,26 @@ const backgroundImages = [
     'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?auto=format&fit=crop&w=1920&q=80'
 ];
 
+// Variantes para animação do banner
+const bannerVariants = {
+  undived: {
+    width: 'calc(100vw - 48px)',
+    height: '93vh',
+    margin: '24px auto',
+    borderRadius: '16px',
+    boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
+    transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.6 }
+  },
+  dived: {
+    width: '100vw',
+    height: '100vh',
+    margin: '0px auto',
+    borderRadius: '0px',
+    boxShadow: 'none',
+    transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.6 }
+  }
+};
+
 export default function MainBanner() {
     const diving = useDiving(100);
     const randomBackground = useMemo(() => {
@@ -19,17 +39,14 @@ export default function MainBanner() {
     }, []);
 
     return (
-        <Box
-            sx={{
+        <motion.div
+            variants={bannerVariants}
+            animate={diving ? 'dived' : 'undived'}
+            style={{
                 position: 'relative',
-                width: diving ? '100%' : 'calc(100vw - 48px)',
-                height: diving ? '100vh' : '93vh',
-                margin: diving ? 0 : '24px auto',
-                borderRadius: diving ? 0 : 2,
                 overflow: 'hidden',
-                boxShadow: diving ? 'none' : '0 2px 16px rgba(0,0,0,0.15)',
-                transition: 'all 0.6s cubic-bezier(.77,0,.18,1)',
                 background: `url("${randomBackground}") center/cover, #02101a`,
+                backgroundAttachment: 'fixed',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -38,8 +55,11 @@ export default function MainBanner() {
             }}
         >
             <MainBannerText diving={diving} />
-            <MainBannerButton diving={diving} />
-
-        </Box>
+            <AnimatePresence>
+                {!diving && (
+                    <MainBannerButton diving={diving} />
+                )}
+            </AnimatePresence>
+        </motion.div>
     );
 }
