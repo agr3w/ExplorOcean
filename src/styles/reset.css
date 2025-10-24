@@ -4,9 +4,9 @@
   box-sizing: border-box;
 }
 
-html {
+/* html {
   height: 100%;
-}
+} */
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -14,8 +14,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
-  overflow: hidden;
+  /* height: 100%; */
+  /* overflow: hidden; */
 }
 
 code {
@@ -26,3 +26,4 @@ code {
 #root {
   min-height: 100vh;
 }
+
