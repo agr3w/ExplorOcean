@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('authToken');
     setToken(null);
     setUser(null);
-    navigate('/login');
+    navigate('/auth');
   }, [navigate]);
 
   const value = useMemo(() => ({
