@@ -7,8 +7,8 @@ export const timelineData = [
     label: 'Hadeano',
     period: '4.6 a 4 bilhões de anos atrás',
     start: 4600, end: 4000,
-    mapImage: '/src/assets/hadeano-map.jpg',
-    backgroundUrl: 'https://images.unsplash.com/photo-1542366329-a35216321262?auto=format&fit=crop&w=1920&q=80',
+    mapImage: 'https://www.parismatch.com/lmnr/var/pm/public/media/image/2022/03/20/03/Ce-n-est-pas-une-planete-sur-laquelle-je-voudrais-vivre.jpg?VersionId=K1FWkcvZmXXuzP8LAFSf83W9vHCtOaHg',
+    backgroundUrl: 'https://th.bing.com/th/id/R.4a23846c5f75c0418b6668f5b3cdca2e?rik=ItV0b3i463AjkA&pid=ImgRaw&r=0',
     description: 'A Terra primitiva, em estágio de formação. A superfície era um oceano de magma, com bombardeio constante de asteroides. A vida ainda não existia.',
     pointsOfInterest: [
       { x: '50%', y: '50%', text: 'Formação da Lua: Um protoplaneta do tamanho de Marte colide com a Terra, criando a Lua a partir dos detritos do impacto.' }
