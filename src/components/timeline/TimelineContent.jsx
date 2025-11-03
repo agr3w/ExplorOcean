@@ -2,14 +2,12 @@ import React from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
 
-// 1. Importe os ícones
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import AirIcon from '@mui/icons-material/Air';
 import PublicIcon from '@mui/icons-material/Public';
 
 import LifeInPeriod from './LifeInPeriod';
 
-// Variantes da animação
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -33,7 +31,6 @@ const itemVariants = {
 };
 const MotionTypography = motion(Typography);
 
-// 2. Componente para o Card de Status
 const StatusCard = ({ stats }) => (
   <Paper
     elevation={4}
@@ -56,7 +53,6 @@ const StatusCard = ({ stats }) => (
   </Paper>
 );
 
-// Componente para cada linha do card
 const StatItem = ({ icon, label, value }) => (
   <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
     {React.cloneElement(icon, { sx: { mr: 1.5, color: 'primary.light' } })}
@@ -78,11 +74,8 @@ const TimelineContent = ({ era, sx }) => {
       initial="hidden"
       animate="visible"
       style={{
-        flexGrow: 1,
-        padding: '16px',
-        maxWidth: '40%',
-        minWidth: '350px',
         ...sx,
+        width: '100%', // Responsivo: ocupa toda a largura disponível
       }}
     >
       <MotionTypography variants={itemVariants} variant="h4" component="h2" gutterBottom>
@@ -97,7 +90,6 @@ const TimelineContent = ({ era, sx }) => {
         {era.description}
       </MotionTypography>
 
-      {/* 3. Renderize o Card de forma condicional e animada */}
       {era.planetStats && (
         <motion.div variants={itemVariants}>
           <StatusCard stats={era.planetStats} />
