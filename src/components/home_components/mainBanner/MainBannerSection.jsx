@@ -57,16 +57,27 @@ export default function MainBanner() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 zIndex: 1,
+                minHeight: '70vh',
             }}
         >
+            {/* Overlay para garantir legibilidade no mobile */}
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    background: 'linear-gradient(to top, rgba(2, 16, 26, 0.85) 0%, transparent 70%)',
+                    zIndex: 1,
+                }}
+            />
             <MainBannerText diving={diving} />
-            
             <AnimatePresence>
                 {!diving && (
                     <MainBannerButton />
                 )}
             </AnimatePresence>
-        
-        </motion.div> 
+        </motion.div>
     );
 }

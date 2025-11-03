@@ -1,0 +1,13 @@
+/* Adicione no seu arquivo de estilos global ou module */
+.about-highlight-popup {
+  font-size: 1.08rem;
+}
+@media (max-width: 600px) {
+  .about-highlight-popup {
+    font-size: 0.98rem;
+    padding: 10px 8px;
+    border-radius: 10px;
+    top: 60% !important;
+    max-width: 96vw;
+  }
+}
