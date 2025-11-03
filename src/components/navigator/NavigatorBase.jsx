@@ -26,6 +26,7 @@ function NavigatorBase({
       <AppBar
         position={transparent ? 'absolute' : 'fixed'}
         sx={{
+          transition: 'background 0.3s, color 0.3s',
           background: transparent
             ? 'transparent'
             : 'rgba(2, 16, 26, 0.85)',
@@ -170,7 +171,8 @@ function NavigatorBase({
             backdropFilter: 'blur(10px)',
             borderRight: '1px solid rgba(54, 209, 224, 0.2)',
             color: '#e3f2fd',
-            width: { xs: '85vw', sm: 280 }, // Drawer ocupa quase toda tela no mobile
+            width: { xs: '85vw', sm: 280 },
+            transition: 'background-color 0.3s, color 0.3s', // Transição leve
           }
         }}
       >

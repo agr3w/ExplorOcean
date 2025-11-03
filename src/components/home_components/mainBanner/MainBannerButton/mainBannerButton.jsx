@@ -80,23 +80,3 @@ export default function MainBannerButton({ diving }) {
         </Box>
     );
 }
-
-// Estilo antigo
-// sx={{
-//     background: 'linear-gradient(90deg, #36d1e0 0%, #1976d2 100%)',
-//     color: '#fff',
-//     borderRadius: 6,
-//     px: 4,
-//     py: 1.2,
-//     fontWeight: 500,
-//     fontSize: '1rem',
-//     boxShadow: '0 1px 4px rgba(30,60,114,0.08)',
-//     letterSpacing: 1,
-//     textTransform: 'none',
-//     transition: 'all 0.2s',
-//     '&:hover': {
-//         background: 'linear-gradient(90deg, #1976d2 0%, #36d1e0 100%)',
-//         color: '#e3f2fd',
-//         boxShadow: '0 4px 16px rgba(30,60,114,0.12)',
-//     },
-// }}
