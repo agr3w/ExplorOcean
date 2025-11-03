@@ -95,6 +95,7 @@ const Timeline = ({ data, onSelectEra, isVisible, toggleVisibility }) => {
 
   return (
     <MotionTimelineContainer
+      id="timeline-navigator"
       variants={panelVariants}
       initial="hidden"
       animate={isVisible ? 'visible' : 'hidden'}
