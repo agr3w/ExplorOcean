@@ -27,9 +27,9 @@ export default function MainBannerText({ diving }) {
                 display: 'flex', flexDirection: 'column',
                 justifyContent: 'center', alignItems: 'center',
                 color: '#fff',
+                padding: '0 8vw',
             }}
         >
-            {/* O overlay do fundo foi movido para um elemento separado para não animar junto */}
             <Box
                 sx={{
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
@@ -40,12 +40,29 @@ export default function MainBannerText({ diving }) {
                 }}
             />
             <motion.div variants={itemVariants}>
-                <Typography variant="h2" sx={{ fontWeight: 500, mb: 2, zIndex: 1 }}>
+                <Typography
+                    variant="h2"
+                    sx={{
+                        fontWeight: 500,
+                        mb: 2,
+                        zIndex: 1,
+                        fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
+                        textAlign: 'center',
+                    }}
+                >
                     ExplorOcean
                 </Typography>
             </motion.div>
             <motion.div variants={itemVariants}>
-                <Typography variant="h5" sx={{ mb: 4, zIndex: 1 }}>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        mb: 4,
+                        zIndex: 1,
+                        fontSize: { xs: '1.1rem', sm: '1.5rem', md: '2rem' },
+                        textAlign: 'center',
+                    }}
+                >
                     Aprofunde seus conhecimentos
                 </Typography>
             </motion.div>

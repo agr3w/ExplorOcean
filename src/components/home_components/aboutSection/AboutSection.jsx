@@ -22,7 +22,7 @@ export default function AboutSection() {
         borderColor: 'divider',
         borderRadius: 2,
         boxShadow: 3,
-        backgroundColor: '#f5f5f5',
+        // backgroundColor: '#f5f5f5',
       }}
     >
       {/* Texto explicativo e highlights à esquerda */}

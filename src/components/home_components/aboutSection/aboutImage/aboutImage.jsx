@@ -16,19 +16,16 @@ export default function AboutImage() {
             {/* O contêiner da "bolha" de cristal */}
             <Box
                 sx={{
-                    // 1. Garantir que seja um círculo perfeito
                     width: 300,
-                    height: 300, // Estava 280
+                    height: 300, 
                     borderRadius: '50%',
                     overflow: 'hidden',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    position: 'relative', // Necessário para o brilho ::before
+                    position: 'relative', 
 
-                    // 2. Efeito "Crystal Glass" com sombras
-                    // Removemos a borda e o fundo antigos
-                    background: '#000', // Fundo de fallback caso o vídeo não carregue
+                    background: '#000', 
                     boxShadow: `
                         /* Sombra externa suave para "flutuar" */
                         0 4px 24px rgba(30, 60, 120, 0.18),
@@ -40,7 +37,6 @@ export default function AboutImage() {
                         inset 0 0 15px rgba(54, 209, 224, 0.5)
                     `,
                     
-                    // 3. Adiciona um "brilho" de reflexo sobre o vídeo
                     '&::before': {
                         content: '""',
                         position: 'absolute',
@@ -48,11 +44,10 @@ export default function AboutImage() {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        zIndex: 2, // Fica em cima do vídeo
+                        zIndex: 2, 
                         borderRadius: '50%',
-                        // Gradiente que simula um reflexo de luz
                         background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%)',
-                        pointerEvents: 'none', // Permite interações com o vídeo (se houver)
+                        pointerEvents: 'none', 
                     }
                 }}
             >
@@ -66,7 +61,7 @@ export default function AboutImage() {
                         height: '100%',
                         objectFit: 'cover',
                         filter: 'brightness(0.95) saturate(1.1)',
-                        zIndex: 1, // Fica abaixo do brilho
+                        zIndex: 1, 
                         position: 'relative',
                     }}
                 />
