@@ -3,10 +3,10 @@ import {
   AppBar, Toolbar, Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText,
   ListSubheader, Divider, Typography, IconButton, Tooltip
 } from '@mui/material';
-import { MdMenu, MdHome, MdPerson, MdLogout } from 'react-icons/md'; // Adicione o ícone de Logout
+import { MdMenu, MdHome, MdPerson, MdLogout } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { navigationLinks } from '../../content/navigatorContet/navigatorLinks';
-import { useAuth } from '../../context/AuthContext'; // Importe o useAuth
+import { useAuth } from '../../context/AuthContext';
 
 function NavigatorBase({
   transparent = false,
@@ -15,7 +15,7 @@ function NavigatorBase({
   menuBg = '#b2ebf2',
   menuText = '#333',
 }) {
-  const { token, logout } = useAuth(); // Pegue o token e a função de logout do contexto
+  const { token, logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerOpen = () => setDrawerOpen(true);
@@ -26,6 +26,7 @@ function NavigatorBase({
       <AppBar
         position={transparent ? 'absolute' : 'fixed'}
         sx={{
+          transition: 'background 0.3s, color 0.3s',
           background: transparent
             ? 'transparent'
             : 'rgba(2, 16, 26, 0.85)',
@@ -41,11 +42,11 @@ function NavigatorBase({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            px: { xs: 4.5, md: 6 },
+            px: { xs: 2, md: 6 }, // Menor padding no mobile
             pt: transparent ? 6 : 0,
           }}
         >
-          {/* --- SEÇÃO ESQUERDA --- */}
+          {/* --- ESQUERDA --- */}
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
             <Button
               startIcon={<MdMenu size={24} />}
@@ -54,9 +55,9 @@ function NavigatorBase({
                 display: { xs: 'none', md: 'inline-flex' },
                 textTransform: 'none',
                 fontWeight: 500,
-                px: 3, py: 1,
+                px: 2, py: 0.8, // Mais compacto
                 fontSize: '1rem',
-                borderRadius: 4,
+                borderRadius: 3,
                 transition: 'all 0.3s ease',
                 ...(transparent
                   ? {
@@ -87,6 +88,8 @@ function NavigatorBase({
                 display: { xs: 'inline-flex', md: 'none' },
                 color: buttonColor,
                 transition: 'all 0.3s ease',
+                p: 1, // padding menor
+                mx: 0.5, // margem menor
                 ...(transparent
                   ? {
                     backgroundColor: 'rgba(255, 255, 255, 0.15)',
@@ -100,11 +103,11 @@ function NavigatorBase({
                 ),
               }}
             >
-              <MdMenu size={24} />
+              <MdMenu size={22} />
             </IconButton>
           </Box>
 
-          {/* --- SEÇÃO CENTRAL (LOGO) --- */}
+          {/* --- CENTRAL (LOGO) --- */}
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
             <Typography
               component={Link}
@@ -115,36 +118,42 @@ function NavigatorBase({
                 fontWeight: 'bold',
                 textDecoration: 'none',
                 letterSpacing: 1,
+                fontSize: { xs: '1.3rem', md: '1.7rem' }, // Ajusta tamanho no mobile
               }}
             >
               ExplorOcean
             </Typography>
           </Box>
 
-          {/* --- SEÇÃO DIREITA ATUALIZADA --- */}
-          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+          {/* --- DIREITA --- */}
+          <Box sx={{
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            gap: { xs: 0.5, md: 1 }, // Menor espaçamento no mobile
+          }}>
             <Tooltip title="Início" arrow>
-              <IconButton component={Link} to="/" sx={{ color: buttonColor }}>
-                <MdHome size={26} />
+              <IconButton component={Link} to="/" sx={{ color: buttonColor, p: { xs: 1, md: 2 } }}>
+                <MdHome size={24} />
               </IconButton>
             </Tooltip>
             {token ? (
               <>
                 <Tooltip title="Acessar Perfil" arrow>
-                  <IconButton component={Link} to="/profile" sx={{ color: buttonColor }}>
-                    <MdPerson size={26} />
+                  <IconButton component={Link} to="/profile" sx={{ color: buttonColor, p: { xs: 1, md: 2 } }}>
+                    <MdPerson size={24} />
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Sair" arrow>
-                  <IconButton onClick={logout} sx={{ color: buttonColor }}>
-                    <MdLogout size={26} />
+                  <IconButton onClick={logout} sx={{ color: buttonColor, p: { xs: 1, md: 2 } }}>
+                    <MdLogout size={24} />
                   </IconButton>
                 </Tooltip>
               </>
             ) : (
               <Tooltip title="Acessar" arrow>
-                <IconButton component={Link} to="/auth" sx={{ color: buttonColor }}>
-                  <MdPerson size={26} />
+                <IconButton component={Link} to="/auth" sx={{ color: buttonColor, p: { xs: 1, md: 2 } }}>
+                  <MdPerson size={24} />
                 </IconButton>
               </Tooltip>
             )}
@@ -156,17 +165,18 @@ function NavigatorBase({
         anchor="left"
         open={drawerOpen}
         onClose={handleDrawerClose}
-        // 1. Adicione a prop PaperProps para estilizar o fundo do Drawer
         PaperProps={{
           sx: {
-            backgroundColor: 'rgba(2, 16, 26, 0.85)', // Fundo escuro e mais opaco
+            backgroundColor: 'rgba(2, 16, 26, 0.92)',
             backdropFilter: 'blur(10px)',
             borderRight: '1px solid rgba(54, 209, 224, 0.2)',
-            color: '#e3f2fd', // Cor de texto padrão para branco suave
+            color: '#e3f2fd',
+            width: { xs: '85vw', sm: 280 },
+            transition: 'background-color 0.3s, color 0.3s', // Transição leve
           }
         }}
       >
-        <Box sx={{ width: 280, pt: 2 }}>
+        <Box sx={{ width: '100%', pt: 2 }}>
           <Typography variant="h6" sx={{ px: 2, pb: 1, fontWeight: 700 }}>
             Navegação
           </Typography>
@@ -179,8 +189,7 @@ function NavigatorBase({
                   bgcolor: 'transparent',
                   fontWeight: 600,
                   fontSize: '1rem',
-                  // 2. Ajuste as cores do texto e ícones para o novo fundo escuro
-                  color: '#36d1e0', // Ciano para destaque
+                  color: '#36d1e0',
                 }}>
                   {section.subheader}
                 </ListSubheader>
@@ -191,13 +200,20 @@ function NavigatorBase({
                   <ListItemButton component={Link} to={item.to} onClick={handleDrawerClose}>
                     <Box sx={{
                       minWidth: 32,
-                      color: '#36d1e0', // Ciano para o ícone
+                      color: '#36d1e0',
                       display: 'flex',
                       alignItems: 'center'
                     }}>
                       {item.icon && React.createElement(item.icon, { size: 22 })}
                     </Box>
-                    <ListItemText primary={item.label} />
+                    <ListItemText
+                      primary={item.label}
+                      sx={{
+                        '.MuiTypography-root': {
+                          fontSize: { xs: '1rem', md: '1.1rem' }, // Texto maior no mobile
+                        }
+                      }}
+                    />
                   </ListItemButton>
                 </ListItem>
               ))}

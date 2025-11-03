@@ -8,12 +8,14 @@ import theme from './styles/theme';
 import './styles/reset.css';
 import SmoothScroll from './components/universal/SmoothScroll';
 import { BrowserRouter as Router } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Router>
         <SmoothScroll>
+          <CssBaseline />
           <AppRoutes />
         </SmoothScroll>
       </Router>
