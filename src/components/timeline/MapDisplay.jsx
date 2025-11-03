@@ -5,20 +5,30 @@ import { motion } from 'framer-motion';      // Importe o motion
 const MapDisplay = ({ era }) => {
   return (
     <motion.div
-      // A prop layoutId cria o efeito "morph" suave entre mudanças de estado.
+      id="timeline-map"
       layoutId="map-container"
-      // Animações de entrada e saída para o efeito de "zoom"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }}
       exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.4, ease: 'easeOut' } }}
       style={{
         width: '50%',
         height: '80%',
-        flexShrink: 0,
-        borderRadius: '16px', // Aumentei o borderRadius
+        minWidth: 260,
+        minHeight: 180,
+        maxWidth: '100vw',
+        maxHeight: '60vh',
+        borderRadius: '16px',
         boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-        position: 'relative', // Essencial para posicionar os pontos
-        overflow: 'hidden',   // Garante que a imagem não vaze do borderRadius
+        position: 'relative',
+        overflow: 'hidden',
+        // Responsivo para mobile:
+        ...(window.innerWidth < 600 ? {
+          // marginTop: '350px',
+          width: '95vw',
+          height: '40vh',
+          minHeight: 160,
+          borderRadius: '10px',
+        } : {}),
       }}
     >
       {/* Box para a imagem de fundo */}
@@ -26,8 +36,8 @@ const MapDisplay = ({ era }) => {
         width: '100%',
         height: '100%',
         background: `url(${era.mapImage}) no-repeat center center/cover`, // Mudei para cover para preencher
-      }}/>
-      
+      }} />
+
       {/* Renderiza os Pontos de Interesse */}
       {era.pointsOfInterest && era.pointsOfInterest.map((point, index) => (
         <Tooltip key={index} title={point.text} arrow placement="top">

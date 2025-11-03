@@ -72,6 +72,7 @@ const StatItem = ({ icon, label, value }) => (
 const TimelineContent = ({ era, sx }) => {
   return (
     <motion.div
+      id="timeline-content"
       key={era.id}
       variants={containerVariants}
       initial="hidden"
