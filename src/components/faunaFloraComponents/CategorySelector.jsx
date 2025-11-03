@@ -26,7 +26,7 @@ export default function CategorySelector({ selectedCategory, onSelectCategory })
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, p: 2, mb: 4 }}>
+        <Box id="tour-step-1" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, p: 2, mb: 4 }}>
             <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold' }}>
                 Explore por Categoria
             </Typography>

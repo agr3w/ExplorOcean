@@ -21,6 +21,7 @@ export default function FaunaFloraContentSection({
 
   return (
     <Box
+      // id="tour-step-3"
       sx={{
         pt: 6, pb: 4, px: 4,
         display: "flex",
@@ -50,7 +51,7 @@ export default function FaunaFloraContentSection({
       </AnimatePresence>
 
       {gridItems.length > 0 && (
-        <Box sx={{ width: '100%', mt: 6 }}>
+        <Box id="tour-step-3" sx={{ width: '100%', mt: 6 }}>
           <Typography variant="h4" sx={{ color: 'white', fontWeight: 'bold', textAlign: 'center', mb: 4 }}>
             Mais para Explorar
           </Typography>

@@ -7,10 +7,12 @@ import FaunaFloraBanner from "../components/faunaFloraComponents/FaunaFloraBanne
 import FaunaFloraToggleButtons from "../components/faunaFloraComponents/FaunaFloraToggleButtons";
 import FaunaFloraContentSection from "../components/faunaFloraComponents/FaunaFloraContentSection";
 import FaunaFlora3DPreferenceModal from "../components/faunaFloraComponents/FaunaFlora3DPreferenceModal";
+import FaunaFloraTour from "../components/faunaFloraComponents/FaunaFloraTour";
 
 export default function FaunaFloraPage() {
   const [selectedCategory, setSelectedCategory] = useState("fauna");
   const [show3D, setShow3D] = useState(null);
+  const [runTour, setRunTour] = useState(false);
 
   const itemsToShow = (selectedCategory === "fauna" ? faunaData : floraData).map((item) => ({
     ...item,
@@ -24,6 +26,20 @@ export default function FaunaFloraPage() {
       ? "Conheça a vida animal que habita os oceanos."
       : "Descubra a rica vida vegetal e micro-organismos dos oceanos.";
 
+  // Tour: só roda na primeira visita
+  useEffect(() => {
+    const tourVisto = localStorage.getItem('hasSeenFaunaFloraTour');
+    if (!tourVisto) {
+      setTimeout(() => setRunTour(true), 1000);
+    }
+  }, []);
+
+  const handleTourEnd = () => {
+    localStorage.setItem('hasSeenFaunaFloraTour', 'true');
+    setRunTour(false);
+  };
+
+  // Preferência 3D: lógica mantida
   useEffect(() => {
     const saved = localStorage.getItem("show3D");
     if (saved !== null) setShow3D(saved === "true");
@@ -48,6 +64,9 @@ export default function FaunaFloraPage() {
         marginTop: 7,
       }}
     >
+      {/* Tour interativo */}
+      <FaunaFloraTour run={runTour} onTourEnd={handleTourEnd} />
+
       <Navigator />
       <FaunaFloraBanner
         selectedCategory={selectedCategory}
