@@ -2,14 +2,19 @@ import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainBannerText from './MainBannerText/mainBannerText';
-import useDiving from '../../../hooks/useDiving';
+import useDiving from '@/hooks/useDiving';
 import MainBannerButton from './MainBannerButton/mainBannerButton';
 
 const backgroundImages = [
-    '/src/assets/earthmap1k.jpg',
-    'https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=1920&q=80',
-    'https://images.unsplash.com/photo-1446776811953-b23d579212c5?auto=format&fit=crop&w=1920&q=80',
-    'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?auto=format&fit=crop&w=1920&q=80'
+    'https://www.nasa.gov/wp-content/uploads/2025/09/iss047e137096orig.jpg',
+    'https://www.nasa.gov/wp-content/uploads/2025/08/nasa-september-2025-hd-1920x1080-1.jpg',
+    'https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA25033.jpg',
+    'https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA23699.jpg',
+    'https://images-assets.nasa.gov/image/iss058e007722/iss058e007722~medium.jpg',
+    'https://images-assets.nasa.gov/image/as4-01-750/as4-01-750~medium.jpg',
+    'https://images-assets.nasa.gov/image/sts054-152-102/sts054-152-102~medium.jpg',
+    'https://images-assets.nasa.gov/image/iss071e570863/iss071e570863~medium.jpg',
+    'https://images-assets.nasa.gov/image/sts052-153-102/sts052-153-102~medium.jpg'
 ];
 
 const bannerVariants = {
