@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography, Modal } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
-import { deleteUserProfile } from '../../services/userService';
+import { deleteUserProfile } from '@/services/userService';
 
 const modalVariants = {
   hidden: { opacity: 0, scale: 0.85, y: 40 },
@@ -27,14 +27,13 @@ export default function ProfileDangerZone({ onAccountDelete }) {
       onAccountDelete();
     } catch (error) {
       console.error("Erro ao excluir conta", error);
-      // Aqui você pode mostrar um alerta de erro para o usuário se quiser
     }
   };
 
   return (
     <>
       <Box sx={{
-        mt: 4, p: 3, borderRadius: 3,
+        mt: 4, p: 3, borderRadius: 2,
         background: 'linear-gradient(90deg, rgba(255,23,68,0.1) 0%, rgba(2,16,26,0.3) 100%)',
         border: '1.5px solid rgba(255,23,68,0.3)',
         boxShadow: '0 2px 12px rgba(255,23,68,0.10)',
@@ -76,7 +75,7 @@ export default function ProfileDangerZone({ onAccountDelete }) {
               <Box sx={{
                 bgcolor: 'rgba(2, 16, 26, 0.93)',
                 border: '1.5px solid #ff5252',
-                borderRadius: 4,
+                borderRadius: 2,
                 boxShadow: 24,
                 p: { xs: 3, md: 4 },
                 textAlign: 'center',

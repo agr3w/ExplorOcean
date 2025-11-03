@@ -12,9 +12,9 @@ export const faunaData = [
       { title: "Conservação", text: "Esteve à beira da extinção devido à caça comercial, mas hoje é um símbolo de sucesso na conservação marinha, com populações se recuperando globalmente." },
       { title: "Migração", text: "Percorre anualmente até 25.000 km, alternando entre áreas de alimentação e reprodução." }
     ],
-    imageUrl: 'https://wallpapercave.com/wp/YocUFbD.jpg',
+    imageUrl: 'https://www.infoescola.com/wp-content/uploads/2017/07/jubarte-514076104.jpg',
     threeModel: '/models/ChimeraVan.glb',
-    backgroundPreset: "sunset",
+    // backgroundPreset: "sunset",
     secondaryImages: [
       'https://images.unsplash.com/photo-1506744038136-46273834b3fb'
     ],
@@ -49,7 +49,7 @@ export const faunaData = [
       { title: "Termorregulação", text: "É um dos poucos peixes capazes de manter a temperatura corporal mais alta que a da água ao seu redor (endotermia), o que lhe confere maior força e resistência muscular." },
       { title: "Sentidos Apurados", text: "Possui um olfato extremamente apurado, capaz de detectar uma gota de sangue a quilômetros de distância." }
     ],
-    imageUrl: 'https://wallpapercave.com/wp/YocUFbD.jpg',
+    imageUrl: 'https://sp-ao.shortpixel.ai/client/to_auto,q_lossless,ret_img,w_750,h_422/https://blogdopescador.com/wp-content/uploads/2022/08/tubarao-branco-2.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "night",
     secondaryImages: [
@@ -81,7 +81,7 @@ export const faunaData = [
       { title: "Respiração", text: "Podem prender a respiração por horas, dependendo do nível de atividade. Durante o sono, podem permanecer submersas por até sete horas." },
       { title: "Ciclo de Vida e Sexo", text: "A temperatura da areia onde os ovos são incubados determina o sexo dos filhotes: temperaturas mais quentes geram mais fêmeas, e temperaturas mais frias, mais machos." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1548450171-807212c45217',
+    imageUrl: 'https://tse1.mm.bing.net/th/id/OIP.kqn2xmICFBlGIi6mtFzpSwHaFb?rs=1&pid=ImgDetMain&o=7&rm=3',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "forest",
     secondaryImages: [
@@ -115,7 +115,7 @@ export const faunaData = [
       { title: "Inteligência Notável", text: "Polvos são capazes de navegar por labirintos, abrir potes e até mesmo demonstrar personalidades distintas. Sua inteligência é um campo de estudo fascinante." },
       { title: "Mecanismos de Defesa", text: "Além da camuflagem, polvos podem expelir uma nuvem de tinta para confundir predadores e usar sua flexibilidade para se esconder em fendas minúsculas." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1545671913-b895c2ba81b9',
+    imageUrl: 'https://truespiritanimal.org/wp-content/uploads/2023/11/image-197-1024x614.png',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "night",
     secondaryImages: [],
@@ -139,7 +139,7 @@ export const faunaData = [
       { title: "Simbiose com Anêmonas", text: "Essa parceria é um dos exemplos mais clássicos de mutualismo nos oceanos, onde ambas as espécies se beneficiam." },
       { title: "Hierarquia Social", text: "Vivem em pequenos grupos com uma hierarquia rígida, liderados por uma fêmea dominante, que é a maior do grupo." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599933571556-25d2595080b3',
+    imageUrl: 'https://myaquarium.com.br/wp-content/uploads/2019/03/peixe-palhaco-amphiprion-ocellaris-2.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "sunset",
     secondaryImages: [],
@@ -163,7 +163,7 @@ export const faunaData = [
       { title: "Espécie-Chave", text: "Ao controlar a população de ouriços, as lontras permitem que as florestas de kelp prosperem, sustentando centenas de outras espécies." },
       { title: "Uso de Ferramentas", text: "Elas frequentemente flutuam de costas, usando uma pedra apoiada na barriga como bigorna para quebrar mariscos e caranguejos." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1563897375-35319c521b4a',
+    imageUrl: 'https://www.infoescola.com/wp-content/uploads/2008/05/lontra-518995978.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "forest",
     secondaryImages: [],
@@ -187,7 +187,7 @@ export const faunaData = [
       { title: "Gigante Gentil", text: "Sua natureza dócil permite que mergulhadores e nadadores se aproximem pacificamente, tornando-o um ícone do ecoturismo marinho." },
       { title: "Alimentação por Filtração", text: "Ele pode processar mais de 6.000 litros de água por hora através de suas brânquias para capturar alimento." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1575550959108-27b6a4b19dea',
+    imageUrl: 'https://www.infoescola.com/wp-content/uploads/2010/02/tubarao-baleia-71323384.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "sunset",
     secondaryImages: [],
@@ -244,7 +244,7 @@ export const floraData = [
       { title: "Bomba de Carbono", text: "Atua como uma 'bomba biológica de carbono', transportando carbono da superfície para o fundo do oceano quando morrem e afundam, um processo crucial para a regulação do clima." },
       { title: "Produção de Oxigênio", text: "Estima-se que o fitoplâncton produza mais oxigênio do que todas as florestas tropicais do mundo combinadas." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534066068694-0f2c4164b38d',
+    imageUrl: 'https://tse3.mm.bing.net/th/id/OIP.yU6w0apn2jlPIho6KSlbYwHaEL?w=756&h=426&rs=1&pid=ImgDetMain&o=7&rm=3',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "sunset",
     secondaryImages: [
@@ -273,7 +273,7 @@ export const floraData = [
       { title: "Sequestro de Carbono", text: "Os prados de grama marinha são um dos ecossistemas mais eficientes do mundo no sequestro de carbono, armazenando-o no sedimento por milhares de anos." },
       { title: "Fonte de Alimento Vital", text: "É a principal fonte de alimento para espécies ameaçadas e icônicas, como o peixe-boi e a tartaruga-verde." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1523996502758-29a3a9364654',
+    imageUrl: 'https://i.pinimg.com/736x/e4/54/8c/e4548ce608b1ac5067d575cb85c79d14.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "forest",
     secondaryImages: [
@@ -303,7 +303,7 @@ export const floraData = [
       { title: "Biodiversidade", text: "Apesar de cobrirem menos de 1% do fundo do oceano, os recifes de coral abrigam cerca de 25% de toda a vida marinha." },
       { title: "Ameaça do Branqueamento", text: "Quando a água esquenta, os corais expelem as algas que vivem em seus tecidos, perdendo sua principal fonte de alimento e cor, o que pode levar à sua morte." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1551201323-ba8a735a42f8',
+    imageUrl: 'https://img.freepik.com/fotos-premium/este-recife-de-coral-vibrante-e-diversificado-apresenta-uma-impressionante-variedade-de-corais-diferentes-uma-vista-aerea-de-um-recife-de-coral-vibrante-gerado-por-ia_538213-15139.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "sunset",
     secondaryImages: [],
@@ -331,7 +331,7 @@ export const floraData = [
       { title: "Caçadora Paciente", text: "A anêmona espera que uma presa desavisada toque em seus tentáculos, que disparam nematocistos venenosos para paralisá-la." },
       { title: "Casa Segura", text: "A anêmona oferece proteção ao peixe-palhaço, que em troca a mantém limpa e afasta predadores." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1574555291242-a058a53c0785',
+    imageUrl: 'https://img.freepik.com/premium-photo/sea-anemone-closeup-with-blurred-background-created-with-generative-ai_419341-21053.jpg',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "night",
     secondaryImages: [],
@@ -355,7 +355,7 @@ export const floraData = [
       { title: "Berçário da Vida Marinha", text: "Muitas espécies de peixes comercialmente importantes passam seus estágios iniciais de vida protegidos entre as raízes dos manguezais." },
       { title: "Defesa Costeira Natural", text: "A densa rede de raízes dos mangues ajuda a dissipar a energia das ondas, protegendo as comunidades costeiras de tempestades e tsunamis." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1590664245788-f542a78693ea',
+    imageUrl: 'https://th.bing.com/th/id/R.0d8f3b63c9cb5ff29588dc7aebdf1107?rik=Kn%2bjcFpHKSiYUg&pid=ImgRaw&r=0.png',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "forest",
     secondaryImages: [],
@@ -379,7 +379,7 @@ export const floraData = [
       { title: "Um Mar Sem Costa", text: "O Mar dos Sargaços é o único mar do mundo que não é definido por costas terrestres, mas sim por correntes oceânicas que contêm as massas de algas." },
       { title: "Habitat Flutuante", text: "As esteiras de sargaço oferecem um refúgio vital em mar aberto para os filhotes de tartarugas marinhas, protegendo-os de predadores." }
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1559311318-435403a73b2d',
+    imageUrl: 'https://acientistaagricola.pt/wp-content/uploads/2023/10/sargaco-1-1536x864.png',
     threeModel: '/models/ChimeraVan.glb',
     backgroundPreset: "sunset",
     secondaryImages: [],

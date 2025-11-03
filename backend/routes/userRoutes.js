@@ -2,7 +2,7 @@ const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const authMiddleware = require('../middleware/authMiddleware'); // Importe o middleware
+const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -77,7 +77,10 @@ router.get('/me', authMiddleware, async (req, res) => {
                 createdAt: true,
                 enable3d: true,
                 notifications: true,
-                history: true
+                history: {
+                    orderBy: { completedAt: 'desc' }
+                },
+                favorites: true 
             }
         });
         if (!user) return res.status(404).json({ message: 'Usuário não encontrado.' });

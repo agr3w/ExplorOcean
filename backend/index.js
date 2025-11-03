@@ -20,6 +20,13 @@ app.get('/', (req, res) => {
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes); // Todas as rotas em userRoutes começarão com /api/users
 
+// NOVAS ROTAS
+const historyRoutes = require('./routes/historyRoutes');
+app.use('/api/history', historyRoutes);
+
+const favoriteRoutes = require('./routes/favoriteRoutes');
+app.use('/api/favorites', favoriteRoutes);
+
 
 // Inicia o servidor
 app.listen(PORT, () => {
