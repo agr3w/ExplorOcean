@@ -18,22 +18,22 @@ const backgroundImages = [
 ];
 
 const bannerVariants = {
-  undived: { 
-    width: 'calc(100vw - 48px)',
-    height: '93vh',
-    margin: '24px auto',
-    borderRadius: '16px', 
-    boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
-    transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.6 }
-  },
-  dived: { 
-    width: '100vw',
-    height: '100vh',
-    margin: '0px auto',
-    borderRadius: '0px',
-    boxShadow: 'none',
-    transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.6 }
-  }
+    undived: {
+        width: 'calc(100vw - 48px)',
+        height: '93vh',
+        margin: '24px auto',
+        borderRadius: '16px',
+        boxShadow: '0 2px 16px rgba(0,0,0,0.15)',
+        transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.6 }
+    },
+    dived: {
+        width: '100vw',
+        height: '100vh',
+        margin: '0px auto',
+        borderRadius: '0px',
+        boxShadow: 'none',
+        transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.6 }
+    }
 };
 
 export default function MainBanner() {
@@ -46,18 +46,22 @@ export default function MainBanner() {
     return (
         <motion.div
             variants={bannerVariants}
-            animate={diving ? 'dived' : 'undived'} 
-            style={{ 
+            animate={diving ? 'dived' : 'undived'}
+            style={{
                 position: 'relative',
                 overflow: 'hidden',
-                background: `url("${randomBackground}") center/cover, #02101a`,
-                backgroundAttachment: 'fixed',
+                backgroundImage: `url("${randomBackground}")`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: '#02101a',
+                backgroundAttachment: 'scroll',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 zIndex: 1,
                 minHeight: '70vh',
+                willChange: 'background-position',
             }}
         >
             {/* Overlay para garantir legibilidade no mobile */}
@@ -75,7 +79,7 @@ export default function MainBanner() {
             <MainBannerText diving={diving} />
             <AnimatePresence>
                 {!diving && (
-                    <MainBannerButton />
+                    <MainBannerButton diving={diving} />
                 )}
             </AnimatePresence>
         </motion.div>
