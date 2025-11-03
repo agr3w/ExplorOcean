@@ -6,6 +6,7 @@ import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Html } from '@react-three/drei';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MdStar } from 'react-icons/md';
 
 function Loader() {
   return (
@@ -42,6 +43,24 @@ const CardMediaWrapper = styled(Box)({
   overflow: 'hidden',
   cursor: 'pointer',
 });
+
+const RatingBox = styled(motion.div)(({ theme }) => ({
+  position: 'absolute',
+  top: 12,
+  left: 12,
+  background: 'linear-gradient(135deg, rgba(54,209,224,0.45) 0%, rgba(41,121,255,0.35) 100%)',
+  borderRadius: '8px',
+  padding: '4px 12px 4px 8px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  zIndex: 2,
+  boxShadow: '0 2px 8px rgba(54,209,224,0.10)',
+  border: '1.5px solid rgba(54,209,224,0.18)',
+  color: '#36d1e0',
+  fontWeight: 700,
+  fontSize: '0.95rem',
+}));
 
 const CardHeader = ({ imageUrl, rating, tags, threeModel }) => {
   const [show3D, setShow3D] = useState(false);
@@ -96,18 +115,15 @@ const CardHeader = ({ imageUrl, rating, tags, threeModel }) => {
       )}
 
       {rating && (
-        <Box sx={{ position: 'absolute', top: 8, left: 8, background: 'rgba(0,0,0,0.5)', borderRadius: '4px', p: '4px 8px', zIndex: 2 }}>
-          <Typography variant="caption" sx={{ color: 'white' }}>{rating}⭐</Typography>
-        </Box>
-      )}
-      {tags && (
-        <Box sx={{ position: 'absolute', top: 8, right: 8, display: 'flex', gap: '4px', zIndex: 2 }}>
-          {tags.map((tag, tagIndex) => (
-            <Box key={tagIndex} sx={{ background: 'rgba(0,0,0,0.5)', borderRadius: '4px', p: '4px 8px' }}>
-              <Typography variant="caption" sx={{ color: 'white' }}>{tag}</Typography>
-            </Box>
-          ))}
-        </Box>
+        <RatingBox
+          initial={{ scale: 0.95, opacity: 0.8 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
+          <MdStar size={18} style={{ color: '#ffd600', marginRight: 4, filter: 'drop-shadow(0 0 4px #ffd600)' }} />
+          <Typography variant="caption" sx={{ color: '#fff', fontWeight: 'bold', fontSize: '0.80rem' }}>
+            {rating}
+          </Typography>
+        </RatingBox>
       )}
     </CardMediaWrapper>
   );

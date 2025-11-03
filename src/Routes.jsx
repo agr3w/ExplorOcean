@@ -1,11 +1,14 @@
-import React, { Suspense, lazy, useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { quizzesData } from "./content/contentGrid/quizzesContent";
-import { documentariesData } from "./content/contentGrid/documentariesContent";
+import React, { Suspense, lazy } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from 'framer-motion';
+
 import ScrollToTop from "./utils/ScrollToTop";
 import LoadingScreen from "./components/Loading/LoadingScreen";
+import RouteTransitionLoader from "./components/Loading/RouteTransitionLoader";
+import AnimatedPage from "./components/universal/AnimatedPage";
 import { AuthProvider } from './context/AuthContext';
-
+import { documentariesData } from "./content/contentGrid/documentariesContent";
+import { quizzesData } from "./content/contentGrid/quizzesContent"; 
 
 // Lazy imports
 const Home = lazy(() => import("./pages/Home"));
@@ -22,64 +25,39 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const AuthPage = lazy(() => import("./pages/AuthPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 
-function AppRoutes() {
-  // Simulação de progresso de loading
-  const [loadingPercent, setLoadingPercent] = useState(0);
-
-  useEffect(() => {
-    let percent = 0;
-    const timer = setInterval(() => {
-      percent += 5;
-      setLoadingPercent(percent);
-      if (percent >= 100) clearInterval(timer);
-    }, 40);
-    return () => clearInterval(timer);
-  }, []);
+export default function AppRoutes() {
+  const location = useLocation();
 
   return (
-    <Router>
-      <AuthProvider>
-        <Suspense fallback={<LoadingScreen progress={loadingPercent} />}>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/test" element={<LoadingScreen />} />
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/documentaries"
-              element={
-                <ContentPageTemplate
-                  data={documentariesData}
-                  title="Nossos Documentários"
-                  description="Assista a documentários incríveis e aprenda sobre a vida marinha e a história dos oceanos."
-                />
-              }
-            />
-            <Route
-              path="/quizzes"
-              element={
-                <ContentPageTemplate
-                  data={quizzesData}
-                  title="Nossos Quizzes"
-                  description="Teste seus conhecimentos sobre a vida marinha e a história dos oceanos."
-                />
-              }
-            />
-            <Route path="/hub" element={<ContentHub />} />
-            <Route path="/ExplorerHub" element={<ExplorerHub />} />
-            <Route path="/globe" element={<GlobePage />} />
-            <Route path="/timeline" element={<TimelinePage />} />
-            <Route path="/fauna-flora" element={<FaunaFloraPage />} />
-            <Route path="/documentaries/:id" element={<DocumentaryDetailPage />} />
-            <Route path="/quizzes/:id" element={<QuizDetailPage />} />
-            <Route path="/:category/:id" element={<FaunaFloraDetailPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Routes>
-        </Suspense>
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+    <Suspense fallback={<RouteTransitionLoader />}>
+      <ScrollToTop />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
+          <Route
+            path="/documentaries"
+            element={<AnimatedPage><ContentPageTemplate data={documentariesData} title="Nossos Documentários" description="Assista a documentários incríveis e aprenda sobre a vida marinha e a história dos oceanos." /></AnimatedPage>}
+          />
+          <Route
+            path="/quizzes"
+            element={<AnimatedPage><ContentPageTemplate data={quizzesData} title="Nossos Quizzes" description="Teste seus conhecimentos sobre a vida marinha e a história dos oceanos." /></AnimatedPage>}
+          />
+          <Route path="/hub" element={<AnimatedPage><ContentHub /></AnimatedPage>} />
+          <Route path="/ExplorerHub" element={<AnimatedPage><ExplorerHub /></AnimatedPage>} />
+          <Route path="/globe" element={<AnimatedPage><GlobePage /></AnimatedPage>} />
+          <Route path="/timeline" element={<AnimatedPage><TimelinePage /></AnimatedPage>} />
+          <Route path="/fauna-flora" element={<AnimatedPage><FaunaFloraPage /></AnimatedPage>} />
+          <Route path="/documentaries/:id" element={<AnimatedPage><DocumentaryDetailPage /></AnimatedPage>} />
+          <Route path="/quizzes/:id" element={<AnimatedPage><QuizDetailPage /></AnimatedPage>} />
+          <Route path="/:category/:id" element={<AnimatedPage><FaunaFloraDetailPage /></AnimatedPage>} />
+          <Route path="/auth" element={<AnimatedPage><AuthPage /></AnimatedPage>} />
+          <Route path="/profile" element={<AnimatedPage><ProfilePage /></AnimatedPage>} />
+          <Route path="*" element={<AnimatedPage><NotFoundPage /></AnimatedPage>} />
+          <Route path="/test" element={<LoadingScreen />} />
+        </Routes>
+      </AnimatePresence>
+    </Suspense>
+    </AuthProvider>
   );
 }
-
-export default AppRoutes;

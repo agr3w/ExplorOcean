@@ -20,17 +20,32 @@ model User {
   enable3d      Boolean @default(true)
   notifications Boolean @default(false)
 
-  history ActivityHistory[]
+  history   ActivityHistory[]
+  favorites Favorite[] // Adicionado: Relacionamento com Favoritos
 }
 
-// NOVA TABELA PARA HISTÓRICO DE ATIVIDADES
 model ActivityHistory {
   id          Int      @id @default(autoincrement())
-  type        String  
-  name        String 
-  score       String? 
+  type        String   // "Quiz", "Documentário", "Fauna", "Flora"
+  name        String   // "Quiz: Gigantes do Oceano"
+  contentId   String   // Adicionado: ID do conteúdo (ex: "baleia-jubarte")
+  score       String?
   completedAt DateTime @default(now())
   
   userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// NOVA TABELA PARA FAVORITOS
+model Favorite {
+  id          Int      @id @default(autoincrement())
+  contentId   String   // ID do item (ex: "professor-polvo")
+  contentType String   // "Fauna", "Flora", "Documentaries", "Quizzes"
+  createdAt   DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Garante que um usuário só pode favoritar um item uma vez
+  @@unique([userId, contentId, contentType])
 }
