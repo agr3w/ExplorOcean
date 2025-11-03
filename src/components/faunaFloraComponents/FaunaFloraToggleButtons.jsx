@@ -19,7 +19,7 @@ export default function FaunaFloraToggleButtons({ show3D, setShow3D }) {
     });
 
     return (
-        <Box sx={{ position: "absolute", top: { xs: 16, md: 32 }, right: { xs: 16, md: 32 }, zIndex: 10, display: "flex", gap: 1.5 }}>
+        <Box id="tour-step-2" sx={{ position: "absolute", top: { xs: 16, md: 32 }, right: { xs: 16, md: 32 }, zIndex: 10, display: "flex", gap: 1.5 }}>
             <Button onClick={() => setShow3D(true)} sx={buttonSx(show3D)}>
                 <MdViewInAr size={28} />
             </Button>
