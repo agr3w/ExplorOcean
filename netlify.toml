@@ -1,2 +1,5 @@
 [build]
-command = "npm install --legacy-peer-deps && vite build"
+command = "npm ci --legacy-peer-deps && npm run build"
+
+[build.environment]
+NODE_VERSION = "18.20.8"
