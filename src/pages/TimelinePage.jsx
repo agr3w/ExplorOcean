@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navigator from '@/components/navigator/Navigator';
-import Timeline from "@/components/Timeline/TimeLine";
-import MapDisplay from '@/components/Timeline/MapDisplay';
-import TimelineContent from '@/components/Timeline/TimelineContent';
-import { timelineData } from '@/content/timeLine/timelineContent';
-import TimelineTour from '@/components/Timeline/TimelineTour';
+import Timeline from "@/components/timeline/TimeLine";
+import MapDisplay from '@/components/timeline/MapDisplay';
+import TimelineContent from '@/components/timeline/TimelineContent';
+import { timelineData } from '@/content/timeLine/TimelineContent';
+import TimelineTour from '@/components/timeline/TimelineTour';
 
 export default function TimelinePage() {
   const [selectedEra, setSelectedEra] = useState(timelineData[0]);
