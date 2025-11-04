@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navigator from '../components/navigator/Navigator';
-import Timeline from '../components/Timeline/Timeline';
+import Timeline from "../components/Timeline/Timeline";
 import MapDisplay from '../components/Timeline/MapDisplay';
 import TimelineContent from '../components/Timeline/TimelineContent';
 import { timelineData } from '../content/timeLine/timelineContent';
