@@ -1,5 +1,5 @@
 import React from "react";
-import ContentGrid from "../components/ContentGridComponents/contentGrid";
+import ContentGrid from "@/components/ContentGridComponents/contentGrid/ContentGrid";
 import Footer from "../components/footer/footer";
 import { Box } from "@mui/material";
 import CategoryFilter from "../components/categoryFilter/categoryFilter";
