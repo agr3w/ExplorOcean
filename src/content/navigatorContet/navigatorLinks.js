@@ -20,7 +20,7 @@ export const navigationLinks = [
     subheader: 'Acesso rápido',
     items: [
       { label: 'Home', to: '/', icon: MdHome },
-      { label: 'Perfil', to: '/perfil', icon: MdPerson },
+      { label: 'Perfil', to: '/profile', icon: MdPerson },
     ],
   },
 ];
