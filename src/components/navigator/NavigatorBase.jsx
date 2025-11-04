@@ -4,7 +4,7 @@ import {
   ListSubheader, Divider, Typography, IconButton, Tooltip
 } from '@mui/material';
 import { MdMenu, MdHome, MdPerson, MdLogout } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { navigationLinks } from '../../content/navigatorContet/navigatorLinks';
 import { useAuth } from '../../context/AuthContext';
 
@@ -17,9 +17,18 @@ function NavigatorBase({
 }) {
   const { token, logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => setDrawerOpen(true);
   const handleDrawerClose = () => setDrawerOpen(false);
+
+  const handleProfileClick = () => {
+    if (token) {
+      navigate('/profile');
+    } else {
+      navigate('/auth');
+    }
+  };
 
   return (
     <>
@@ -140,7 +149,7 @@ function NavigatorBase({
             {token ? (
               <>
                 <Tooltip title="Acessar Perfil" arrow>
-                  <IconButton component={Link} to="/profile" sx={{ color: buttonColor, p: { xs: 1, md: 2 } }}>
+                  <IconButton onClick={handleProfileClick} sx={{ color: buttonColor, p: { xs: 1, md: 2 } }}>
                     <MdPerson size={24} />
                   </IconButton>
                 </Tooltip>
@@ -197,24 +206,54 @@ function NavigatorBase({
             >
               {section.items.map((item) => (
                 <ListItem key={item.to} disablePadding>
-                  <ListItemButton component={Link} to={item.to} onClick={handleDrawerClose}>
-                    <Box sx={{
-                      minWidth: 32,
-                      color: '#36d1e0',
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}>
-                      {item.icon && React.createElement(item.icon, { size: 22 })}
-                    </Box>
-                    <ListItemText
-                      primary={item.label}
-                      sx={{
-                        '.MuiTypography-root': {
-                          fontSize: { xs: '1rem', md: '1.1rem' }, // Texto maior no mobile
-                        }
+                  {item.label === 'Perfil' ? (
+                    <ListItemButton
+                      onClick={() => {
+                        handleDrawerClose();
+                        handleProfileClick();
                       }}
-                    />
-                  </ListItemButton>
+                    >
+                      <Box sx={{
+                        minWidth: 32,
+                        color: '#36d1e0',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        {item.icon && React.createElement(item.icon, { size: 22 })}
+                      </Box>
+                      <ListItemText
+                        primary={item.label}
+                        sx={{
+                          '.MuiTypography-root': {
+                            fontSize: { xs: '1rem', md: '1.1rem' },
+                          }
+                        }}
+                      />
+                    </ListItemButton>
+                  ) : (
+                    <ListItemButton
+                      component={Link}
+                      to={item.to}
+                      onClick={handleDrawerClose}
+                    >
+                      <Box sx={{
+                        minWidth: 32,
+                        color: '#36d1e0',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        {item.icon && React.createElement(item.icon, { size: 22 })}
+                      </Box>
+                      <ListItemText
+                        primary={item.label}
+                        sx={{
+                          '.MuiTypography-root': {
+                            fontSize: { xs: '1rem', md: '1.1rem' },
+                          }
+                        }}
+                      />
+                    </ListItemButton>
+                  )}
                 </ListItem>
               ))}
               {idx < navigationLinks.length - 1 && <Divider sx={{ my: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }} />}
