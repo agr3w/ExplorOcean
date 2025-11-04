@@ -5,7 +5,7 @@ import Navigator from '@/components/navigator/Navigator';
 import Timeline from "@/components/timeline/TimeLine";
 import MapDisplay from '@/components/timeline/MapDisplay';
 import TimelineContent from '@/components/timeline/TimelineContent';
-import { timelineData } from '@/content/timeLine/TimelineContent';
+import { timelineData } from '@/content/timeLine/timelineContent';
 import TimelineTour from '@/components/timeline/TimelineTour';
 
 export default function TimelinePage() {
