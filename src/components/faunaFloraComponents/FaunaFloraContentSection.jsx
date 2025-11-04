@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import CategorySelector from "../../components/faunaFloraComponents/CategorySelector";
-import ContentGrid from "../../components/ContentGridComponents/contentGrid/ContentGrid";
-import FeaturedCard from "../../components/faunaFloraComponents/FeaturedCard";
+import CategorySelector from "@/components/faunaFloraComponents/CategorySelector";
+import ContentGrid from "@/components/ContentGridComponents/contentGrid";
+import FeaturedCard from "@/components/faunaFloraComponents/FeaturedCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FaunaFloraContentSection({
