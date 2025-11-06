@@ -5,8 +5,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("NETLIFY_DATABASE_URL")
 }
 
 model User {
@@ -26,12 +26,12 @@ model User {
 
 model ActivityHistory {
   id          Int      @id @default(autoincrement())
-  type        String   // "Quiz", "Documentário", "Fauna", "Flora"
-  name        String   // "Quiz: Gigantes do Oceano"
-  contentId   String   // Adicionado: ID do conteúdo (ex: "baleia-jubarte")
+  type        String // "Quiz", "Documentário", "Fauna", "Flora"
+  name        String // "Quiz: Gigantes do Oceano"
+  contentId   String // Adicionado: ID do conteúdo (ex: "baleia-jubarte")
   score       String?
   completedAt DateTime @default(now())
-  
+
   userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -39,8 +39,8 @@ model ActivityHistory {
 // NOVA TABELA PARA FAVORITOS
 model Favorite {
   id          Int      @id @default(autoincrement())
-  contentId   String   // ID do item (ex: "professor-polvo")
-  contentType String   // "Fauna", "Flora", "Documentaries", "Quizzes"
+  contentId   String // ID do item (ex: "professor-polvo")
+  contentType String // "Fauna", "Flora", "Documentaries", "Quizzes"
   createdAt   DateTime @default(now())
 
   userId Int
