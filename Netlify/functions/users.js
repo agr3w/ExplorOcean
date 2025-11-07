@@ -47,8 +47,7 @@ export async function handler(event, context) {
       if (!user || !(await bcrypt.compare(password, user.password))) {
         return { statusCode: 401, body: JSON.stringify({ message: "Email ou senha inválidos." }) };
       }
-      const token = jwt.sign({ userId: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '24h' });
-      return { statusCode: 200, body: JSON.stringify({ token }) };
+const token = jwt.sign({ userId: user.id, username: user.username }, 'minha-chave-de-teste-super-secreta-123456-que-ninguem-vai-adivinhar', { expiresIn: '24h' });      return { statusCode: 200, body: JSON.stringify({ token }) };
     }
 
     // Autenticação obrigatória
