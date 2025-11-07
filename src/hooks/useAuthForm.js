@@ -45,7 +45,7 @@ export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) =>
     return errors;
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setError && setError('');
     setSuccess && setSuccess('');
@@ -63,7 +63,7 @@ export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) =>
     try {
       if (isLogin) {
         const { data } = await loginUser(submissionData);
-        // Aguarda o loginAction do contexto (inclui GET /me)
+        // Aguarda o login do contexto (inclui GET /me)
         await login(data.token);
         setMood && setMood('happy');
         setSuccess && setSuccess('Login bem-sucedido! Bem-vindo(a) de volta.');
@@ -75,7 +75,7 @@ export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) =>
         setTimeout(() => onToggle(), 2000);
       }
     } catch (err) {
-      setError && setError(err.response?.data?.message || 'Ocorreu um erro. Tente novamente.');
+      setError && setError(err.response?.data?.message || 'Sessão inválida ou erro no login.');
       setMood && setMood('sad');
     } finally {
       setIsLoading(false);

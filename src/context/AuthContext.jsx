@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/userService';
+import apiClient from '../services/api';
 
 const AuthContext = createContext(null);
 
@@ -9,45 +10,50 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  // Função para logout
+  const logoutAction = useCallback(() => {
+    localStorage.removeItem('authToken');
+    apiClient.defaults.headers.common['Authorization'] = undefined;
+    setToken(null);
+    setUser(null);
+    navigate('/auth');
+  }, [navigate]);
+
   // Função para buscar e setar o usuário
   const fetchAndSetUser = useCallback(async () => {
     const currentToken = localStorage.getItem('authToken');
     if (currentToken) {
+      apiClient.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
       try {
         const { data } = await getUserProfile();
         setUser(data);
+        setToken(currentToken);
       } catch (error) {
         console.error("Sessão inválida, deslogando.", error);
         logoutAction();
       }
     } else {
       setUser(null);
+      setToken(null);
     }
-  }, [navigate]); // Removido logoutAction das dependências
+  }, [logoutAction]);
 
-  // useEffect só roda uma vez no carregamento inicial
   useEffect(() => {
     fetchAndSetUser();
-  }, [fetchAndSetUser]); // Removido 'token' das dependências
-
-  // Função para logout
-  const logoutAction = useCallback(() => {
-    localStorage.removeItem('authToken');
-    setToken(null);
-    setUser(null);
-    navigate('/auth');
-  }, [navigate]);
+  }, [fetchAndSetUser]);
 
   // Função para login, agora async e busca o usuário após login
   const loginAction = useCallback(async (newToken) => {
     localStorage.setItem('authToken', newToken);
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
     setToken(newToken);
     try {
       const { data } = await getUserProfile();
       setUser(data);
     } catch (error) {
-      console.error("Sessão inválida pós-login, deslogando.", error);
+      console.error("Falha ao buscar usuário pós-login, deslogando.", error);
       logoutAction();
+      throw error;
     }
   }, [logoutAction]);
 
