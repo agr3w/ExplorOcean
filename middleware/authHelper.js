@@ -1,6 +1,7 @@
+// middleware/authHelper.js
 import jwt from 'jsonwebtoken';
 
-export default function (event) {
+export function authHelper(event) {
     const authHeader = event.headers['authorization'];
     if (!authHeader) {
         throw new Error('Acesso negado. Nenhum token fornecido.');
