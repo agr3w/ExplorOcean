@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import authHelper from '../../middleware/authHelper.js';
+import { authHelper } from '../../middleware/authHelper.js';
 
 const prisma = new PrismaClient();
 
