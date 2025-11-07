@@ -7,8 +7,8 @@ export default function (event) {
     }
     try {
         const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, 'essa-chave-e-um-teste-final-para-provar-o-cache-do-netlify-987654');
-    return decoded;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return decoded;
     } catch (ex) {
         throw new Error('Token inválido.');
     }
