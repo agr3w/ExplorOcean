@@ -45,7 +45,7 @@ export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) =>
     return errors;
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
     setError && setError('');
     setSuccess && setSuccess('');
@@ -63,8 +63,8 @@ export const useAuthForm = (isLogin, onToggle, setSuccess, setError, setMood) =>
     try {
       if (isLogin) {
         const { data } = await loginUser(submissionData);
-        // Use o contexto para login e navegação
-        login(data.token);
+        // Aguarda o loginAction do contexto (inclui GET /me)
+        await login(data.token);
         setMood && setMood('happy');
         setSuccess && setSuccess('Login bem-sucedido! Bem-vindo(a) de volta.');
         setTimeout(() => navigate('/profile'), 1500);

@@ -1,5 +1,3 @@
-// src/context/AuthContext.jsx
-
 import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/userService';
@@ -11,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  // Função para buscar e setar o usuário
   const fetchAndSetUser = useCallback(async () => {
     const currentToken = localStorage.getItem('authToken');
     if (currentToken) {
@@ -24,23 +23,33 @@ export const AuthProvider = ({ children }) => {
     } else {
       setUser(null);
     }
-  }, []);
+  }, [navigate]); // Removido logoutAction das dependências
 
+  // useEffect só roda uma vez no carregamento inicial
   useEffect(() => {
     fetchAndSetUser();
-  }, [token, fetchAndSetUser]);
+  }, [fetchAndSetUser]); // Removido 'token' das dependências
 
-  const loginAction = useCallback((newToken) => {
-    localStorage.setItem('authToken', newToken);
-    setToken(newToken);
-  }, []);
-
+  // Função para logout
   const logoutAction = useCallback(() => {
     localStorage.removeItem('authToken');
     setToken(null);
     setUser(null);
     navigate('/auth');
   }, [navigate]);
+
+  // Função para login, agora async e busca o usuário após login
+  const loginAction = useCallback(async (newToken) => {
+    localStorage.setItem('authToken', newToken);
+    setToken(newToken);
+    try {
+      const { data } = await getUserProfile();
+      setUser(data);
+    } catch (error) {
+      console.error("Sessão inválida pós-login, deslogando.", error);
+      logoutAction();
+    }
+  }, [logoutAction]);
 
   const value = useMemo(() => ({
     token,
