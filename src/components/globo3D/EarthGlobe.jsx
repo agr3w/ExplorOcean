@@ -12,7 +12,7 @@ function EarthGlobeInner() {
   try {
     earthTexture = useLoader(THREE.TextureLoader, '/assets/earthmap1k.jpg');
   } catch (error) {
-    earthTexture = null;
+    earthTexture = useLoader(THREE.TextureLoader, '/assets/earthmap1k.jpg');
   }
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function EarthGlobeInner() {
 
 export default function EarthGlobe() {
   return (
-    <Suspense fallback={<CircularProgress color="info" />}>
+    <Suspense fallback={null}>
       <EarthGlobeInner />
     </Suspense>
   );
