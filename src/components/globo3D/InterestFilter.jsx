@@ -1,31 +1,46 @@
-import { Box, FormGroup, FormControlLabel, Checkbox, Paper } from '@mui/material';
+import React from 'react';
+import { Box, FormGroup, FormControlLabel, Checkbox, Paper, Typography } from '@mui/material';
+
+const StyledFormControlLabel = (props) => (
+  <FormControlLabel
+    {...props}
+    control={<Checkbox sx={{ color: 'primary.light', '&.Mui-checked': { color: 'primary.main' } }} />}
+    sx={{ color: 'white' }}
+  />
+);
 
 function InterestFilter({ filters, setFilters }) {
-    return (
-        <Paper sx={{
-            position: 'absolute',
-            top: 100,
-            right: 24,
-            zIndex: 20,
-            p: 2,
-            borderRadius: 3,
-            background: 'rgba(30,60,120,0.85)',
-            color: '#fff',
-            boxShadow: '0 2px 12px rgba(30,60,120,0.18)'
-        }}>
-            <FormGroup>
-                <FormControlLabel
-                    control={<Checkbox checked={filters.fossas} onChange={() => setFilters(f => ({ ...f, fossas: !f.fossas }))} />}
-                    label="Fossas"
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={filters.placas} onChange={() => setFilters(f => ({ ...f, placas: !f.placas }))} />}
-                    label="Placas"
-                />
-                {/* Adicione mais filtros conforme necessário */}
-            </FormGroup>
-        </Paper>
-    );
+  const handleChange = (event) => {
+    setFilters(f => ({ ...f, [event.target.name]: event.target.checked }));
+  };
+
+  return (
+    <Paper sx={{
+      position: 'absolute', top: 100, right: 24, zIndex: 20,
+      p: 2, borderRadius: 2,
+      background: 'rgba(2, 16, 26, 0.7)',
+      backdropFilter: 'blur(10px)',
+      border: '1.5px solid rgba(54, 209, 224, 0.3)',
+      boxShadow: '0 8px 32px rgba(2, 16, 26, 0.5)',
+      color: '#fff',
+    }}>
+      <Typography variant="h6" sx={{ mb: 1, fontWeight: 'bold' }}>Camadas</Typography>
+      <FormGroup>
+        <StyledFormControlLabel
+          control={<Checkbox checked={filters.geologia} onChange={handleChange} name="geologia" />}
+          label="Geologia"
+        />
+        <StyledFormControlLabel
+          control={<Checkbox checked={filters.biologia} onChange={handleChange} name="biologia" />}
+          label="Biologia"
+        />
+        <StyledFormControlLabel
+          control={<Checkbox checked={filters.historia} onChange={handleChange} name="historia" />}
+          label="História"
+        />
+      </FormGroup>
+    </Paper>
+  );
 }
 
 export default InterestFilter;
