@@ -2,11 +2,17 @@ import React, { useRef, Suspense } from 'react';
 import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 import useSlowRotation from '../../hooks/useSlowRotation';
+import { CircularProgress } from '@mui/material';
 
 function EarthGlobeInner() {
-  const earthTexture = useLoader(THREE.TextureLoader, '/assets/earthmap1k.jpg');
+  let earthTexture;
+  try {
+    earthTexture = useLoader(THREE.TextureLoader, '/assets/earthmap1k.jpg');
+  } catch (error) {
+    console.error('Erro ao carregar textura:', error);
+    return <mesh><sphereGeometry args={[4, 64, 64]} /><meshStandardMaterial color="gray" /></mesh>;
+  }
   const meshRef = useRef();
-  // useSlowRotation(meshRef, 0.0001);
 
   return (
     <mesh ref={meshRef}>
@@ -18,7 +24,7 @@ function EarthGlobeInner() {
 
 export default function EarthGlobe() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<CircularProgress color="info" />}>
       <EarthGlobeInner />
     </Suspense>
   );
