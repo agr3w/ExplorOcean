@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography, IconButton, Link as MuiLink } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
 import { MdEmail } from 'react-icons/md';
 import { FaInstagram, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { Link } from 'react-router-dom'; // Importa o Link do react-router-dom
 
 const AlgaSVG = () => (
     <svg
@@ -59,9 +60,9 @@ export default function Footer({ depth = 3 }) {
             </Box>
             <Box sx={{ zIndex: 1 }}>
                 <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>Links Úteis</Typography>
-                <MuiLink href="/documentaries" color="inherit" underline="hover" sx={{ display: 'block', mb: 1 }}>Documentários</MuiLink>
-                <MuiLink href="/quizzes" color="inherit" underline="hover" sx={{ display: 'block', mb: 1 }}>Quizzes</MuiLink>
-                <MuiLink href="/fauna-flora" color="inherit" underline="hover" sx={{ display: 'block' }}>Fauna e Flora</MuiLink>
+                <Link to="/documentaries" style={{ color: 'inherit', textDecoration: 'none', display: 'block', marginBottom: 8 }}>Documentários</Link>
+                <Link to="/quizzes" style={{ color: 'inherit', textDecoration: 'none', display: 'block', marginBottom: 8 }}>Quizzes</Link>
+                <Link to="/fauna-flora" style={{ color: 'inherit', textDecoration: 'none', display: 'block' }}>Fauna e Flora</Link>
             </Box>
             <Box sx={{ zIndex: 1 }}>
                 <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>Redes Sociais</Typography>
@@ -78,7 +79,6 @@ export default function Footer({ depth = 3 }) {
                     </IconButton>
                 </Box>
             </Box>
-            {/* Elemento decorativo oceânico */}
             <AlgaSVG />
         </Box>
     );
