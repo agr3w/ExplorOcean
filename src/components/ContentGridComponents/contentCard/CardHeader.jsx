@@ -16,7 +16,7 @@ function Loader() {
   );
 }
 
-function Model({ url }) {
+function Model({ url, scale, position }) {
   const gltf = useLoader(GLTFLoader, url);
   const modelRef = useRef();
 
@@ -26,7 +26,7 @@ function Model({ url }) {
     }
   });
 
-  return <primitive ref={modelRef} object={gltf.scene} scale={1.5} />;
+  return <primitive ref={modelRef} object={gltf.scene} scale={scale} position={position} />;
 }
 
 const CardMediaWrapper = styled(Box)({
@@ -62,10 +62,12 @@ const RatingBox = styled(motion.div)(({ theme }) => ({
   fontSize: '0.95rem',
 }));
 
-const CardHeader = ({ imageUrl, rating, tags, threeModel }) => {
+const CardHeader = ({ imageUrl, rating, tags, threeModel, modelScale, modelPosition }) => {
   const [show3D, setShow3D] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  const iamgeUrl3D = "/underWater.jpg"; // Supondo que a imagem 3D tenha um sufixo _3d antes da extensão
 
   const handleMouseEnter = () => {
     if (threeModel) {
@@ -99,14 +101,14 @@ const CardHeader = ({ imageUrl, rating, tags, threeModel }) => {
                 width: '100%',
                 height: '100%',
                 zIndex: 1,
-                background: '#02101a',
+                background: `url(${iamgeUrl3D}) center/cover`,
               }}
             >
               <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
                 <ambientLight intensity={0.7} />
                 <directionalLight position={[2, 2, 5]} intensity={1} />
                 <Suspense fallback={<Loader />}>
-                  <Model url={threeModel} />
+                  <Model url={threeModel} scale={modelScale} position={modelPosition} />
                 </Suspense>
               </Canvas>
             </motion.div>

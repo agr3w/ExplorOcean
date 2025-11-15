@@ -168,6 +168,8 @@ export default function ContentCard({ item, threeModel }) {
             imageUrl={item.imageUrl}
             rating={item.rating}
             threeModel={threeModel}
+            modelScale={item.modelScaleCard}
+            modelPosition={item.modelPositionCard}
           />
           <CardBody
             label={item.label}
