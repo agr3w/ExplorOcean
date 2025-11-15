@@ -126,7 +126,7 @@ export const faunaData = [
     ],
     imageUrl:
       "https://tse1.mm.bing.net/th/id/OIP.kqn2xmICFBlGIi6mtFzpSwHaFb?rs=1&pid=ImgDetMain&o=7&rm=3",
-    threeModel: "/models/sea_turtle.glb",
+    threeModel: "/models/ChimeraVan.glb",
     backgroundPreset: "forest",
     modelScale: 2,
     modelPosition: [0, 0, 0],
@@ -284,7 +284,7 @@ export const faunaData = [
     ],
     imageUrl:
       "https://www.infoescola.com/wp-content/uploads/2010/02/tubarao-baleia-71323384.jpg",
-    threeModel: "/models/whale_shark.glb",
+    threeModel: "/models/ChimeraVan.glb",
     backgroundPreset: "sunset",
     modelScale: 1.6,
     modelPosition: [0, 0.5, 0],
