@@ -34,7 +34,10 @@ export default function SmoothScroll({ children }) {
         rafRef.current = null;
       }
       // Garante que o scroll nativo esteja habilitado antes de decidir
-      document.body.style.overflow = 'auto';
+      // Mantém overflow-x desativado (evita reativar scroll horizontal)
+      document.body.style.overflowX = 'hidden';
+      // garante overflow-y nativo por enquanto
+      document.body.style.overflowY = 'auto';
       // --- Fim Limpeza ---
 
       if (isMobile()) {
@@ -43,8 +46,9 @@ export default function SmoothScroll({ children }) {
       } else {
         // Desktop: Cria e configura o Lenis
         console.log("SmoothScroll: Ativando Lenis (Desktop). Desativando scroll nativo.");
-        // Mantém a barra visível para que a estilização CSS apareça
+        // Mantém a barra visível e mantém overflow-x bloqueado
         document.body.style.overflowY = 'scroll';
+        document.body.style.overflowX = 'hidden';
 
         const lenis = new Lenis({
           duration: 1.2,

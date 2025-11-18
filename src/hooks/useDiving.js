@@ -12,20 +12,21 @@ export default function useDiving(threshold = 100) {
         let ticking = false;
 
         const onScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const newValue = window.scrollY > threshold;
-                    if (lastValue.current !== newValue) {
-                        setDiving(newValue);
-                        lastValue.current = newValue;
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY || window.pageYOffset;
+                const newValue = scrollY > threshold;
+                // atualiza estado apenas quando passar threshold relevante
+                if (lastValue.current !== newValue) {
+                    setDiving(newValue);
+                    lastValue.current = newValue;
+                }
+                ticking = false;
+            });
         };
 
-        window.addEventListener('scroll', onScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
 
         return () => window.removeEventListener('scroll', onScroll);
     }, [threshold]);

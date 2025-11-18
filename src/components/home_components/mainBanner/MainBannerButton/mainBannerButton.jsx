@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { FaWater } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -40,7 +40,7 @@ export default function MainBannerButton({ diving }) {
                                 { transform: 'translateY(120px) scale(0.8)', opacity: 0 },
                                 { transform: 'translateY(0)', opacity: 1 }
                             ], {
-                                duration: 800,
+                                duration: 1000,
                                 easing: 'cubic-bezier(.77,0,.18,1)',
                                 fill: 'forwards'
                             });
@@ -49,33 +49,27 @@ export default function MainBannerButton({ diving }) {
                 }}
                 id="main-banner-dive-btn"
             >
-                <Button
-                    variant="contained"
-                    startIcon={<FaWater />}
+                <Typography
                     sx={{
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        backdropFilter: 'blur(10px)',
-                        WebkitBackdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.2)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 1,
                         color: '#fff',
+                        background: 'transparent',
                         borderRadius: 6,
-                        px: 4,
-                        py: 1.2,
+                        px: 2.5,
+                        py: 0.8,
                         fontWeight: 500,
-                        fontSize: '1rem',
-                        letterSpacing: 1,
+                        fontSize: '0.95rem',
+                        letterSpacing: 0.6,
                         textTransform: 'none',
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                            background: 'rgba(255, 255, 255, 0.3)',
-                            boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.25)',
-                            borderColor: 'rgba(255, 255, 255, 0.5)',
-                        },
+                        cursor: 'default',
+                        userSelect: 'none',
                     }}
                 >
-                    Mergulhar
-                </Button>
+                    <FaWater />
+                    Role para baixo para mergulhar
+                </Typography>
             </motion.div>
         </Box>
     );

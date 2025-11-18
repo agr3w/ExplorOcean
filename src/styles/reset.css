@@ -59,9 +59,8 @@ html {
   scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 }
 
-/* Mantém a gutter estável (já existente) */
 html {
   scrollbar-gutter: stable;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
