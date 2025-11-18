@@ -43,7 +43,8 @@ export default function SmoothScroll({ children }) {
       } else {
         // Desktop: Cria e configura o Lenis
         console.log("SmoothScroll: Ativando Lenis (Desktop). Desativando scroll nativo.");
-        document.body.style.overflow = 'hidden'; // Esconde scroll nativo
+        // Mantém a barra visível para que a estilização CSS apareça
+        document.body.style.overflowY = 'scroll';
 
         const lenis = new Lenis({
           duration: 1.2,
@@ -79,7 +80,7 @@ export default function SmoothScroll({ children }) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
       }
-      document.body.style.overflow = 'auto'; // Garante scroll nativo ao sair
+      document.body.style.overflowY = 'auto'; // Garante scroll nativo ao sair
     };
   }, []); // Array vazio: Roda apenas no mount e cleanup no unmount
 

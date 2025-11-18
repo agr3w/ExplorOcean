@@ -16,6 +16,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* height: 100%; */
   /* overflow: hidden; */
+  overflow-y: scroll;
 }
 
 code {
@@ -25,5 +26,42 @@ code {
 
 #root {
   min-height: 100vh;
+}
+
+:root {
+  --scroll-track: #02101a; /* cor do trilho */
+  --scroll-thumb: #0ea5a4; /* cor do polegar (thumb) */
+  --scroll-thumb-hover: #066b6b;
+  --scroll-width: 12px;
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+body::-webkit-scrollbar {
+  width: var(--scroll-width);
+  height: var(--scroll-width);
+}
+body::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+  border-radius: 999px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb);
+  border-radius: 999px;
+  border: 3px solid var(--scroll-track); /* cria espaço ao redor do thumb */
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scroll-thumb-hover);
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin; /* auto | thin | none */
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+
+/* Mantém a gutter estável (já existente) */
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
 }
 
