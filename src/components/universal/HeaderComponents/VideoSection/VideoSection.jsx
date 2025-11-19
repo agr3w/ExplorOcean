@@ -1,23 +1,23 @@
 import { Box } from '@mui/material';
 
-export default function VideoSection({ videoUrl, title }) {
+export default function VideoSection({ videoUrl, title, maxWidth = 900 }) {
   if (!videoUrl) return null;
   return (
     <Box
       sx={{
         position: 'relative',
-        paddingTop: '56.25%',
-        height: 0,
+        width: '100%',
+        maxWidth: { xs: '96vw', md: maxWidth }, // limita no desktop e ocupa quase toda a tela no mobile
+        margin: '0 auto',
+        aspectRatio: '16/9', // mantém proporção 16:9 de forma responsiva
+        height: 'auto',
         overflow: 'hidden',
         borderRadius: 3,
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.1)',
         border: '2px solid rgba(255, 255, 255, 0.2)',
         backdropFilter: 'blur(5px)',
-        backgroundColor: 'rgba(0, 10, 20, 0.7)',
-        '&:hover': {
-          boxShadow: '0 6px 25px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.2)',
-        },
-        transition: 'all 0.3s ease-in-out',
+        transition: 'transform 0.18s ease',
+        '&:hover': { transform: 'translateY(-4px)' },
       }}
     >
       <iframe
